@@ -5,7 +5,7 @@
   <div class="row">
 
     <!-- The branding -->
-  <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2 col-xl-1" style="margin-top:50px;" *ngIf="!isLoggedIn">
+  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" style="margin-top:50px;" *ngIf="!isLoggedIn">
 
 <app-projects></app-projects>
     <app-legend></app-legend>
@@ -18,7 +18,7 @@
 
   <!-- The skill editor -->
 
-  <div *ngIf="isLoggedIn" class="col-xs-12 col-sm-4 col-md-3 col-lg-2 col-xl-1" style="margin-top:50px;" >
+  <div *ngIf="isLoggedIn" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" style="margin-top:50px;" >
 
     <div class="panel panel-default">
       <div class="panel-heading">Skill Editor</div>
@@ -83,7 +83,7 @@
       <div class="panel-body">
 
 
-        <div class="dropdown">
+
           <table id="skillBox" style="margin: 0px auto;">
             <tr>
               <th [id]=getStyle()>
@@ -104,7 +104,7 @@
             </tr>
           </table>
           <!--<button class="btn btn-danger"  (click)="onClearFields()">Clear</button>-->
-        </div>
+
       </div>
     </div>
   </div>
@@ -113,7 +113,7 @@
 
 
 <!--The list of skills and the page-->
-    <div class="col-md-9 col-sm-8 col-xs-12 col-lg-10 col-xl-11" style="margin-top: 50px">
+    <div class="col-md-9 col-sm-9 col-xs-12 col-lg-10 col-xl-11" style="margin-top: 50px">
 
       <div id="listOfSkills" *ngIf="showSkillBox">
         <div class="dropdown" *ngFor="let skill of skillSets; let i=index">
@@ -131,7 +131,7 @@
 
                   {{skill.skillTitle}}
 
-              </div><button *ngIf="isLoggedIn && !isModify"  style="margin: 5px 25px; position: absolute; float:right;" type="button" class="btn btn-danger btn-xs"
+              </div><button *ngIf="isLoggedIn && !isModify"  style="margin: 5px 15px; position: absolute; float:right;" type="button" class="btn btn-danger btn-xs"
                             (click)="onRemoveSkill(i)">
               Delete
             </button><tr>

@@ -30,6 +30,18 @@ export class AppComponent implements OnInit {
   isLoggedIn = true;
   showSpinner = false;
 
+  options: Object = {
+    placeholderText: 'Add here the text for the page',
+    charCounterCount: true,
+    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', 'paragraphFormat'],
+    toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', 'paragraphFormat'],
+    toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|',  'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
+    toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|',  'help', 'html', '|', 'undo', 'redo', 'paragraphFormat']
+
+  };
+
+
+
   // Careful when choosing either http or https
   server = 'https://www.maikel.uk';
 //  server = 'http://localhost:3000';

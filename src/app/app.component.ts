@@ -217,8 +217,15 @@ export class AppComponent implements OnInit {
       pages: this.passContent
     };
     const address = this.server + '/api/v1/todo';
-    const req = this.http.post(address, _todo);
-    req.subscribe();
+    let results: any;
+    const req = this.http.post(address, _todo).subscribe(data => {
+      results = data;
+      console.log(results);
+    });
+    setTimeout(() => {
+      console.log(results._id);
+    }, 1000);
+
 
   }
 

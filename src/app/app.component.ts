@@ -35,8 +35,12 @@ export class AppComponent implements OnInit {
     charCounterCount: true,
     toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', 'paragraphFormat'],
     toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', 'paragraphFormat'],
-    toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|',  'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
-    toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', '|',  'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
+    toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
+      'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
+      'insertFile', 'insertTable', '|',  'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
+    toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
+      'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
+      'insertFile', 'insertTable', '|',  'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
     tableStyles: {
       'table table-bordered': 'BS bordered',
       'table table-condensed': 'BS condensed'

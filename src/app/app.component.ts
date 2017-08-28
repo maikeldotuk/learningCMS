@@ -158,14 +158,16 @@ export class AppComponent implements OnInit {
     req.subscribe();
     this.skillSets.splice(id, 1);
 
-    // With this the associated pages are also deleted
-    for (const index of Object.keys(thePages)) {
-
-      const eachPage = thePages[index];
-      const address2 = this.server + '/api/v1/page/' + eachPage.id;
-      const req2 = this.http.delete(address2);
-      req2.subscribe();
+    if (this.isModify === false) {
+      // With this the associated pages are also deleted if it's not a modification.
+      for (const index of Object.keys(thePages)) {
+        const eachPage = thePages[index];
+        const address2 = this.server + '/api/v1/page/' + eachPage.id;
+        const req2 = this.http.delete(address2);
+        req2.subscribe();
+      }
     }
+
 
   }
 

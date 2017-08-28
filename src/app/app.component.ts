@@ -11,24 +11,24 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AppComponent implements OnInit {
   pageID: any;
-  skilltitle = '';
-  logoURL = '';
+  fieldSkillTitle = '';
+  fieldLogoURL = '';
   disableAddSkillButton = true;
-  levelOfMastery = 'Learning';
+  fieldMasteryLevel = 'Learning';
   passContent = ['Anything'];
   thePages: Pagecontent[] = [];
   moreContent: string;
   skillSets: Skillbox[] = [];
   allSubSkills: Pagecontent[] = [];
-  isModify: boolean;
-  modifyingID: number;
+  isModify = false;
+  orderOnGrid: number;
   isSaving = 'Save Page';
   showSkillBox = true;
   toggleText = 'Hide';
-  currentSkill: Skillbox;
   buttonModi = 'Create New';
   isLoggedIn = true;
   showSpinner = false;
+  selectedSkill: Skillbox;
 
   options: Object = {
     placeholderText: 'Add here the text for the page',
@@ -37,16 +37,15 @@ export class AppComponent implements OnInit {
     toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', 'paragraphFormat'],
     toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
       'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
-      'insertFile', 'insertTable', '|',  'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
+      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
     toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
       'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
-      'insertFile', 'insertTable', '|',  'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
+      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
     tableStyles: {
       'table table-bordered': 'BS bordered',
       'table table-condensed': 'BS condensed'
     }
   };
-
 
 
   // Careful when choosing either http or https
@@ -69,52 +68,33 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getSkills();
-    this.loadSubSkills();
-
-  }
-
-  onCreateSkill() {
-    if (this.isModify === true) {
-      this.onLinkPage(this.skillSets[this.modifyingID]); // Link the pages to the new skill title.
-      this.onRemoveSkill(this.modifyingID); // Deletes the old skill
-    }
-
-    this.onSendSkill();
-    this.fixLastSkill();
-
-    setTimeout(() => {
-      this.loadSubSkills();
-      if (this.isModify === false) {
-        this.onClearFields();
-      }
-    }, 500);
-
+    this.getUpdatedSkillsGrid();
+    this.getAllPagesList();
 
   }
 
 
-  onModifySkill(id: number) {
+  onSelectSkill(aSkill, index) {
     this.isPageEnabled = false;
     if (this.isLoggedIn === false) {
       return;
     }
     this.buttonModi = 'Modify';
     this.isPageEnabled = false;
-    this.skilltitle = this.skillSets[id].skillTitle;
-    this.logoURL = this.skillSets[id].skillLogoURL;
-    this.levelOfMastery = this.skillSets[id].skillLevel;
+
+    this.selectedSkill = aSkill;
+
+    this.fieldSkillTitle = aSkill.skillTitle;
+    this.fieldLogoURL = aSkill.skillLogoURL;
+    this.fieldMasteryLevel = aSkill.skillLevel;
     this.isModify = true;
-    this.modifyingID = id;
-
-
-    this.loadSubSkills();
-
+    this.orderOnGrid = index;
+    this.thePages = aSkill.getPages(this.allSubSkills);
 
   }
 
   isEnabled() {
-    if (this.skilltitle.length > 0 && this.logoURL.length > 0) {
+    if (this.fieldSkillTitle.length > 0 && this.fieldLogoURL.length > 0) {
 
       this.disableAddSkillButton = false;
 
@@ -130,52 +110,65 @@ export class AppComponent implements OnInit {
   onClearFields() {
     this.passContent = [];
     this.thePages = [];
-    this.logoURL = '';
-    this.levelOfMastery = 'Learning';
-    this.skilltitle = '';
+    this.fieldLogoURL = '';
+    this.fieldMasteryLevel = 'Learning';
+    this.fieldSkillTitle = '';
     this.isModify = false;
     this.buttonModi = 'Create New';
   }
 
-  addContentToArray() {
+  addPageToSkill() {
     // Maybe this one can be changed.
 
-    this.passContent.push(this.moreContent);
+    let results: any;
+    let somePage: Pagecontent;
     const aPage = {
       title: this.moreContent,
       content: '',
-      skill: this.skilltitle,
+      skill: this.fieldSkillTitle,
       editDate: new Date()
     };
     const address = this.server + '/api/v1/page';
     const req = this.http.post(address, aPage);
-    req.subscribe();
+    req.subscribe(data => {
+      results = data;
+      somePage = new Pagecontent(results._id, results.title, results.content, results.skill, results.editDate);
+      this.allSubSkills.push(somePage);
+      this.thePages = this.selectedSkill.getPages(this.allSubSkills);
 
-    setTimeout(() => {
-      this.moreContent = '';
-      this.loadSubSkills();
-    }, 500);
-
+    });
+    this.moreContent = '';
 
   }
 
 
   onRemoveSkill(id: number) {
+    const theSkillToRemove = this.skillSets[id];
+    const thePages = theSkillToRemove.getPages(this.allSubSkills);
 
     if (this.isModify === false) {
-      if (confirm('Are you sure? This cannot be undone') === false) {
+      if (confirm('Are you sure? This cannot be undone\nAll associated pages will also be deleted') === false) {
         return;
       }
     }
-    const address = this.server + '/api/v1/todo/' + this.skillSets[id].skillID;
+    const address = this.server + '/api/v1/todo/' + theSkillToRemove.skillID;
     const req = this.http.delete(address);
     req.subscribe();
     this.skillSets.splice(id, 1);
 
+    // With this the associated pages are also deleted
+    for (const index of Object.keys(thePages)) {
+
+      const eachPage = thePages[index];
+      const address2 = this.server + '/api/v1/page/' + eachPage.id;
+      const req2 = this.http.delete(address2);
+      req2.subscribe();
+    }
+
   }
 
   // Right now nobody is implementing this
-  onRemoveSubskill() {
+  onRemovePage() {
 
     if (confirm('Are you sure? This cannot be undone') === true) {
       const address = this.server + '/api/v1/page/' + this.pageID;
@@ -183,7 +176,7 @@ export class AppComponent implements OnInit {
       req.subscribe();
 
       setTimeout(() => {
-        this.loadSubSkills();
+        this.getAllPagesList();
         this.isPageEnabled = false;
       }, 500);
     }
@@ -191,7 +184,7 @@ export class AppComponent implements OnInit {
   }
 
   getStyle() {
-    switch (this.levelOfMastery) {
+    switch (this.fieldMasteryLevel) {
       case 'Known': {
         return 'knownTitle';
       }
@@ -208,67 +201,129 @@ export class AppComponent implements OnInit {
     }
   }
 
-  onSendSkill() {
 
-    const _todo = {
-      title: this.skilltitle,
-      logoURL: this.logoURL,
-      mastery: this.levelOfMastery,
-      pages: this.passContent
-    };
-    const address = this.server + '/api/v1/todo';
-    let results: any;
-    const req = this.http.post(address, _todo).subscribe(data => {
-      results = data;
-      console.log(results);
-    });
-    setTimeout(() => {
-      console.log(results._id);
-    }, 1000);
-
-
-  }
-
-  getSkills() {
+  getUpdatedSkillsGrid() {
     const address = this.server + '/api/v1/todos';
 
     this.http.get(address).subscribe(data => {
-
-
-
       // Read the result field from the JSON response.
 
       for (const entry of Object.keys(data)) {
         this.skillSets.push(
-          new Skillbox(data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery, data[entry].pages),
+          new Skillbox(data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery),
         );
       }
     });
   }
 
-  fixLastSkill() {
+  onCreateSkill() {
+    if (this.isModify === true) {
+      this.movePagesToNewSkill(this.skillSets[this.orderOnGrid]); // Link the pages to the new skill title.
+      this.onRemoveSkill(this.orderOnGrid); // Deletes the old skill
+    }
 
-    // This is to ensure it adds the item with the ID
-    let item: any;
+    this.onSendSkill();
+
+  }
+
+  onSendSkill() {
+
     let formattedItem: Skillbox;
 
-    // Without this wait it'll delete the previous skillbox instead of the newest one.
-    setTimeout(() => {
-      const address = this.server + '/api/v1/todos';
-      this.http.get(address).subscribe(data => {
-// Get the last item
-        item = data[Object.keys(data)[Object.keys(data).length - 1]];
-        formattedItem = new Skillbox(item._id, item.title, item.logoURL, item.mastery, item.pages);
+    const newSkill = {
+      title: this.fieldSkillTitle,
+      logoURL: this.fieldLogoURL,
+      mastery: this.fieldMasteryLevel,
+    };
+    const address = this.server + '/api/v1/todo';
+    let results: any;
+    const req = this.http.post(address, newSkill);
 
-        this.skillSets.push(formattedItem);
-      });
-    }, 1000);
+    req.subscribe(data => {
+      results = data;
+      formattedItem = new Skillbox(results._id, newSkill.title, newSkill.logoURL, newSkill.mastery);
+      this.skillSets.push(formattedItem);
+      this.onClearFields();
+      this.getAllPagesList();
+    });
+  }
+
+
+  onSavePage() {
+    // var thePage = new Pagecontent(0, this.titlePage, this.contentPage, this.fieldSkillTitle);
+    this.isSaving = 'Saving';
+    this.showSpinner = true;
+
+    const options = {
+      weekday: 'long', year: 'numeric', month: 'long',
+      day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true,
+    };
+
+
+    this.lastEdit = new Date().toLocaleString('en-GB', options);
+
+
+    const aPage = {
+      title: this.titlePage,
+      content: this.contentPage,
+      skill: this.theSkillTitle,
+      editDate: new Date()
+    };
+    const address = this.server + '/api/v1/page/' + this.pageID;
+    const req = this.http.put(address, aPage);
+    req.subscribe(data => {
+      this.isSaving = 'Saved';
+    this.showSpinner = false;
+    this.getAllPagesList();
+    this.isHideEditor = true;
+    this.isSaving = 'Save';
+  });
+  }
+
+  getAllPagesList() {
+
+    // This must be rewrittent o avoid reading the whole set of skills
+    this.allSubSkills = [];
+
+    const address = this.server + '/api/v1/pages';
+    this.http.get(address).subscribe(data => {
+      // Read the result field from the JSON response.
+
+      for (const entry of Object.keys(data)) {
+        this.allSubSkills.push(
+          new Pagecontent(data[entry]._id, data[entry].title, data[entry].content, data[entry].skill, data[entry].editDate),
+        );
+      }
+      if (this.selectedSkill) {
+        this.thePages = this.selectedSkill.getPages(this.allSubSkills);
+      }
+
+    });
 
 
   }
 
 
-  onClickSubskill(item) {
+
+  onToggleEditor() {
+    this.isHideEditor = false;
+  }
+
+  toggleSkillBox() {
+
+    if (this.showSkillBox === true) {
+      this.showSkillBox = false;
+      this.toggleText = 'Show';
+
+    } else {
+      this.showSkillBox = true;
+      this.toggleText = 'Hide';
+    }
+
+  }
+
+
+  onClickPage(item) {
 
 // this.passContent.splice(id, 1);
 // Originally that was it.
@@ -294,152 +349,24 @@ export class AppComponent implements OnInit {
     this.pageID = item.id;
   }
 
-  onSavePage() {
-    // var thePage = new Pagecontent(0, this.titlePage, this.contentPage, this.skilltitle);
-    this.isSaving = 'Saving';
-    this.showSpinner = true;
+  movePagesToNewSkill(aSkill) {
+    const thePages = aSkill.getPages(this.allSubSkills);
 
-    const options = {
-      weekday: 'long', year: 'numeric', month: 'long',
-      day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true,
-    };
+    // receiving the old skill but also have the global orderOnGrid
 
+    for (const index of Object.keys(thePages)) {
 
-    this.lastEdit = new Date().toLocaleString('en-GB', options);
-
-
-    let theParentSkill: string;
-    if (this.currentSkill.skillTitle) {
-      theParentSkill = this.currentSkill.skillTitle;
-    } else {
-      theParentSkill = this.titlePage;
-    }
-
-
-    const aPage = {
-      title: this.titlePage,
-      content: this.contentPage,
-      skill: theParentSkill,
-      editDate: new Date()
-    };
-    const address = this.server + '/api/v1/page/' + this.pageID;
-    const req = this.http.put(address, aPage);
-    req.subscribe();
-
-    setTimeout(() => {
-      this.isSaving = 'Saved';
-      this.showSpinner = false;
-      this.loadSubSkills();
-    }, 1000);
-
-
-  }
-
-  loadSubSkills() {
-
-    // This must be rewrittent o avoid reading the whole set of skills
-    this.allSubSkills = [];
-
-    const address = this.server + '/api/v1/pages';
-    this.http.get(address).subscribe(data => {
-      // Read the result field from the JSON response.
-
-      for (const entry of Object.keys(data)) {
-        this.allSubSkills.push(
-          new Pagecontent(data[entry]._id, data[entry].title, data[entry].content, data[entry].skill, data[entry].editDate),
-        );
-      }
-
-    });
-
-
-    setTimeout(() => {
-      this.thePages = [];
-      this.thePages = this.allSubSkills.filter(item => {
-        return item.skill === this.skilltitle;
-      });
-      this.isHideEditor = true;
-      this.isSaving = 'Save';
-    }, 500);
-
-    const aTempArray: Skillbox[] = [];
-
-    setTimeout(() => {
-      for (const aSkill of Object.keys(this.skillSets)) {
-        const theSkill = this.skillSets[aSkill];
-        const listSubskills: string[] = [];
-        for (const aSubskill of Object.keys(this.allSubSkills)) {
-          const theSubskill = this.allSubSkills[aSubskill];
-          if (theSkill.skillTitle === theSubskill.skill) {
-            listSubskills.push(theSubskill.title);
-          }
-          /*console.log(this.skillSets[aSkill].skillTitle);
-           console.log(this.skillSets[aSkill].skillContent);*/
-        }
-        aTempArray.push(new Skillbox(theSkill.skillID, theSkill.skillTitle, theSkill.skillLogoURL, theSkill.skillLevel, listSubskills));
-
-      }
-      this.skillSets = aTempArray;
-    }, 1000);
-
-
-    /*
-     this.skillSets.push(
-     new Skillbox(data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery, data[entry].pages),
-     );*/
-
-
-  }
-
-  onToggleEditor() {
-    this.isHideEditor = false;
-  }
-
-  toggleSkillBox() {
-
-    if (this.showSkillBox === true) {
-      this.showSkillBox = false;
-      this.toggleText = 'Show';
-
-    } else {
-      this.showSkillBox = true;
-      this.toggleText = 'Hide';
-    }
-
-  }
-
-  onClickSubskillUpBox(skill, subskill) {
-    this.currentSkill = skill;
-    const aPage = this.allSubSkills.filter(item => {
-      return item.skill === skill.skillTitle && item.title === subskill;
-    });
-
-
-    this.onClickSubskill(aPage[0]);
-  }
-
-  onLinkPage(aSkill) {
-    // receiving the old skill but also have the global modifyingID
-
-    for (const index of Object.keys(this.allSubSkills)) {
-
-      const theSubskillObject = this.allSubSkills[index];
-      for (const theSubSkillString in aSkill.skillContent) {
-        if (aSkill.skillContent[theSubSkillString] === theSubskillObject.title) {
+      const eachPage = thePages[index];
 
           const aPage = {
-            title: theSubskillObject.title,
-            content: theSubskillObject.content,
-            skill: this.skilltitle,
-            editDate: theSubskillObject.editDate
+            title: eachPage.title,
+            content: eachPage.content,
+            skill: this.fieldSkillTitle,
+            editDate: eachPage.editDate
           };
-          const address = this.server + '/api/v1/page/' + theSubskillObject.id;
+          const address = this.server + '/api/v1/page/' + eachPage.id;
           const req = this.http.put(address, aPage);
           req.subscribe();
-        }
-
-      }
-
     }
 
   }

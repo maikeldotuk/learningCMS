@@ -24,11 +24,13 @@ export class AppComponent implements OnInit {
   orderOnGrid: number;
   isSaving = 'Save Page';
   showSkillBox = true;
-  toggleText = 'Hide';
+  toggleText = 'Expand';
   buttonModi = 'Create New';
-  isLoggedIn = true;
+  isLoggedIn = false;
   showSpinner = false;
   selectedSkill: Skillbox;
+  showSkillEditor = true;
+  showSkillEditorText = "Hide Editor";
 
   options: Object = {
     placeholderText: 'Add here the text for the page',
@@ -167,18 +169,17 @@ export class AppComponent implements OnInit {
 
   }
 
-  // Right now nobody is implementing this
+
   onRemovePage() {
 
     if (confirm('Are you sure? This cannot be undone') === true) {
       const address = this.server + '/api/v1/page/' + this.pageID;
       const req = this.http.delete(address);
-      req.subscribe();
-
-      setTimeout(() => {
+      req.subscribe(data => {
         this.getAllPagesList();
         this.isPageEnabled = false;
-      }, 500);
+        this.onClearFields() ;
+      });
     }
 
   }
@@ -313,11 +314,11 @@ export class AppComponent implements OnInit {
 
     if (this.showSkillBox === true) {
       this.showSkillBox = false;
-      this.toggleText = 'Show';
+      this.toggleText = 'Shrink';
 
     } else {
       this.showSkillBox = true;
-      this.toggleText = 'Hide';
+      this.toggleText = 'Expand';
     }
 
   }
@@ -329,6 +330,7 @@ export class AppComponent implements OnInit {
 // Originally that was it.
 
     this.isPageEnabled = true;
+    this.onClearFields();
 
     if (item.editDate !== undefined) {
       const aDate: Date = new Date(item.editDate);
@@ -384,19 +386,27 @@ export class AppComponent implements OnInit {
     this.http.get(address).subscribe(data => {
       // Read the result field from the JSON response.
       results = data;
-    });
-
-    setTimeout(() => {
       if (results.password === 'true') {
         this.isLoggedIn = true;
       } else {
         alert('Invalid Password');
       }
-    }, 1000);
-
-
-    // Read the result field from the JSON response.
+    });
 
 
   }
+
+  onToogleEditor() {
+    if (this.showSkillEditor === true) {
+      this.showSkillEditor = false;
+      this.showSkillEditorText = 'Show Editor';
+    } else {
+      this.showSkillEditor = true;
+      this.showSkillEditorText = 'Hide Editor';
+    }
+
+
+  }
+
+
 }

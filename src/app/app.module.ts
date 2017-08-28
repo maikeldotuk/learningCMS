@@ -14,6 +14,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { FooterComponent } from './footer/footer.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,6 +25,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ProjectsComponent,
     FooterComponent,
     SpinnerComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -21,26 +21,11 @@ export class Skillbox  {
     }
   }
 
-  getPages(received) {
+  getPages(allPagesArray) {
 
-    const thePages = received.filter(item => {
+    const thePages = allPagesArray.filter(item => {
       return item.skill === this.skillTitle;
     });
 return thePages;
-
-
-/*
-    onClickSubskillUpBox(skill, subskill) {
-      this.currentSkill = skill;
-      const aPage = this.allSubSkills.filter(item => {
-        return item.skill === skill.skillTitle && item.title === subskill;
-      });
-
-
-      this.onClickPage(aPage[0]);
-
-*/
-
-
   }
 }

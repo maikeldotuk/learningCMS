@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header [user]="user"></app-header>
 <!--The padding is added here because otherwise the bottom navbar covers the text-->
 
 <div class="container-fluid" style="padding-bottom: 100px;" >
@@ -6,20 +6,16 @@
   <div class="row">
 
     <!-- The branding -->
-  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!isLoggedIn">
+  <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!user.getLoggedStatus()">
 <app-branding></app-branding>
 <app-projects></app-projects>
     <app-legend></app-legend>
 
     <app-latestnews ></app-latestnews>
-
-    <button id="login" class="btn btn-xs btn-danger" (click)="login()">Rudimentary Login</button>
   </div>
-
-
   <!-- The skill editor -->
 <div *ngIf="showSkillEditor">
-  <div *ngIf="isLoggedIn" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
+  <div *ngIf="user.getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
 
     <div class="panel panel-default">
       <div class="panel-heading">Skill Editor</div>
@@ -36,16 +32,19 @@
           <input [(ngModel)]="fieldLogoURL" type="text" class="form-control" name="msg"
                  placeholder="A valid URL with the logo">
         </div><br>
-
+        <form >
         <div class="input-group" *ngIf="isModify">
-          <input type="text" class="form-control" placeholder="Page within the skill" [(ngModel)]="moreContent">
+          <input type="text" class="form-control" placeholder="Page within the skill" [(ngModel)]="moreContent" [ngModelOptions]="{standalone: true}">
           <div class="input-group-btn">
             <button class="btn btn-default" (click)="addPageToSkill()">
               <i class="glyphicon glyphicon-plus"></i>
             </button>
           </div>
-        </div><br *ngIf="isModify">
+        </div>
+        </form>
 
+
+        <br *ngIf="isModify">
 
         <div class="form-group">
           <label for="level">Level of Mastery:</label>
@@ -113,13 +112,13 @@
 
 <!--The list of skills and the page-->
     <div [ngClass]="{'col-md-9': showSkillEditor, 'col-sm-9': showSkillEditor, 'col-xs-12': showSkillEditor,
-     'col-lg-10': showSkillEditor, 'col-xl-11': showSkillEditor, 'col-sm-12':!showSkillEditor}">
+     'col-lg-10': showSkillEditor, 'col-xl-11': showSkillEditor, 'col-sm-12':!showSkillEditor && user.getLoggedStatus()}">
 
 
 
 
       <div id="listOfSkills" *ngIf="showSkillBox">
-        <div class="dropdown" *ngFor="let skill of skillSets; let i=index">
+        <div class="dropdown" *ngFor="let skill of arraySkillboxes; let i=index">
           <table id="skillBox"> <tr>
             <p [id]=skill.getStyle()>{{skill.skillTitle}}
             </p>
@@ -134,7 +133,7 @@
 
                   {{skill.skillTitle}}
 
-              </div><button *ngIf="isLoggedIn && !isModify"  style="margin: 5px 15px; position: absolute; float:right;" type="button" class="btn btn-danger btn-xs"
+              </div><button *ngIf="user.getLoggedStatus() && !isModify"  style="margin: 5px 15px; position: absolute; float:right;" type="button" class="btn btn-danger btn-xs"
                             (click)="onRemoveSkill(i)">
               Delete
             </button><tr>
@@ -146,7 +145,7 @@
               <tr>
                 <td id="theContent">
 
-                  <a *ngFor="let subskill of skill.getPages(allSubSkills);" (click)="onClickPage(subskill)">{{subskill.title}}
+                  <a *ngFor="let subskill of skill.getPages(arrayAllPages);" (click)="onClickPage(subskill)">{{subskill.title}}
                      </a>
 
                 </td>
@@ -157,14 +156,14 @@
         </div>
 
 
-        <div class="dropdown" *ngIf="isLoggedIn">
+        <div class="dropdown" *ngIf="user.getLoggedStatus()">
           <table id="userControls"> <tr>
 
 
             <td id="normalLogo">
               <button class="btn btn-sm btn-link" (click)="onToogleEditor()">{{showSkillEditorText}}</button>
 
-              <button class="btn btn-xs btn-danger" (click)="logout()">Logout</button>
+
 
             </td>
           </tr>
@@ -186,7 +185,7 @@
 
         <h1>{{theSkillTitle}}: {{titlePage}}<button style="margin-left: 10px;" (click)="toggleSkillBox()" class="btn btn-xs btn-primary">{{toggleText}}</button>
 
-          <div *ngIf="isLoggedIn" class="btn-group">
+          <div *ngIf="user.getLoggedStatus()" class="btn-group">
 
             <button class="btn btn-xs btn-primary" *ngIf="isHideEditor" (click)="onToggleEditor()">Edit
             </button>
@@ -196,7 +195,7 @@
             </button>
           </div>
         </h1>
-        <div style="color: #760a0e; font-style: italic; font-size:12px;" *ngIf="isLoggedIn && isHideEditor"> Last Edited on {{lastEdit}}</div>
+        <div style="color: #760a0e; font-style: italic; font-size:12px;" *ngIf="user.getLoggedStatus() && isHideEditor"> Last Edited on {{lastEdit}}</div>
 
         <div *ngIf="isHideEditor">
 

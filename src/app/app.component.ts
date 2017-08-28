@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Skillbox} from './skillbox.model';
-import {Pagecontent} from './pagecontent.model';
+import {User} from './user.model';
+import {Page} from './page.model';
 import {HttpClient} from '@angular/common/http';
-
+declare var $ :any;
 
 @Component({
   selector: 'app-root',
@@ -15,18 +16,19 @@ export class AppComponent implements OnInit {
   fieldLogoURL = '';
   disableAddSkillButton = true;
   fieldMasteryLevel = 'Learning';
-  passContent = ['Anything'];
-  thePages: Pagecontent[] = [];
+
+  thePages: Page[] = [];
   moreContent: string;
-  skillSets: Skillbox[] = [];
-  allSubSkills: Pagecontent[] = [];
+  arraySkillboxes: Skillbox[] = [];
+  arrayAllPages: Page[] = [];
   isModify = false;
   orderOnGrid: number;
   isSaving = 'Save Page';
   showSkillBox = true;
   toggleText = 'Expand';
   buttonModi = 'Create New';
-  isLoggedIn = false;
+
+  user = new User(this.http);
   showSpinner = false;
   selectedSkill: Skillbox;
   showSkillEditor = true;
@@ -35,8 +37,8 @@ export class AppComponent implements OnInit {
   options: Object = {
     placeholderText: 'Add here the text for the page',
     charCounterCount: true,
-    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', 'paragraphFormat'],
-    toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', 'paragraphFormat'],
+    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo','|','h1','h2','h3','h4','code','p','pre'],
+    toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|','h1','h2','h3','h4','code','p','pre'],
     toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
       'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
       'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
@@ -63,7 +65,7 @@ export class AppComponent implements OnInit {
 
   constructor(private http: HttpClient) {
 
-    this.passContent = [];
+
     this.isPageEnabled = false;
 
 
@@ -73,12 +75,158 @@ export class AppComponent implements OnInit {
     this.getUpdatedSkillsGrid();
     this.getAllPagesList();
 
+    let isActive = function (cmd) {
+      const blocks = this.selection.blocks();
+      let tag: string;
+
+      if (blocks.length) {
+        const blk = blocks[0];
+         tag = 'N';
+        const default_tag = this.html.defaultTag();
+        if (blk.tagName.toLowerCase() !== default_tag && blk !== this.el) {
+          tag = blk.tagName;
+        }
+      }
+
+      if (['LI', 'TD', 'TH'].indexOf(tag) >= 0) {
+        tag = 'N';
+      }
+
+      return tag.toLowerCase() === cmd;
+    }
+
+    $.FroalaEditor.DefineIcon('alert', {NAME: 'info'});
+    $.FroalaEditor.RegisterCommand('alert', {
+      title: 'Hello',
+      focus: false,
+      undo: false,
+      refreshAfterCallback: false,
+
+      callback: function () {
+        alert('Hello!');
+      }
+    });
+
+    $.FroalaEditor.DefineIcon('h1', {NAME: '<strong>H1</strong>', template: 'text'});
+    $.FroalaEditor.DefineIcon('h2', {NAME: '<strong>H2</strong>', template: 'text'});
+    $.FroalaEditor.DefineIcon('h3', {NAME: '<strong>H3</strong>', template: 'text'});
+    $.FroalaEditor.DefineIcon('h4', {NAME: '<strong>H4</strong>', template: 'text'});
+    $.FroalaEditor.DefineIcon('code', {NAME: '<strong>code</strong>', template: 'text'});
+    $.FroalaEditor.DefineIcon('p', {NAME: '<strong>p</strong>', template: 'text'});
+    $.FroalaEditor.DefineIcon('pre', {NAME: '<strong>pre</strong>', template: 'text'});
+
+    $.FroalaEditor.RegisterCommand('h1', {
+      title: 'Heading 1',
+      callback: function (cmd, val, params) {
+        if (isActive.apply(this, [cmd])) {
+          this.paragraphFormat.apply('N');
+        }
+        else {
+          this.paragraphFormat.apply(cmd);
+        }
+      },
+      refresh: function ($btn) {
+        $btn.toggleClass('fr-active', isActive.apply(this, [$btn.data('cmd')]));
+      }
+    });
+
+    $.FroalaEditor.RegisterCommand('h2', {
+      title: 'Heading 2',
+      callback: function (cmd, val, params) {
+        if (isActive.apply(this, [cmd])) {
+          this.paragraphFormat.apply('N');
+        }
+        else {
+          this.paragraphFormat.apply(cmd);
+        }
+      },
+      refresh: function ($btn) {
+        $btn.toggleClass('fr-active', isActive.apply(this, [$btn.data('cmd')]));
+      }
+    });
+
+    $.FroalaEditor.RegisterCommand('h3', {
+      title: 'Heading 3',
+      callback: function (cmd, val, params) {
+        if (isActive.apply(this, [cmd])) {
+          this.paragraphFormat.apply('N');
+        }
+        else {
+          this.paragraphFormat.apply(cmd);
+        }
+      },
+      refresh: function ($btn) {
+        $btn.toggleClass('fr-active', isActive.apply(this, [$btn.data('cmd')]));
+      }
+    });
+
+    $.FroalaEditor.RegisterCommand('h4', {
+      title: 'Heading 4',
+      callback: function (cmd, val, params) {
+        if (isActive.apply(this, [cmd])) {
+          this.paragraphFormat.apply('N');
+        }
+        else {
+          this.paragraphFormat.apply(cmd);
+        }
+      },
+      refresh: function ($btn) {
+        $btn.toggleClass('fr-active', isActive.apply(this, [$btn.data('cmd')]));
+      }
+    });
+
+    $.FroalaEditor.RegisterCommand('code', {
+      title: 'Code',
+      callback: function (cmd, val, params) {
+        if (isActive.apply(this, [cmd])) {
+          this.paragraphFormat.apply('N');
+        }
+        else {
+          this.paragraphFormat.apply(cmd);
+        }
+      },
+      refresh: function ($btn) {
+        $btn.toggleClass('fr-active', isActive.apply(this, [$btn.data('cmd')]));
+      }
+    });
+
+    $.FroalaEditor.RegisterCommand('p', {
+      title: 'Normal',
+      callback: function (cmd, val, params) {
+        if (isActive.apply(this, [cmd])) {
+          this.paragraphFormat.apply('N');
+        }
+        else {
+          this.paragraphFormat.apply(cmd);
+        }
+      },
+      refresh: function ($btn) {
+        $btn.toggleClass('fr-active', isActive.apply(this, [$btn.data('cmd')]));
+      }
+    });
+
+    $.FroalaEditor.RegisterCommand('pre', {
+      title: 'Pre-Formatted',
+      callback: function (cmd, val, params) {
+        if (isActive.apply(this, [cmd])) {
+          this.paragraphFormat.apply('N');
+        }
+        else {
+          this.paragraphFormat.apply(cmd);
+        }
+      },
+      refresh: function ($btn) {
+        $btn.toggleClass('fr-active', isActive.apply(this, [$btn.data('cmd')]));
+      }
+    });
+
   }
 
 
   onSelectSkill(aSkill, index) {
+
     this.isPageEnabled = false;
-    if (this.isLoggedIn === false) {
+    if (this.user.getLoggedStatus() === false) {
       return;
     }
     this.buttonModi = 'Modify';
@@ -91,7 +239,7 @@ export class AppComponent implements OnInit {
     this.fieldMasteryLevel = aSkill.skillLevel;
     this.isModify = true;
     this.orderOnGrid = index;
-    this.thePages = aSkill.getPages(this.allSubSkills);
+    this.thePages = aSkill.getPages(this.arrayAllPages);
 
   }
 
@@ -110,7 +258,7 @@ export class AppComponent implements OnInit {
 
 
   onClearFields() {
-    this.passContent = [];
+
     this.thePages = [];
     this.fieldLogoURL = '';
     this.fieldMasteryLevel = 'Learning';
@@ -123,7 +271,7 @@ export class AppComponent implements OnInit {
     // Maybe this one can be changed.
 
     let results: any;
-    let somePage: Pagecontent;
+    let somePage: Page;
     const aPage = {
       title: this.moreContent,
       content: '',
@@ -134,9 +282,9 @@ export class AppComponent implements OnInit {
     const req = this.http.post(address, aPage);
     req.subscribe(data => {
       results = data;
-      somePage = new Pagecontent(results._id, results.title, results.content, results.skill, results.editDate);
-      this.allSubSkills.push(somePage);
-      this.thePages = this.selectedSkill.getPages(this.allSubSkills);
+      somePage = new Page(results._id, results.title, results.content, results.skill, results.editDate);
+      this.arrayAllPages.push(somePage);
+      this.thePages = this.selectedSkill.getPages(this.arrayAllPages);
 
     });
     this.moreContent = '';
@@ -145,8 +293,8 @@ export class AppComponent implements OnInit {
 
 
   onRemoveSkill(id: number) {
-    const theSkillToRemove = this.skillSets[id];
-    const thePages = theSkillToRemove.getPages(this.allSubSkills);
+    const theSkillToRemove = this.arraySkillboxes[id];
+    const thePages = theSkillToRemove.getPages(this.arrayAllPages);
 
     if (this.isModify === false) {
       if (confirm('Are you sure? This cannot be undone\nAll associated pages will also be deleted') === false) {
@@ -156,7 +304,7 @@ export class AppComponent implements OnInit {
     const address = this.server + '/api/v1/todo/' + theSkillToRemove.skillID;
     const req = this.http.delete(address);
     req.subscribe();
-    this.skillSets.splice(id, 1);
+    this.arraySkillboxes.splice(id, 1);
 
     if (this.isModify === false) {
       // With this the associated pages are also deleted if it's not a modification.
@@ -187,6 +335,7 @@ export class AppComponent implements OnInit {
   }
 
   getStyle() {
+
     switch (this.fieldMasteryLevel) {
       case 'Known': {
         return 'knownTitle';
@@ -212,7 +361,7 @@ export class AppComponent implements OnInit {
       // Read the result field from the JSON response.
 
       for (const entry of Object.keys(data)) {
-        this.skillSets.push(
+        this.arraySkillboxes.push(
           new Skillbox(data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery),
         );
       }
@@ -221,7 +370,7 @@ export class AppComponent implements OnInit {
 
   onCreateSkill() {
     if (this.isModify === true) {
-      this.movePagesToNewSkill(this.skillSets[this.orderOnGrid]); // Link the pages to the new skill title.
+      this.movePagesToNewSkill(this.arraySkillboxes[this.orderOnGrid]); // Link the pages to the new skill title.
       this.onRemoveSkill(this.orderOnGrid); // Deletes the old skill
     }
 
@@ -245,7 +394,7 @@ export class AppComponent implements OnInit {
     req.subscribe(data => {
       results = data;
       formattedItem = new Skillbox(results._id, newSkill.title, newSkill.logoURL, newSkill.mastery);
-      this.skillSets.push(formattedItem);
+      this.arraySkillboxes.push(formattedItem);
       this.onClearFields();
       this.getAllPagesList();
     });
@@ -253,7 +402,7 @@ export class AppComponent implements OnInit {
 
 
   onSavePage() {
-    // var thePage = new Pagecontent(0, this.titlePage, this.contentPage, this.fieldSkillTitle);
+
     this.isSaving = 'Saving';
     this.showSpinner = true;
 
@@ -286,19 +435,19 @@ export class AppComponent implements OnInit {
   getAllPagesList() {
 
     // This must be rewrittent o avoid reading the whole set of skills
-    this.allSubSkills = [];
+    this.arrayAllPages = [];
 
     const address = this.server + '/api/v1/pages';
     this.http.get(address).subscribe(data => {
       // Read the result field from the JSON response.
 
       for (const entry of Object.keys(data)) {
-        this.allSubSkills.push(
-          new Pagecontent(data[entry]._id, data[entry].title, data[entry].content, data[entry].skill, data[entry].editDate),
+        this.arrayAllPages.push(
+          new Page(data[entry]._id, data[entry].title, data[entry].content, data[entry].skill, data[entry].editDate),
         );
       }
       if (this.selectedSkill) {
-        this.thePages = this.selectedSkill.getPages(this.allSubSkills);
+        this.thePages = this.selectedSkill.getPages(this.arrayAllPages);
       }
 
     });
@@ -328,7 +477,7 @@ export class AppComponent implements OnInit {
 
   onClickPage(item) {
 
-// this.passContent.splice(id, 1);
+
 // Originally that was it.
 
     this.isPageEnabled = true;
@@ -354,7 +503,7 @@ export class AppComponent implements OnInit {
   }
 
   movePagesToNewSkill(aSkill) {
-    const thePages = aSkill.getPages(this.allSubSkills);
+    const thePages = aSkill.getPages(this.arrayAllPages);
 
     // receiving the old skill but also have the global orderOnGrid
 
@@ -376,27 +525,10 @@ export class AppComponent implements OnInit {
   }
 
 
-  logout() {
-    this.isLoggedIn = false;
-  }
 
 
-  login() {
-    const aString: string = prompt('Password');
-    const address = this.server + '/api/v1/user/' + aString;
-    let results;
-    this.http.get(address).subscribe(data => {
-      // Read the result field from the JSON response.
-      results = data;
-      if (results.password === 'true') {
-        this.isLoggedIn = true;
-      } else {
-        alert('Invalid Password');
-      }
-    });
 
 
-  }
 
   onToogleEditor() {
     if (this.showSkillEditor === true) {

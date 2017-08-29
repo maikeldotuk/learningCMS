@@ -15,7 +15,7 @@ import {SkillsPageGlobalsService} from '../skills-page-globals.service';
 export class SkillsComponent implements OnInit {
 
   // Careful when choosing either http or https
-  constructor(private globals: SkillsPageGlobalsService, private http: HttpClient, private user: UserService) {
+  constructor(public globals: SkillsPageGlobalsService, private http: HttpClient, private user: UserService) {
 
 
 
@@ -182,9 +182,7 @@ export class SkillsComponent implements OnInit {
   isPreviewEnabled(): boolean {
     return this.globals.showPreview();
   }
-  showSkillEditor(): boolean {
-    return this.globals.showSkillEditor;
-  }
+
 isPageEnabled(): boolean {
   return this.globals.isPageEnabled;
 }

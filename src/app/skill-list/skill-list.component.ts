@@ -26,14 +26,10 @@ export class SkillListComponent implements OnInit {
     return this.user.getLoggedStatus();
   }
 
-  onToggleEditor() {
-    this.globals.onToggleEditor();
-  }
+
 
   getSkillBoxes(): Skillbox[] {
     return this.globals.getArraySkillBoxes();
 }
-  getSkillEditorText(): string {
-    return this.globals.showSkillEditorText;
-  }
+
 }

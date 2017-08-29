@@ -32,7 +32,7 @@ export class SkillsPageGlobalsService {
 
   showSpinner = false;
   selectedSkill: Skillbox;
-  showSkillEditor = true;
+  showSkillEditor: boolean;
   showSkillEditorText = 'Hide Editor';
 
   froalaOptions: Object = {
@@ -67,6 +67,7 @@ export class SkillsPageGlobalsService {
     this.server = server;
     this.getUpdatedSkillsGrid();
     this.getAllPagesList();
+    this.showSkillEditor = true;
 
   }
 
@@ -371,8 +372,9 @@ component.
   }
 
   toggleSkillBox() {
-
+    console.log("Clicked");
     if (this.showSkillBox === true) {
+
       this.showSkillBox = false;
       this.toggleText = 'Shrink';
 
@@ -437,9 +439,11 @@ component.
   onToogleEditor() {
     if (this.showSkillEditor === true) {
       this.showSkillEditor = false;
+
       this.showSkillEditorText = 'Show Editor';
     } else {
       this.showSkillEditor = true;
+
       this.showSkillEditorText = 'Hide Editor';
     }
 

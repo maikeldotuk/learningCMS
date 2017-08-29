@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 declare var $: any;
 import swal from 'sweetalert2';
 import {UserService} from "../user.service";
+import {SkillsPageGlobalsService} from "../skills-page-globals.service";
 
 
 @Component({
@@ -63,7 +64,7 @@ export class SkillsComponent implements OnInit {
 
   isHideEditor = true;
 
-  constructor(private http: HttpClient, private user: UserService, @Inject('SERVER_URL') server: string) {
+  constructor(private globals: SkillsPageGlobalsService, private http: HttpClient, private user: UserService, @Inject('SERVER_URL') server: string) {
   this.server = server;
 
 

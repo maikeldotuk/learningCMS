@@ -1,0 +1,36 @@
+#listOfSkills {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+}
+
+button,
+button:active,
+button:focus,
+button:hover,
+.btn,
+.btn:active,
+.btn:focus,
+.btn:hover {
+  outline: none !important;
+}
+
+
+#userControls {
+  border: 1px dashed lightgrey;
+  width: 90px;
+  height: 100px;
+  text-align: center;
+  background-color:white;
+  margin: 2px;
+}
+
+
+.dropdown {
+  position: relative;
+}
+
+#normalLogo {
+  height: 100px;
+}

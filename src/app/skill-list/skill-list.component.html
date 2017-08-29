@@ -1,0 +1,22 @@
+<div id="listOfSkills" *ngIf="globals.showSkillBox">
+<app-single-skill-box *ngFor="let skill of globals.arraySkillboxes; let i=index"
+[skill]="skill" [i]="i"></app-single-skill-box>
+
+
+  <div class="dropdown" *ngIf="user.getLoggedStatus()">
+    <table id="userControls"> <tr>
+
+
+      <td id="normalLogo">
+        <button class="btn btn-sm btn-link" (click)="globals.onToogleEditor()">{{globals.showSkillEditorText}}</button>
+
+
+
+      </td>
+    </tr>
+    </table>
+
+
+  </div>
+
+</div>

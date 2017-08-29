@@ -15,57 +15,7 @@
     <div *ngIf="globals.showSkillEditor">
       <div *ngIf="user.getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
 
-        <div class="panel panel-default">
-          <div class="panel-heading">Skill Editor</div>
-          <div class="panel-body">
-            <div class="input-group">
-              <span class="input-group-addon">Skill</span>
-              <input [(ngModel)]="globals.fieldSkillTitle" type="text" class="form-control" name="msg"
-                     placeholder="The name of the skill">
-            </div><br>
-
-
-            <div class="input-group">
-              <span class="input-group-addon">Logo</span>
-              <input [(ngModel)]="globals.fieldLogoURL" type="text" class="form-control" name="msg"
-                     placeholder="A valid URL with the logo">
-            </div><br>
-            <form >
-              <div class="input-group" *ngIf="globals.isModify">
-                <input type="text" class="form-control" placeholder="Page within the skill" [(ngModel)]="globals.moreContent" [ngModelOptions]="{standalone: true}">
-                <div class="input-group-btn">
-                  <button class="btn btn-default" (click)="globals.addPageToSkill()">
-                    <i class="glyphicon glyphicon-plus"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
-
-
-            <br *ngIf="globals.isModify">
-
-            <div class="form-group">
-              <label for="level">Level of Mastery:</label>
-              <select [(ngModel)]="globals.fieldMasteryLevel" class="form-control" id="level">
-                <option>Known</option>
-                <option>Memorising</option>
-                <option selected="selected">Learning</option>
-                <option>Queued</option>
-
-              </select></div>
-          </div>
-
-
-          <div class="panel-footer">
-            <button class="btn btn-xs btn-primary" [disabled]="globals.disableAddSkillButton" *ngIf="!globals.isModify" (click)="globals.onCreateSkill()">Create
-            </button><button class="btn btn-xs btn-primary" [disabled]="globals.disableAddSkillButton" *ngIf="globals.isModify" (click)="globals.onAmendSkill()">Modify
-          </button><button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="globals.onClearFields()">
-            Clear
-          </button>
-
-          </div>
-
-        </div>
+        <app-skilleditor></app-skilleditor>
 
 
 
@@ -73,40 +23,7 @@
         <!-- The preview -->
 
         <div *ngIf="globals.isEnabled()">
-          <div class="panel panel-default">
-
-
-            <div class="panel-heading">Preview<button *ngIf="user.getLoggedStatus() && globals.isModify"  style="float:right;" type="button" class="btn btn-danger btn-xs"
-                                                      (click)="globals.onRemoveSkill(globals.orderOnGrid)">
-              Delete
-            </button></div>
-            <div class="panel-body">
-
-
-
-              <table id="skillBox" style="margin: 0px auto;">
-                <tr>
-                  <th [id]=globals.getStyle()>
-
-                    {{globals.fieldSkillTitle}}
-                  </th>
-                </tr>
-                <tr>
-                  <td id="normalLogo"><img id="theLogo" [src]="globals.fieldLogoURL"></td>
-                </tr>
-                <tr>
-                  <td id="theContent">
-                    <a *ngFor="let subskill of globals.thePages" (click)="globals.onClickPage(subskill)">{{subskill.title}}
-                    </a>
-
-
-                  </td>
-                </tr>
-              </table>
-              <!--<button class="btn btn-danger"  (click)="globals.onClearFields()">Clear</button>-->
-
-            </div>
-          </div>
+          <app-skillpreview></app-skillpreview>
         </div>
 
       </div></div>
@@ -117,63 +34,7 @@
      'col-lg-10': globals.showSkillEditor, 'col-xl-11': globals.showSkillEditor, 'col-md-12':!globals.showSkillEditor && user.getLoggedStatus(), 'col-sm-12':!globals.showSkillEditor && user.getLoggedStatus()}" class="col-xs-12">
 
 
-
-
-      <div id="listOfSkills" *ngIf="globals.showSkillBox">
-        <div class="dropdown" *ngFor="let skill of globals.arraySkillboxes; let i=index">
-          <table id="skillBox"> <tr>
-            <p [id]=skill.getStyle()>{{skill.skillTitle}}
-            </p>
-
-            <td id="normalLogo"><img id="theLogo" [src]="skill.skillLogoURL"></td>
-          </tr>
-          </table>
-
-          <div class="dropdown-content">
-            <table id="skillBox">
-              <div id="hoveredTitle">
-
-                {{skill.skillTitle}}
-
-              </div><tr>
-
-              <td id="hooveredLogo" (click)="globals.onSelectSkill(skill, i)"><img id="theLogo" [src]="skill.skillLogoURL"></td>
-
-            </tr>
-
-              <tr>
-                <td id="theContent">
-
-                  <a *ngFor="let subskill of globals.getPages(skill);" (click)="globals.onClickPage(subskill)">{{subskill.title}}
-                  </a>
-
-                </td>
-
-              </tr>
-            </table>
-          </div>
-        </div>
-
-
-        <div class="dropdown" *ngIf="user.getLoggedStatus()">
-          <table id="userControls"> <tr>
-
-
-            <td id="normalLogo">
-              <button class="btn btn-sm btn-link" (click)="globals.onToogleEditor()">{{globals.showSkillEditorText}}</button>
-
-
-
-            </td>
-          </tr>
-          </table>
-
-
-        </div>
-
-      </div>
-
-
+      <app-skill-list></app-skill-list>
 
 
       <!--THe text of the page-->

@@ -1,0 +1,33 @@
+<div class="dropdown" >
+  <table id="skillBox"> <tr>
+    <p [id]=skill.getStyle()>{{skill.skillTitle}}
+    </p>
+
+    <td id="normalLogo"><img id="theLogo" [src]="skill.skillLogoURL"></td>
+  </tr>
+  </table>
+
+  <div class="dropdown-content">
+    <table id="skillBox">
+      <div id="hoveredTitle">
+
+        {{skill.skillTitle}}
+
+      </div><tr>
+
+      <td id="hooveredLogo" (click)="globals.onSelectSkill(skill, skillNumber)"><img id="theLogo" [src]="skill.skillLogoURL"></td>
+
+    </tr>
+
+      <tr>
+        <td id="theContent">
+
+          <a *ngFor="let subskill of globals.getPages(skill);" (click)="globals.onClickPage(subskill)">{{subskill.title}}
+          </a>
+
+        </td>
+
+      </tr>
+    </table>
+  </div>
+</div>

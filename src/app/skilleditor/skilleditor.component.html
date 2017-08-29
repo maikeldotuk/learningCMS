@@ -1,0 +1,51 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Skill Editor</div>
+  <div class="panel-body">
+    <div class="input-group">
+      <span class="input-group-addon">Skill</span>
+      <input [(ngModel)]="globals.fieldSkillTitle" type="text" class="form-control" name="msg"
+             placeholder="The name of the skill">
+    </div><br>
+
+
+    <div class="input-group">
+      <span class="input-group-addon">Logo</span>
+      <input [(ngModel)]="globals.fieldLogoURL" type="text" class="form-control" name="msg"
+             placeholder="A valid URL with the logo">
+    </div><br>
+    <form >
+      <div class="input-group" *ngIf="globals.isModify">
+        <input type="text" class="form-control" placeholder="Page within the skill" [(ngModel)]="globals.moreContent" [ngModelOptions]="{standalone: true}">
+        <div class="input-group-btn">
+          <button class="btn btn-default" (click)="globals.addPageToSkill()">
+            <i class="glyphicon glyphicon-plus"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+
+
+    <br *ngIf="globals.isModify">
+
+    <div class="form-group">
+      <label for="level">Level of Mastery:</label>
+      <select [(ngModel)]="globals.fieldMasteryLevel" class="form-control" id="level">
+        <option>Known</option>
+        <option>Memorising</option>
+        <option selected="selected">Learning</option>
+        <option>Queued</option>
+
+      </select></div>
+  </div>
+
+
+  <div class="panel-footer">
+    <button class="btn btn-xs btn-primary" [disabled]="globals.disableAddSkillButton" *ngIf="!globals.isModify" (click)="globals.onCreateSkill()">Create
+    </button><button class="btn btn-xs btn-primary" [disabled]="globals.disableAddSkillButton" *ngIf="globals.isModify" (click)="globals.onAmendSkill()">Modify
+  </button><button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="globals.onClearFields()">
+    Clear
+  </button>
+
+  </div>
+
+</div>

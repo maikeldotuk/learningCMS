@@ -1,9 +1,8 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {Skillbox} from '../skillbox.model';
-import {Page} from '../page.model';
+import {Component, OnInit} from '@angular/core';
+
 import {HttpClient} from '@angular/common/http';
 declare var $: any;
-import swal from 'sweetalert2';
+
 import {UserService} from "../user.service";
 import {SkillsPageGlobalsService} from "../skills-page-globals.service";
 

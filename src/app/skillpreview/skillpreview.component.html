@@ -1,0 +1,34 @@
+<div class="panel panel-default">
+
+
+  <div class="panel-heading">Preview<button *ngIf="user.getLoggedStatus() && globals.isModify"  style="float:right;" type="button" class="btn btn-danger btn-xs"
+                                            (click)="globals.onRemoveSkill(globals.orderOnGrid)">
+    Delete
+  </button></div>
+  <div class="panel-body">
+
+
+
+    <table id="skillBox" style="margin: 0px auto;">
+      <tr>
+        <th [id]=globals.getStyle()>
+
+          {{globals.fieldSkillTitle}}
+        </th>
+      </tr>
+      <tr>
+        <td id="normalLogo"><img id="theLogo" [src]="globals.fieldLogoURL"></td>
+      </tr>
+      <tr>
+        <td id="theContent">
+          <a *ngFor="let subskill of globals.thePages" (click)="globals.onClickPage(subskill)">{{subskill.title}}
+          </a>
+
+
+        </td>
+      </tr>
+    </table>
+    <!--<button class="btn btn-danger"  (click)="globals.onClearFields()">Clear</button>-->
+
+  </div>
+</div>

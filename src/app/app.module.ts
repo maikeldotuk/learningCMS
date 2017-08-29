@@ -20,6 +20,10 @@ import { SkillsComponent } from './skills/skills.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {UserService} from './user.service';
 import {SkillsPageGlobalsService} from './skills-page-globals.service';
+import { SkilleditorComponent } from './skilleditor/skilleditor.component';
+import { SkillListComponent } from './skill-list/skill-list.component';
+import { SkillpreviewComponent } from './skillpreview/skillpreview.component';
+import { SingleSkillBoxComponent } from './skill-list/single-skill-box/single-skill-box.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
@@ -41,6 +45,10 @@ const routes: Routes = [
     AboutComponent,
     ContactComponent,
     SkillsComponent,
+    SkilleditorComponent,
+    SkillListComponent,
+    SkillpreviewComponent,
+    SingleSkillBoxComponent,
 
   ],
   imports: [

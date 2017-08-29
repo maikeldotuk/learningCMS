@@ -3,7 +3,9 @@ import {Skillbox} from './skillbox.model';
 import {User} from './user.model';
 import {Page} from './page.model';
 import {HttpClient} from '@angular/common/http';
-declare var $ :any;
+declare var $: any;
+import swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-root',
@@ -26,19 +28,19 @@ export class AppComponent implements OnInit {
   isSaving = 'Save Page';
   showSkillBox = true;
   toggleText = 'Expand';
-  buttonModi = 'Create New';
+
 
   user = new User(this.http);
   showSpinner = false;
   selectedSkill: Skillbox;
   showSkillEditor = true;
-  showSkillEditorText = "Hide Editor";
+  showSkillEditorText = 'Show Editor';
 
   options: Object = {
     placeholderText: 'Add here the text for the page',
     charCounterCount: true,
-    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo','|','h1','h2','h3','h4','code','p','pre'],
-    toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|','h1','h2','h3','h4','code','p','pre'],
+    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'code', 'p', 'pre'],
+    toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'code', 'p', 'pre'],
     toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
       'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
       'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
@@ -72,16 +74,19 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
+
     this.getUpdatedSkillsGrid();
     this.getAllPagesList();
 
-    let isActive = function (cmd) {
+    const isActive = function (cmd) {
       const blocks = this.selection.blocks();
       let tag: string;
 
       if (blocks.length) {
         const blk = blocks[0];
-         tag = 'N';
+        tag = 'N';
         const default_tag = this.html.defaultTag();
         if (blk.tagName.toLowerCase() !== default_tag && blk !== this.el) {
           tag = blk.tagName;
@@ -93,7 +98,7 @@ export class AppComponent implements OnInit {
       }
 
       return tag.toLowerCase() === cmd;
-    }
+    };
 
     $.FroalaEditor.DefineIcon('alert', {NAME: 'info'});
     $.FroalaEditor.RegisterCommand('alert', {
@@ -229,7 +234,7 @@ export class AppComponent implements OnInit {
     if (this.user.getLoggedStatus() === false) {
       return;
     }
-    this.buttonModi = 'Modify';
+
     this.isPageEnabled = false;
 
     this.selectedSkill = aSkill;
@@ -264,7 +269,7 @@ export class AppComponent implements OnInit {
     this.fieldMasteryLevel = 'Learning';
     this.fieldSkillTitle = '';
     this.isModify = false;
-    this.buttonModi = 'Create New';
+
   }
 
   addPageToSkill() {
@@ -293,44 +298,82 @@ export class AppComponent implements OnInit {
 
 
   onRemoveSkill(id: number) {
-    const theSkillToRemove = this.arraySkillboxes[id];
-    const thePages = theSkillToRemove.getPages(this.arrayAllPages);
 
-    if (this.isModify === false) {
-      if (confirm('Are you sure? This cannot be undone\nAll associated pages will also be deleted') === false) {
+    swal({
+      title: 'Are you sure?',
+      text: 'You\'ll lose the skill and any pages attached to it',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'red',
+      confirmButtonText: 'Yes, delete it!',
+      showLoaderOnConfirm: true,
+      buttonsStyling: false,
+      confirmButtonClass: "btn btn-danger",
+      cancelButtonClass: "btn btn-primary",
+      focusCancel: true,
+      preConfirm: (data) => {
+
+        return new Promise(function(resolve) {
+            resolve();
+        });
+      }
+    }).then(() => {
+      // The actual deleting of the skill
+      const theSkillToRemove = this.arraySkillboxes[id];
+      const thePages = theSkillToRemove.getPages(this.arrayAllPages);
+
+      const address = this.server + '/api/v1/todo/' + theSkillToRemove.skillID;
+      const req = this.http.delete(address);
+      req.subscribe();
+      this.arraySkillboxes.splice(id, 1);
+
+
+      // With this the associated pages are also deleted because this it's not a modification.
+      if (thePages.length === 0) {
+        this.onClearFields();
         return;
+      } else {
+        for (const index of Object.keys(thePages)) {
+          const eachPage = thePages[index];
+          const address2 = this.server + '/api/v1/page/' + eachPage.id;
+          const req2 = this.http.delete(address2);
+          req2.subscribe();
+          this.onClearFields();
+        }
       }
-    }
-    const address = this.server + '/api/v1/todo/' + theSkillToRemove.skillID;
-    const req = this.http.delete(address);
-    req.subscribe();
-    this.arraySkillboxes.splice(id, 1);
-
-    if (this.isModify === false) {
-      // With this the associated pages are also deleted if it's not a modification.
-      for (const index of Object.keys(thePages)) {
-        const eachPage = thePages[index];
-        const address2 = this.server + '/api/v1/page/' + eachPage.id;
-        const req2 = this.http.delete(address2);
-        req2.subscribe();
-      }
-    }
-
-
+    }).catch(swal.noop);
   }
 
 
   onRemovePage() {
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted you can\'t recover this page',
+      type: 'warning',
+      showCancelButton: true,
 
-    if (confirm('Are you sure? This cannot be undone') === true) {
+      confirmButtonText: 'Yes, delete it!',
+      showLoaderOnConfirm: true,
+      buttonsStyling: false,
+      confirmButtonClass: "btn btn-danger",
+      cancelButtonClass: "btn btn-primary",
+      focusCancel: true,
+      preConfirm: (data) => {
+
+        return new Promise(function(resolve) {
+          resolve();
+        });
+      }
+    }).then(() => {
+
       const address = this.server + '/api/v1/page/' + this.pageID;
       const req = this.http.delete(address);
       req.subscribe(data => {
         this.getAllPagesList();
         this.isPageEnabled = false;
-        this.onClearFields() ;
+        this.onClearFields();
       });
-    }
+    }).catch(swal.noop);
 
   }
 
@@ -369,14 +412,12 @@ export class AppComponent implements OnInit {
   }
 
   onCreateSkill() {
-    if (this.isModify === true) {
-      this.movePagesToNewSkill(this.arraySkillboxes[this.orderOnGrid]); // Link the pages to the new skill title.
-      this.onRemoveSkill(this.orderOnGrid); // Deletes the old skill
-    }
+
 
     this.onSendSkill();
 
   }
+
 
   onSendSkill() {
 
@@ -400,6 +441,26 @@ export class AppComponent implements OnInit {
     });
   }
 
+//This is going to be to modify
+  onAmendSkill() {
+
+    this.movePagesToNewSkill(this.arraySkillboxes[this.orderOnGrid]); // Link the pages to the new skill title.
+
+
+    // Deletes the old skill without deleting the pages.
+    const id = this.orderOnGrid;
+    const theSkillToRemove = this.arraySkillboxes[id];
+    const thePages = theSkillToRemove.getPages(this.arrayAllPages);
+
+
+    const address = this.server + '/api/v1/todo/' + theSkillToRemove.skillID;
+    const req = this.http.delete(address);
+    req.subscribe();
+    this.arraySkillboxes.splice(id, 1);
+
+    this.onSendSkill();
+
+  }
 
   onSavePage() {
 
@@ -425,11 +486,11 @@ export class AppComponent implements OnInit {
     const req = this.http.put(address, aPage);
     req.subscribe(data => {
       this.isSaving = 'Saved';
-    this.showSpinner = false;
-    this.getAllPagesList();
-    this.isHideEditor = true;
-    this.isSaving = 'Save';
-  });
+      this.showSpinner = false;
+      this.getAllPagesList();
+      this.isHideEditor = true;
+      this.isSaving = 'Save';
+    });
   }
 
   getAllPagesList() {
@@ -454,7 +515,6 @@ export class AppComponent implements OnInit {
 
 
   }
-
 
 
   onToggleEditor() {
@@ -511,23 +571,18 @@ export class AppComponent implements OnInit {
 
       const eachPage = thePages[index];
 
-          const aPage = {
-            title: eachPage.title,
-            content: eachPage.content,
-            skill: this.fieldSkillTitle,
-            editDate: eachPage.editDate
-          };
-          const address = this.server + '/api/v1/page/' + eachPage.id;
-          const req = this.http.put(address, aPage);
-          req.subscribe();
+      const aPage = {
+        title: eachPage.title,
+        content: eachPage.content,
+        skill: this.fieldSkillTitle,
+        editDate: eachPage.editDate
+      };
+      const address = this.server + '/api/v1/page/' + eachPage.id;
+      const req = this.http.put(address, aPage);
+      req.subscribe();
     }
 
   }
-
-
-
-
-
 
 
   onToogleEditor() {

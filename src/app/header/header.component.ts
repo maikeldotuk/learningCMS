@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { User } from '../user.model';
-
+import {Component, OnInit, Input} from '@angular/core';
+import {User} from '../user.model';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +10,7 @@ import { User } from '../user.model';
 export class HeaderComponent implements OnInit {
   @Input() user: User;
   password: string;
-  colorPassField = 'white';
-placeholderText = "Password";
+
 
   constructor() {
 
@@ -20,19 +19,28 @@ placeholderText = "Password";
   ngOnInit() {
   }
 
+
   login() {
-    if (!this.password) {
-      this.colorPassField = '#ffb3b3';
-      this.placeholderText = "Can't be blank";
-      return;
-    }
-    this.user.login(this.password);
-    this.password = "";
+    swal({
+      title: 'Introduce the Password',
+      input: 'password',
+      imageUrl: 'favicon.ico',
+      buttonsStyling: false,
+      confirmButtonClass: 'btn btn-primary',
+      confirmButtonText: 'Let me In',
+    }).then(data => {
+      if (!data) {
+        swal({
+          title: 'Password can\'t be blank',
+          type: 'error',
+          buttonsStyling: false,
+          confirmButtonClass: 'btn btn-primary',
+          confirmButtonText: 'Try Again'
+        });
+        return;
+      } else {
+      this.user.login(data);
+      }
+    });
   }
-
-  onChangeColorPassField() {
-    this.colorPassField = 'white';
-    this.placeholderText = "Password";
-  }
-
 }

@@ -5,6 +5,12 @@
     <div class="navbar-header">
 
 
+      <button *ngIf="!user.getLoggedStatus()" type="button" class="navbar-toggle btn-danger btn" style="color: white;" data-toggle="collapse" (click)="login()"><span class="glyphicon glyphicon-log-in">
+          </span></button>
+      <button  *ngIf="user.getLoggedStatus()" type="button" class="navbar-toggle btn-danger btn" style="color: white;" data-toggle="collapse" (click)="user.logout()"><span class="glyphicon glyphicon-log-out">
+
+      </span></button>
+
       <a class="navbar-brand" href="#">Maikel Knowledge Base</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
@@ -14,16 +20,14 @@
         <li><a href="#">Contact</a></li>
       </ul>
 
-      <form class="navbar-form navbar-right" *ngIf="!user.getLoggedStatus()">
-        <div class="form-group">
-          <input [ngStyle]="{'background-color':colorPassField}" [(ngModel)]="password" name="password" type="password" (ngModelChange)="onChangeColorPassField()" class="form-control" placeholder={{placeholderText}}>
-        </div>
-        <button type="submit" class="btn btn-danger" (click)="login()"><span class="glyphicon glyphicon-log-in" >
-          </span> Login</button>
+
+      <p class="navbar-text pull-right" *ngIf="!user.getLoggedStatus()">
+        <a   (click)="login()" style="color: white;"><span class="glyphicon glyphicon-log-in" >
+          </span> Login</a>
 
 
-      </form>
-      <<p class="navbar-text pull-right" *ngIf="user.getLoggedStatus()">
+
+      <p class="navbar-text pull-right" *ngIf="user.getLoggedStatus()">
       <a   (click)="user.logout()" style="color: white;"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
     </p>
 

@@ -1,11 +1,12 @@
 import {HttpClient} from '@angular/common/http';
+import swal from 'sweetalert2';
 
 export class User  {
   server = 'https://www.maikel.uk';
   public logedin: boolean;
 
   constructor(private http: HttpClient) {
-    this.logedin = true;
+    this.logedin = false;
   }
 
 
@@ -24,7 +25,13 @@ export class User  {
       if (results.password === 'true') {
         this.logedin = true;
       } else {
-        alert('Invalid Password');
+        swal({
+          title:"Wrong Password!",
+          imageUrl: "https://media.tenor.com/images/aee72fd7530ce5deae7209ffe6df76c0/tenor.gif",
+          buttonsStyling: false,
+          confirmButtonClass: 'btn btn-primary',
+          confirmButtonText: 'Try Again',
+        });
       }
     });
   }

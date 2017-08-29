@@ -59,8 +59,9 @@
 
 
       <div class="panel-footer">
-        <button class="btn btn-xs btn-primary" [disabled]="disableAddSkillButton" (click)="onCreateSkill()">{{buttonModi}}
-        </button><button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="onClearFields()">
+        <button class="btn btn-xs btn-primary" [disabled]="disableAddSkillButton" *ngIf="!isModify" (click)="onCreateSkill()">Create
+        </button><button class="btn btn-xs btn-primary" [disabled]="disableAddSkillButton" *ngIf="isModify" (click)="onAmendSkill()">Modify
+      </button><button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="onClearFields()">
         Clear
       </button>
 
@@ -77,7 +78,10 @@
     <div class="panel panel-default">
 
 
-      <div class="panel-heading">Preview</div>
+      <div class="panel-heading">Preview<button *ngIf="user.getLoggedStatus() && isModify"  style="float:right;" type="button" class="btn btn-danger btn-xs"
+                                                (click)="onRemoveSkill(orderOnGrid)">
+        Delete
+      </button></div>
       <div class="panel-body">
 
 
@@ -111,8 +115,8 @@
 
 
 <!--The list of skills and the page-->
-    <div [ngClass]="{'col-md-9': showSkillEditor, 'col-sm-9': showSkillEditor, 'col-xs-12': showSkillEditor,
-     'col-lg-10': showSkillEditor, 'col-xl-11': showSkillEditor, 'col-sm-12':!showSkillEditor && user.getLoggedStatus()}">
+    <div [ngClass]="{'col-md-9': showSkillEditor, 'col-sm-9': showSkillEditor,
+     'col-lg-10': showSkillEditor, 'col-xl-11': showSkillEditor, 'col-md-12':!showSkillEditor && user.getLoggedStatus(), 'col-sm-12':!showSkillEditor && user.getLoggedStatus()}" class="col-xs-12">
 
 
 
@@ -133,10 +137,7 @@
 
                   {{skill.skillTitle}}
 
-              </div><button *ngIf="user.getLoggedStatus() && !isModify"  style="margin: 5px 15px; position: absolute; float:right;" type="button" class="btn btn-danger btn-xs"
-                            (click)="onRemoveSkill(i)">
-              Delete
-            </button><tr>
+              </div><tr>
 
                 <td id="hooveredLogo" (click)="onSelectSkill(skill, i)"><img id="theLogo" [src]="skill.skillLogoURL"></td>
 

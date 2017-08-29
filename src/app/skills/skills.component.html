@@ -1,0 +1,227 @@
+<app-header [user]="user"></app-header>
+<!--The padding is added here because otherwise the bottom navbar covers the text-->
+
+<div class="container-fluid" style="padding-bottom: 100px;" >
+
+  <div class="row">
+
+    <!-- The branding -->
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!user.getLoggedStatus()">
+      <app-branding></app-branding>
+      <app-projects></app-projects>
+      <app-legend></app-legend>
+
+      <app-latestnews ></app-latestnews>
+    </div>
+    <!-- The skill editor -->
+    <div *ngIf="showSkillEditor">
+      <div *ngIf="user.getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
+
+        <div class="panel panel-default">
+          <div class="panel-heading">Skill Editor</div>
+          <div class="panel-body">
+            <div class="input-group">
+              <span class="input-group-addon">Skill</span>
+              <input [(ngModel)]="fieldSkillTitle" type="text" class="form-control" name="msg"
+                     placeholder="The name of the skill">
+            </div><br>
+
+
+            <div class="input-group">
+              <span class="input-group-addon">Logo</span>
+              <input [(ngModel)]="fieldLogoURL" type="text" class="form-control" name="msg"
+                     placeholder="A valid URL with the logo">
+            </div><br>
+            <form >
+              <div class="input-group" *ngIf="isModify">
+                <input type="text" class="form-control" placeholder="Page within the skill" [(ngModel)]="moreContent" [ngModelOptions]="{standalone: true}">
+                <div class="input-group-btn">
+                  <button class="btn btn-default" (click)="addPageToSkill()">
+                    <i class="glyphicon glyphicon-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+
+            <br *ngIf="isModify">
+
+            <div class="form-group">
+              <label for="level">Level of Mastery:</label>
+              <select [(ngModel)]="fieldMasteryLevel" class="form-control" id="level">
+                <option>Known</option>
+                <option>Memorising</option>
+                <option selected="selected">Learning</option>
+                <option>Queued</option>
+
+              </select></div>
+          </div>
+
+
+          <div class="panel-footer">
+            <button class="btn btn-xs btn-primary" [disabled]="disableAddSkillButton" *ngIf="!isModify" (click)="onCreateSkill()">Create
+            </button><button class="btn btn-xs btn-primary" [disabled]="disableAddSkillButton" *ngIf="isModify" (click)="onAmendSkill()">Modify
+          </button><button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="onClearFields()">
+            Clear
+          </button>
+
+          </div>
+
+        </div>
+
+
+
+
+        <!-- The preview -->
+
+        <div *ngIf="isEnabled()">
+          <div class="panel panel-default">
+
+
+            <div class="panel-heading">Preview<button *ngIf="user.getLoggedStatus() && isModify"  style="float:right;" type="button" class="btn btn-danger btn-xs"
+                                                      (click)="onRemoveSkill(orderOnGrid)">
+              Delete
+            </button></div>
+            <div class="panel-body">
+
+
+
+              <table id="skillBox" style="margin: 0px auto;">
+                <tr>
+                  <th [id]=getStyle()>
+
+                    {{fieldSkillTitle}}
+                  </th>
+                </tr>
+                <tr>
+                  <td id="normalLogo"><img id="theLogo" [src]="fieldLogoURL"></td>
+                </tr>
+                <tr>
+                  <td id="theContent">
+                    <a *ngFor="let subskill of thePages" (click)="onClickPage(subskill)">{{subskill.title}}
+                    </a>
+
+
+                  </td>
+                </tr>
+              </table>
+              <!--<button class="btn btn-danger"  (click)="onClearFields()">Clear</button>-->
+
+            </div>
+          </div>
+        </div>
+
+      </div></div>
+
+
+    <!--The list of skills and the page-->
+    <div [ngClass]="{'col-md-9': showSkillEditor, 'col-sm-9': showSkillEditor,
+     'col-lg-10': showSkillEditor, 'col-xl-11': showSkillEditor, 'col-md-12':!showSkillEditor && user.getLoggedStatus(), 'col-sm-12':!showSkillEditor && user.getLoggedStatus()}" class="col-xs-12">
+
+
+
+
+      <div id="listOfSkills" *ngIf="showSkillBox">
+        <div class="dropdown" *ngFor="let skill of arraySkillboxes; let i=index">
+          <table id="skillBox"> <tr>
+            <p [id]=skill.getStyle()>{{skill.skillTitle}}
+            </p>
+
+            <td id="normalLogo"><img id="theLogo" [src]="skill.skillLogoURL"></td>
+          </tr>
+          </table>
+
+          <div class="dropdown-content">
+            <table id="skillBox">
+              <div id="hoveredTitle">
+
+                {{skill.skillTitle}}
+
+              </div><tr>
+
+              <td id="hooveredLogo" (click)="onSelectSkill(skill, i)"><img id="theLogo" [src]="skill.skillLogoURL"></td>
+
+            </tr>
+
+              <tr>
+                <td id="theContent">
+
+                  <a *ngFor="let subskill of skill.getPages(arrayAllPages);" (click)="onClickPage(subskill)">{{subskill.title}}
+                  </a>
+
+                </td>
+
+              </tr>
+            </table>
+          </div>
+        </div>
+
+
+        <div class="dropdown" *ngIf="user.getLoggedStatus()">
+          <table id="userControls"> <tr>
+
+
+            <td id="normalLogo">
+              <button class="btn btn-sm btn-link" (click)="onToogleEditor()">{{showSkillEditorText}}</button>
+
+
+
+            </td>
+          </tr>
+          </table>
+
+
+        </div>
+
+      </div>
+
+
+
+      <!--THe text of the page-->
+      <div *ngIf="isPageEnabled">
+
+
+
+
+
+        <h1>{{theSkillTitle}}: {{titlePage}}<button style="margin-left: 10px;" (click)="toggleSkillBox()" class="btn btn-xs btn-primary">{{toggleText}}</button>
+
+          <div *ngIf="user.getLoggedStatus()" class="btn-group">
+
+            <button class="btn btn-xs btn-primary" *ngIf="isHideEditor" (click)="onToggleEditor()">Edit
+            </button>
+            <button *ngIf="!isHideEditor" class="btn btn-xs btn-primary" (click)="onSavePage()">{{isSaving}} <app-spinner *ngIf="showSpinner"></app-spinner>
+            </button>
+            <button class="btn btn-xs btn-danger" (click)="onRemovePage()">Delete
+            </button>
+          </div>
+        </h1>
+        <div style="color: #760a0e; font-style: italic; font-size:12px;" *ngIf="user.getLoggedStatus() && isHideEditor"> Last Edited on {{lastEdit}}</div>
+
+        <div *ngIf="isHideEditor">
+
+          <p [innerHTML]="contentPage" [froalaView]></p>
+
+
+        </div>
+        <div *ngIf="!isHideEditor">
+          <div class="input-group">
+            <span class="input-group-addon">Rename</span>
+            <input [(ngModel)]="titlePage" type="text" class="form-control" name="msg">
+          </div><br>
+
+
+
+
+
+          <textarea class="form-control" rows="5" id="comment" [froalaEditor]="options" [(ngModel)]="contentPage"></textarea>
+
+        </div>
+
+        <!--<br><p ></p>-->
+      </div>
+
+
+
+    </div></div></div>
+

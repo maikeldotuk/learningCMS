@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import {RouterModule, Routes} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -13,7 +14,18 @@ import { LatestnewsComponent } from './latestnews/latestnews.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { FooterComponent } from './footer/footer.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { SkillsComponent } from './skills/skills.component';
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import { HeaderNoDataComponent } from './header-no-data/header-no-data.component';
 
+const routes: Routes = [
+  {path: '', redirectTo: 'skills', pathMatch: 'full'},
+  {path: 'skills', component: SkillsComponent},
+  {path: 'about', component: AboutComponent},
+  {path: 'contact', component: ContactComponent}
+];
 
 @NgModule({
   declarations: [
@@ -25,6 +37,10 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ProjectsComponent,
     FooterComponent,
     SpinnerComponent,
+    AboutComponent,
+    ContactComponent,
+    SkillsComponent,
+    HeaderNoDataComponent,
 
   ],
   imports: [
@@ -32,9 +48,15 @@ import { SpinnerComponent } from './spinner/spinner.component';
     FormsModule,
     HttpClientModule,
     HttpModule,
-    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
+    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
+    RouterModule.forRoot(routes)
   ],
-  providers: [],
+  providers: [
+    {provide: LocationStrategy,
+  useClass: HashLocationStrategy}
+],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

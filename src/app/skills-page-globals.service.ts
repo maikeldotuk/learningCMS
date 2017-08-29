@@ -65,6 +65,8 @@ export class SkillsPageGlobalsService {
 
   constructor(private http: HttpClient, private user: UserService, @Inject('SERVER_URL') server: string) {
     this.server = server;
+    this.getUpdatedSkillsGrid();
+    this.getAllPagesList();
 
   }
 
@@ -451,6 +453,11 @@ export class SkillsPageGlobalsService {
     return thePages;
   }
 
+  //New setters and getters
+
+  getArraySkillBoxes(): Skillbox[] {
+    return this.arraySkillboxes;
+  }
 
 
 }

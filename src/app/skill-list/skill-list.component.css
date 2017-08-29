@@ -34,3 +34,161 @@ button:hover,
 #normalLogo {
   height: 100px;
 }
+
+
+
+
+
+
+
+* {
+  font-family: Sans-Serif;
+}
+
+#skillBox {
+  border: 1px dashed lightgrey;
+  width: 130px;
+  height: 100px;
+  text-align: center;
+  background-color: #f8f8f8;
+  margin: 2px;
+}
+
+
+
+table {
+  border-collapse: collapse;
+}
+
+#knownTitle, #hoveredTitle, #learningTitle, #queuedTitle, #memorisingTitle, #legendTitle {
+  position: absolute;
+  opacity: 0.9;
+  color: black;
+  font-size: 14px;
+  padding: 4px;
+  font-weight: bold;
+}
+
+#knownTitle {
+  background-color: rgba(41, 155, 255, 0.8);
+}
+
+#memorisingTitle {
+  background-color: #00d700;
+}
+
+#learningTitle {
+  background-color: #b3ffb3;
+}
+
+#queuedTitle {
+  background-color: #ffef3f;
+}
+
+
+#hoveredTitle {
+  background-color: black;
+  font-weight: normal;
+  color: yellow;
+}
+
+#legendTitle {
+  background-color: black;
+  color: white
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  top: 0px;
+  display: none;
+  position: absolute;
+  width: 100%;
+  overflow: auto;
+  padding: 0px;
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+#theContent {
+  background-color: black;
+  padding: 10px;
+
+}
+
+#theContent p, a, a:active {
+  color: yellow;
+  text-decoration: none;
+}
+
+#theContent a:hover {
+  color: red;
+  text-decoration: none;
+}
+
+#theContent a.new {
+  color: grey;
+  font-weight: normal;
+}
+
+#theLogo {
+  max-width: 130px;
+  max-height: 100px;
+  padding: 5px;
+}
+
+#normalLogo {
+  height: 100px;
+}
+
+#hooveredLogo {
+  height: 100px;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    #ffb3b3 10px,
+    #ffb3b3 20px
+  ),
+    /* on "bottom" */ linear-gradient(
+    to bottom,
+    #ffffb3,
+    #ffffb3
+  );
+}
+
+
+
+#listOfSkills {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+
+}
+
+
+
+button,
+button:active,
+button:focus,
+button:hover,
+.btn,
+.btn:active,
+.btn:focus,
+.btn:hover {
+  outline: none !important;
+}
+
+
+
+
+
+
+
+
+

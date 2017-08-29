@@ -1,87 +1,26 @@
-<!--The padding is added here because otherwise the bottom navbar covers the text-->
 <div class="container-fluid" style="padding-bottom: 100px;" >
-
   <div class="row">
-
     <!-- The branding -->
     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!user.getLoggedStatus()">
       <app-branding></app-branding>
       <app-projects></app-projects>
       <app-legend></app-legend>
-
       <app-latestnews ></app-latestnews>
     </div>
     <!-- The skill editor -->
     <div *ngIf="globals.showSkillEditor">
       <div *ngIf="user.getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
-
         <app-skilleditor></app-skilleditor>
-
-
-
-
         <!-- The preview -->
-
         <div *ngIf="globals.isEnabled()">
           <app-skillpreview></app-skillpreview>
         </div>
-
       </div></div>
-
-
     <!--The list of skills and the page-->
     <div [ngClass]="{'col-md-9': globals.showSkillEditor, 'col-sm-9': globals.showSkillEditor,
      'col-lg-10': globals.showSkillEditor, 'col-xl-11': globals.showSkillEditor, 'col-md-12':!globals.showSkillEditor && user.getLoggedStatus(), 'col-sm-12':!globals.showSkillEditor && user.getLoggedStatus()}" class="col-xs-12">
-
-
       <app-skill-list></app-skill-list>
-
-
       <!--THe text of the page-->
-      <div *ngIf="globals.isPageEnabled">
-
-
-
-
-
-        <h1>{{globals.theSkillTitle}}: {{globals.titlePage}}<button style="margin-left: 10px;" (click)="globals.toggleSkillBox()" class="btn btn-xs btn-primary">{{globals.toggleText}}</button>
-
-          <div *ngIf="user.getLoggedStatus()" class="btn-group">
-
-            <button class="btn btn-xs btn-primary" *ngIf="globals.isHideEditor" (click)="globals.onToggleEditor()">Edit
-            </button>
-            <button *ngIf="!globals.isHideEditor" class="btn btn-xs btn-primary" (click)="globals.onSavePage()">{{globals.isSaving}} <app-spinner *ngIf="globals.showSpinner"></app-spinner>
-            </button>
-            <button class="btn btn-xs btn-danger" (click)="globals.onRemovePage()">Delete
-            </button>
-          </div>
-        </h1>
-        <div style="color: #760a0e; font-style: italic; font-size:12px;" *ngIf="user.getLoggedStatus() && globals.isHideEditor"> Last Edited on {{globals.lastEdit}}</div>
-
-        <div *ngIf="globals.isHideEditor">
-
-          <p [innerHTML]="globals.contentPage" [froalaView]></p>
-
-
-        </div>
-        <div *ngIf="!globals.isHideEditor">
-          <div class="input-group">
-            <span class="input-group-addon">Rename</span>
-            <input [(ngModel)]="titlePage" type="text" class="form-control" name="msg">
-          </div><br>
-
-
-
-
-
-          <textarea class="form-control" rows="5" id="comment" [froalaEditor]="globals.froalaOptions" [(ngModel)]="globals.contentPage"></textarea>
-
-        </div>
-
-        <!--<br><p ></p>-->
-      </div>
-
-
-
+      <app-pageeditor *ngIf="globals.isPageEnabled"></app-pageeditor>
     </div></div></div>
 

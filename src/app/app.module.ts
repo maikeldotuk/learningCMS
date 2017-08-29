@@ -24,6 +24,7 @@ import { SkilleditorComponent } from './skilleditor/skilleditor.component';
 import { SkillListComponent } from './skill-list/skill-list.component';
 import { SkillpreviewComponent } from './skillpreview/skillpreview.component';
 import { SingleSkillBoxComponent } from './skill-list/single-skill-box/single-skill-box.component';
+import { PageeditorComponent } from './pageeditor/pageeditor.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
@@ -49,6 +50,7 @@ const routes: Routes = [
     SkillListComponent,
     SkillpreviewComponent,
     SingleSkillBoxComponent,
+    PageeditorComponent,
 
   ],
   imports: [

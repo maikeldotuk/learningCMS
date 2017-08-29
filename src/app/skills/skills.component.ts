@@ -15,11 +15,6 @@ import {SkillsPageGlobalsService} from "../skills-page-globals.service";
 export class SkillsComponent implements OnInit {
 
   // Careful when choosing either http or https
-
-
-
-
-
   constructor(private globals: SkillsPageGlobalsService, private http: HttpClient, private user: UserService) {
 
 
@@ -32,8 +27,6 @@ export class SkillsComponent implements OnInit {
 
 
 
-    this.globals.getUpdatedSkillsGrid();
-    this.globals.getAllPagesList();
 
     const isActive = function (cmd) {
       const blocks = this.selection.blocks();

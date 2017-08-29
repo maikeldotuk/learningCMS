@@ -13,7 +13,7 @@ export class SingleSkillBoxComponent implements OnInit {
   @Input('i') skillNumber: number;
 
 
-  constructor(  private globals: SkillsPageGlobalsService, private user: UserService
+  constructor(  public globals: SkillsPageGlobalsService, private user: UserService
   ) { }
 
   ngOnInit() {

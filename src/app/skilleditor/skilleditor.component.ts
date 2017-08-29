@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SkillsPageGlobalsService} from "../skills-page-globals.service";
+import {SkillsPageGlobalsService} from '../skills-page-globals.service';
 import {UserService} from '../user.service';
 
 @Component({
@@ -9,10 +9,45 @@ import {UserService} from '../user.service';
 })
 export class SkilleditorComponent implements OnInit {
 
-  constructor(  private globals: SkillsPageGlobalsService, private user: UserService
+  constructor( public globals: SkillsPageGlobalsService, private user: UserService
   ) { }
 
   ngOnInit() {
+  }
+
+  getFieldSkillTitle(): string{
+  return this.globals.fieldSkillTitle;
+  }
+  getFieldLogoURL(): string {
+    return this.globals.fieldLogoURL;
+  }
+  isModify(): boolean {
+    return this.globals.isModify;
+  }
+
+  addPageToSkill() {
+    this.globals.addPageToSkill();
+  }
+
+  getFieldMasteryLevel(): string {
+    return this.globals.fieldMasteryLevel;
+  }
+
+
+  disableAddSkillButton(): boolean {
+  return this.globals.disableAddSkillButton;
+  }
+
+
+  onCreateSkill() {
+  this.globals.onCreateSkill();
+  }
+
+  onAmendSkill() {
+  this.globals.onAmendSkill();
+  }
+  onClearFields() {
+  this.globals.onClearFields();
   }
 
 }

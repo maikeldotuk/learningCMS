@@ -180,7 +180,7 @@ export class SkillsComponent implements OnInit {
   }
 
   isPreviewEnabled(): boolean {
-    return this.globals.isEnabled();
+    return this.globals.showPreview();
   }
   showSkillEditor(): boolean {
     return this.globals.showSkillEditor;

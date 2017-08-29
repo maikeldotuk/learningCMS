@@ -1,7 +1,7 @@
 <div class="panel panel-default">
 
 
-  <div class="panel-heading">Preview<button *ngIf="user.getLoggedStatus() && globals.isModify"  style="float:right;" type="button" class="btn btn-danger btn-xs"
+  <div class="panel-heading">Preview<button *ngIf="getLoggedStatus() && globals.isModify"  style="float:right;" type="button" class="btn btn-danger btn-xs"
                                             (click)="globals.onRemoveSkill(globals.orderOnGrid)">
     Delete
   </button></div>

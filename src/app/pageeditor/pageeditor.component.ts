@@ -9,10 +9,12 @@ import {UserService} from '../user.service';
 })
 export class PageeditorComponent implements OnInit {
 
-  constructor(  private globals: SkillsPageGlobalsService, private user: UserService
+  constructor(  public globals: SkillsPageGlobalsService, private user: UserService
   ) { }
 
   ngOnInit() {
   }
-
+  getLoggedStatus(): boolean {
+    return this.user.getLoggedStatus();
+  }
 }

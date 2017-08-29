@@ -1,8 +1,8 @@
 import { Injectable, Inject } from '@angular/core';
 import {Page} from './page.model';
 import {Skillbox} from './skillbox.model';
-import {UserService} from "./user.service";
-import {HttpClient} from "@angular/common/http";
+import {UserService} from './user.service';
+import {HttpClient} from '@angular/common/http';
 import swal from 'sweetalert2';
 
 
@@ -73,7 +73,10 @@ export class SkillsPageGlobalsService {
 
 
 
-
+/* By moving all the methods to this service I have to wrap them in all the components and therefore discover
+easily which ones uses which and if they intercommunicate or not. If they don't they can be moved locally to that
+component.
+ */
   onSelectSkill(aSkill, index) {
 
     this.isPageEnabled = false;
@@ -94,13 +97,14 @@ export class SkillsPageGlobalsService {
 
   }
 
-  isEnabled() {
+  showPreview() {
     if (this.fieldSkillTitle.length > 0 && this.fieldLogoURL.length > 0) {
 
       this.disableAddSkillButton = false;
 
       return true;
     } else {
+
       this.disableAddSkillButton = true;
       return false;
 
@@ -154,8 +158,8 @@ export class SkillsPageGlobalsService {
       confirmButtonText: 'Yes, delete it!',
       showLoaderOnConfirm: true,
       buttonsStyling: false,
-      confirmButtonClass: "btn btn-danger",
-      cancelButtonClass: "btn btn-primary",
+      confirmButtonClass: 'btn btn-danger',
+      cancelButtonClass: 'btn btn-primary',
       focusCancel: true,
       preConfirm: (data) => {
 
@@ -201,8 +205,8 @@ export class SkillsPageGlobalsService {
       confirmButtonText: 'Yes, delete it!',
       showLoaderOnConfirm: true,
       buttonsStyling: false,
-      confirmButtonClass: "btn btn-danger",
-      cancelButtonClass: "btn btn-primary",
+      confirmButtonClass: 'btn btn-danger',
+      cancelButtonClass: 'btn btn-primary',
       focusCancel: true,
       preConfirm: (data) => {
 

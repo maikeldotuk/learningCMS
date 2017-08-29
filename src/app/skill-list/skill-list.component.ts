@@ -10,7 +10,7 @@ import {Skillbox} from "../skillbox.model";
 })
 export class SkillListComponent implements OnInit {
 
-  constructor(private globals: SkillsPageGlobalsService, private user: UserService
+  constructor(public globals: SkillsPageGlobalsService, private user: UserService
   ) {
   }
 

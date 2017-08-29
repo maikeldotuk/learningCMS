@@ -2,7 +2,7 @@
 
   <h1>{{globals.theSkillTitle}}: {{globals.titlePage}}<button style="margin-left: 10px;" (click)="globals.toggleSkillBox()" class="btn btn-xs btn-primary">{{globals.toggleText}}</button>
 
-    <div *ngIf="user.getLoggedStatus()" class="btn-group">
+    <div *ngIf="getLoggedStatus()" class="btn-group">
 
       <button class="btn btn-xs btn-primary" *ngIf="globals.isHideEditor" (click)="globals.onToggleEditor()">Edit
       </button>
@@ -12,7 +12,7 @@
       </button>
     </div>
   </h1>
-  <div style="color: #760a0e; font-style: italic; font-size:12px;" *ngIf="user.getLoggedStatus() && globals.isHideEditor"> Last Edited on {{globals.lastEdit}}</div>
+  <div style="color: #760a0e; font-style: italic; font-size:12px;" *ngIf="getLoggedStatus() && globals.isHideEditor"> Last Edited on {{globals.lastEdit}}</div>
 
   <div *ngIf="globals.isHideEditor">
 

@@ -34,7 +34,7 @@
               <div class="input-group" *ngIf="globals.isModify">
                 <input type="text" class="form-control" placeholder="Page within the skill" [(ngModel)]="globals.moreContent" [ngModelOptions]="{standalone: true}">
                 <div class="input-group-btn">
-                  <button class="btn btn-default" (click)="addPageToSkill()">
+                  <button class="btn btn-default" (click)="globals.addPageToSkill()">
                     <i class="glyphicon glyphicon-plus"></i>
                   </button>
                 </div>
@@ -57,9 +57,9 @@
 
 
           <div class="panel-footer">
-            <button class="btn btn-xs btn-primary" [disabled]="globals.disableAddSkillButton" *ngIf="!globals.isModify" (click)="onCreateSkill()">Create
-            </button><button class="btn btn-xs btn-primary" [disabled]="globals.disableAddSkillButton" *ngIf="globals.isModify" (click)="onAmendSkill()">Modify
-          </button><button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="onClearFields()">
+            <button class="btn btn-xs btn-primary" [disabled]="globals.disableAddSkillButton" *ngIf="!globals.isModify" (click)="globals.onCreateSkill()">Create
+            </button><button class="btn btn-xs btn-primary" [disabled]="globals.disableAddSkillButton" *ngIf="globals.isModify" (click)="globals.onAmendSkill()">Modify
+          </button><button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="globals.onClearFields()">
             Clear
           </button>
 
@@ -72,12 +72,12 @@
 
         <!-- The preview -->
 
-        <div *ngIf="isEnabled()">
+        <div *ngIf="globals.isEnabled()">
           <div class="panel panel-default">
 
 
             <div class="panel-heading">Preview<button *ngIf="user.getLoggedStatus() && globals.isModify"  style="float:right;" type="button" class="btn btn-danger btn-xs"
-                                                      (click)="onRemoveSkill(globals.orderOnGrid)">
+                                                      (click)="globals.onRemoveSkill(globals.orderOnGrid)">
               Delete
             </button></div>
             <div class="panel-body">
@@ -86,7 +86,7 @@
 
               <table id="skillBox" style="margin: 0px auto;">
                 <tr>
-                  <th [id]=getStyle()>
+                  <th [id]=globals.getStyle()>
 
                     {{globals.fieldSkillTitle}}
                   </th>
@@ -96,14 +96,14 @@
                 </tr>
                 <tr>
                   <td id="theContent">
-                    <a *ngFor="let subskill of globals.thePages" (click)="onClickPage(subskill)">{{subskill.title}}
+                    <a *ngFor="let subskill of globals.thePages" (click)="globals.onClickPage(subskill)">{{subskill.title}}
                     </a>
 
 
                   </td>
                 </tr>
               </table>
-              <!--<button class="btn btn-danger"  (click)="onClearFields()">Clear</button>-->
+              <!--<button class="btn btn-danger"  (click)="globals.onClearFields()">Clear</button>-->
 
             </div>
           </div>
@@ -137,14 +137,14 @@
 
               </div><tr>
 
-              <td id="hooveredLogo" (click)="onSelectSkill(skill, i)"><img id="theLogo" [src]="skill.skillLogoURL"></td>
+              <td id="hooveredLogo" (click)="globals.onSelectSkill(skill, i)"><img id="theLogo" [src]="skill.skillLogoURL"></td>
 
             </tr>
 
               <tr>
                 <td id="theContent">
 
-                  <a *ngFor="let subskill of skill.getPages();" (click)="onClickPage(subskill)">{{subskill.title}}
+                  <a *ngFor="let subskill of globals.getPages(skill);" (click)="globals.onClickPage(subskill)">{{subskill.title}}
                   </a>
 
                 </td>
@@ -160,7 +160,7 @@
 
 
             <td id="normalLogo">
-              <button class="btn btn-sm btn-link" (click)="onToogleEditor()">{{globals.showSkillEditorText}}</button>
+              <button class="btn btn-sm btn-link" (click)="globals.onToogleEditor()">{{globals.showSkillEditorText}}</button>
 
 
 
@@ -183,15 +183,15 @@
 
 
 
-        <h1>{{globals.theSkillTitle}}: {{globals.titlePage}}<button style="margin-left: 10px;" (click)="toggleSkillBox()" class="btn btn-xs btn-primary">{{globals.toggleText}}</button>
+        <h1>{{globals.theSkillTitle}}: {{globals.titlePage}}<button style="margin-left: 10px;" (click)="globals.toggleSkillBox()" class="btn btn-xs btn-primary">{{globals.toggleText}}</button>
 
           <div *ngIf="user.getLoggedStatus()" class="btn-group">
 
-            <button class="btn btn-xs btn-primary" *ngIf="globals.isHideEditor" (click)="onToggleEditor()">Edit
+            <button class="btn btn-xs btn-primary" *ngIf="globals.isHideEditor" (click)="globals.onToggleEditor()">Edit
             </button>
-            <button *ngIf="!globals.isHideEditor" class="btn btn-xs btn-primary" (click)="onSavePage()">{{globals.isSaving}} <app-spinner *ngIf="globals.showSpinner"></app-spinner>
+            <button *ngIf="!globals.isHideEditor" class="btn btn-xs btn-primary" (click)="globals.onSavePage()">{{globals.isSaving}} <app-spinner *ngIf="globals.showSpinner"></app-spinner>
             </button>
-            <button class="btn btn-xs btn-danger" (click)="onRemovePage()">Delete
+            <button class="btn btn-xs btn-danger" (click)="globals.onRemovePage()">Delete
             </button>
           </div>
         </h1>

@@ -2,7 +2,7 @@ import {SkillsPageGlobalsService} from './skills-page-globals.service';
 
 
 export class Skillbox {
-  constructor(private globals: SkillsPageGlobalsService, public skillID: number, public skillTitle: string, public skillLogoURL: string, public skillLevel: string) {
+  constructor(public skillID: number, public skillTitle: string, public skillLogoURL: string, public skillLevel: string) {
   }
 
   getStyle() {
@@ -25,12 +25,4 @@ export class Skillbox {
     }
   }
 
-  getPages() {
-
-    const thePages = this.globals.arrayAllPages.filter(item => {
-      return item.skill === this.skillTitle;
-    });
-
-    return thePages;
-  }
 }

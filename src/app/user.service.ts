@@ -1,19 +1,21 @@
+import { Injectable, Inject } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import swal from 'sweetalert2';
 
-export class User  {
-  server = 'https://www.maikel.uk';
+@Injectable()
+export class UserService {
+  server: string;
   public logedin: boolean;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, @Inject('SERVER_URL') server: string) {
+    this.server = server;
     this.logedin = false;
   }
-
-
 
   getLoggedStatus() {
     return this.logedin;
   }
+
 
   login(password: string) {
 
@@ -38,5 +40,29 @@ export class User  {
 
   logout() {
     this.logedin = false;
+  }
+
+  clickedLogin() {
+    swal({
+      title: 'Introduce the Password',
+      input: 'password',
+      imageUrl: 'favicon.ico',
+      buttonsStyling: false,
+      confirmButtonClass: 'btn btn-primary',
+      confirmButtonText: 'Let me In',
+    }).then(data => {
+      if (!data) {
+        swal({
+          title: 'Password can\'t be blank',
+          type: 'error',
+          buttonsStyling: false,
+          confirmButtonClass: 'btn btn-primary',
+          confirmButtonText: 'Try Again'
+        });
+        return;
+      } else {
+        this.login(data);
+      }
+    });
   }
 }

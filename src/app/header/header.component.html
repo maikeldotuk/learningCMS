@@ -15,7 +15,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a [routerLink]="['/skills']">Skills</a></li>
+        <li><a [routerLink]="['/skills']">Skills</a></li>
         <li><a [routerLink]="['/about']">About</a></li>
         <li><a [routerLink]="['/contact']">Contact</a></li>
       </ul>
@@ -28,7 +28,7 @@
 
 
       <p class="navbar-text pull-right" *ngIf="user.getLoggedStatus()">
-      <a   (click)="user.logout()" style="color: white;"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+      <a   (click)="logout()" style="color: white;"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
     </p>
 
 

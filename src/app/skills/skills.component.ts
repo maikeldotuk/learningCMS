@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Inject} from '@angular/core';
 import {Skillbox} from '../skillbox.model';
-import {User} from '../user.model';
 import {Page} from '../page.model';
 import {HttpClient} from '@angular/common/http';
 declare var $: any;
 import swal from 'sweetalert2';
+import {UserService} from "../user.service";
 
 
 @Component({
@@ -29,8 +29,6 @@ export class SkillsComponent implements OnInit {
   showSkillBox = true;
   toggleText = 'Expand';
 
-
-  user = new User(this.http);
   showSpinner = false;
   selectedSkill: Skillbox;
   showSkillEditor = true;
@@ -55,8 +53,8 @@ export class SkillsComponent implements OnInit {
 
 
   // Careful when choosing either http or https
-  server = 'https://www.maikel.uk';
-//  server = 'http://localhost:3000';
+  server: string;
+
   titlePage: string;
   contentPage: string;
   theSkillTitle: string;
@@ -65,7 +63,8 @@ export class SkillsComponent implements OnInit {
 
   isHideEditor = true;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private user: UserService, @Inject('SERVER_URL') server: string) {
+  this.server = server;
 
 
     this.isPageEnabled = false;

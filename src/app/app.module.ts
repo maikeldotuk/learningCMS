@@ -18,7 +18,8 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { SkillsComponent } from './skills/skills.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
-import { HeaderNoDataComponent } from './header-no-data/header-no-data.component';
+import {UserService} from './user.service';
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
@@ -40,7 +41,6 @@ const routes: Routes = [
     AboutComponent,
     ContactComponent,
     SkillsComponent,
-    HeaderNoDataComponent,
 
   ],
   imports: [
@@ -53,7 +53,9 @@ const routes: Routes = [
   ],
   providers: [
     {provide: LocationStrategy,
-  useClass: HashLocationStrategy}
+  useClass: HashLocationStrategy},
+    UserService,
+    {provide: 'SERVER_URL', useValue: 'https://www.maikel.uk'}
 ],
   bootstrap: [AppComponent]
 })

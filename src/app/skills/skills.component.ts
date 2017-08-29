@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-
+import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 declare var $: any;
 
@@ -15,17 +15,24 @@ import {SkillsPageGlobalsService} from '../skills-page-globals.service';
 export class SkillsComponent implements OnInit {
 
   // Careful when choosing either http or https
-  constructor(public globals: SkillsPageGlobalsService, private http: HttpClient, private user: UserService) {
+  constructor(private route: ActivatedRoute, public globals: SkillsPageGlobalsService, private http: HttpClient, private user: UserService) {
 
+    route.params.subscribe(params => {
+      const addressSkill = params['skill'];
+      const addressPage = params['page'];
+      if (!addressSkill || !addressPage) {
+        this.globals.clearPageFields();
+      } else {
+        globals.passPage(addressSkill, addressPage);
+      }
+    });
 
-
-    this.globals.isPageEnabled = false;
+    console.log(globals);
 
 
   }
+
   ngOnInit() {
-
-
 
 
     const isActive = function (cmd) {
@@ -183,7 +190,7 @@ export class SkillsComponent implements OnInit {
     return this.globals.showPreview();
   }
 
-isPageEnabled(): boolean {
-  return this.globals.isPageEnabled;
-}
+  isPageEnabled(): boolean {
+    return this.globals.isPageEnabled;
+  }
 }

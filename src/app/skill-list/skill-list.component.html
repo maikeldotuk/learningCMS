@@ -1,6 +1,6 @@
 <div id="listOfSkills" *ngIf="showSkillBox">
   <app-single-skill-box *ngFor="let skill of getSkillBoxes(); let i=index"
-                        [skill]="skill" [i]="i"></app-single-skill-box>
+                        [skill]="skill" [i]="i" [skillPages]="globals.getPages(skill)"></app-single-skill-box>
 
 
 

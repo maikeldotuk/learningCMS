@@ -1,9 +1,10 @@
-import { Injectable, Inject } from '@angular/core';
+import {Injectable, Inject} from '@angular/core';
 import {Page} from './page.model';
 import {Skillbox} from './skillbox.model';
 import {UserService} from './user.service';
 import {HttpClient} from '@angular/common/http';
 import swal from 'sweetalert2';
+import {Router} from '@angular/router';
 
 
 @Injectable()
@@ -17,16 +18,16 @@ export class SkillsPageGlobalsService {
 
   pageID: any;
 
-  fieldSkillTitle = '';
-  fieldLogoURL = '';
-  disableAddSkillButton = true;
-  fieldMasteryLevel = 'Learning';
+  editorTitleField = '';
+  editorLogoField = '';
+  editorAddModifyButtonVisible = true;
+  editorMasteryField = 'Learning';
 
   moreContent: string;
 
-  isModify = false;
+  isExistingSkill = false;
   orderOnGrid: number;
-  isSaving = 'Save Page';
+  pageSavingButtonLabel = 'Save Page';
   showSkillBox = true;
   toggleText = 'Expand';
 
@@ -35,22 +36,7 @@ export class SkillsPageGlobalsService {
   showSkillEditor: boolean;
   showSkillEditorText = 'Hide Editor';
 
-  froalaOptions: Object = {
-    placeholderText: 'Add here the text for the page',
-    charCounterCount: true,
-    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'code', 'p', 'pre'],
-    toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'code', 'p', 'pre'],
-    toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
-      'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
-      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
-    toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
-      'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
-      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
-    tableStyles: {
-      'table table-bordered': 'BS bordered',
-      'table table-condensed': 'BS condensed'
-    }
-  };
+
 
   server: string;
 
@@ -61,9 +47,9 @@ export class SkillsPageGlobalsService {
   lastEdit: string;
   isPageEnabled: boolean;
 
-  isHideEditor = true;
+  pageFroalaEditorHidden = true;
 
-  constructor(private http: HttpClient, private user: UserService, @Inject('SERVER_URL') server: string) {
+  constructor(private router: Router, private http: HttpClient, private user: UserService, @Inject('SERVER_URL') server: string) {
     this.server = server;
     this.getUpdatedSkillsGrid();
     this.getAllPagesList();
@@ -72,12 +58,10 @@ export class SkillsPageGlobalsService {
   }
 
 
-
-
-/* By moving all the methods to this service I have to wrap them in all the components and therefore discover
-easily which ones uses which and if they intercommunicate or not. If they don't they can be moved locally to that
-component.
- */
+  /* By moving all the methods to this service I have to wrap them in all the components and therefore discover
+   easily which ones uses which and if they intercommunicate or not. If they don't they can be moved locally to that
+   component.
+   */
   onSelectSkill(aSkill, index) {
 
     this.isPageEnabled = false;
@@ -85,28 +69,26 @@ component.
       return;
     }
 
-    this.isPageEnabled = false;
-
     this.selectedSkill = aSkill;
 
-    this.fieldSkillTitle = aSkill.skillTitle;
-    this.fieldLogoURL = aSkill.skillLogoURL;
-    this.fieldMasteryLevel = aSkill.skillLevel;
-    this.isModify = true;
+    this.editorTitleField = aSkill.skillTitle;
+    this.editorLogoField = aSkill.skillLogoURL;
+    this.editorMasteryField = aSkill.skillLevel;
+    this.isExistingSkill = true;
     this.orderOnGrid = index;
     this.thePages = this.getPages(aSkill);
 
   }
 
   showPreview() {
-    if (this.fieldSkillTitle.length > 0 && this.fieldLogoURL.length > 0) {
+    if (this.editorTitleField.length > 0 && this.editorLogoField.length > 0) {
 
-      this.disableAddSkillButton = false;
+      this.editorAddModifyButtonVisible = false;
 
       return true;
     } else {
 
-      this.disableAddSkillButton = true;
+      this.editorAddModifyButtonVisible = true;
       return false;
 
     }
@@ -116,10 +98,10 @@ component.
   onClearFields() {
 
     this.thePages = [];
-    this.fieldLogoURL = '';
-    this.fieldMasteryLevel = 'Learning';
-    this.fieldSkillTitle = '';
-    this.isModify = false;
+    this.editorLogoField = '';
+    this.editorMasteryField = 'Learning';
+    this.editorTitleField = '';
+    this.isExistingSkill = false;
 
   }
 
@@ -131,7 +113,7 @@ component.
     const aPage = {
       title: this.moreContent,
       content: '',
-      skill: this.fieldSkillTitle,
+      skill: this.editorTitleField,
       editDate: new Date()
     };
     const address = this.server + '/api/v1/page';
@@ -164,7 +146,7 @@ component.
       focusCancel: true,
       preConfirm: (data) => {
 
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
           resolve();
         });
       }
@@ -211,7 +193,7 @@ component.
       focusCancel: true,
       preConfirm: (data) => {
 
-        return new Promise(function(resolve) {
+        return new Promise(function (resolve) {
           resolve();
         });
       }
@@ -230,7 +212,7 @@ component.
 
   getStyle() {
 
-    switch (this.fieldMasteryLevel) {
+    switch (this.editorMasteryField) {
       case 'Known': {
         return 'knownTitle';
       }
@@ -256,7 +238,7 @@ component.
 
       for (const entry of Object.keys(data)) {
         this.arraySkillboxes.push(
-          new Skillbox( data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery),
+          new Skillbox(data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery),
         );
       }
     });
@@ -275,9 +257,9 @@ component.
     let formattedItem: Skillbox;
 
     const newSkill = {
-      title: this.fieldSkillTitle,
-      logoURL: this.fieldLogoURL,
-      mastery: this.fieldMasteryLevel,
+      title: this.editorTitleField,
+      logoURL: this.editorLogoField,
+      mastery: this.editorMasteryField,
     };
     const address = this.server + '/api/v1/todo';
     let results: any;
@@ -285,7 +267,7 @@ component.
 
     req.subscribe(data => {
       results = data;
-      formattedItem = new Skillbox( results._id, newSkill.title, newSkill.logoURL, newSkill.mastery);
+      formattedItem = new Skillbox(results._id, newSkill.title, newSkill.logoURL, newSkill.mastery);
       this.arraySkillboxes.push(formattedItem);
       this.onClearFields();
       this.getAllPagesList();
@@ -314,7 +296,7 @@ component.
 
   onSavePage() {
 
-    this.isSaving = 'Saving';
+    this.pageSavingButtonLabel = 'Saving';
     this.showSpinner = true;
 
     const options = {
@@ -335,11 +317,12 @@ component.
     const address = this.server + '/api/v1/page/' + this.pageID;
     const req = this.http.put(address, aPage);
     req.subscribe(data => {
-      this.isSaving = 'Saved';
+      this.pageSavingButtonLabel = 'Saved';
       this.showSpinner = false;
       this.getAllPagesList();
-      this.isHideEditor = true;
-      this.isSaving = 'Save';
+      this.pageFroalaEditorHidden = true;
+      this.pageSavingButtonLabel = 'Save';
+      this.router.navigate(['/skills', aPage.skill, aPage.title]);
     });
   }
 
@@ -368,11 +351,11 @@ component.
 
 
   onToggleEditor() {
-    this.isHideEditor = false;
+    this.pageFroalaEditorHidden = false;
   }
 
   toggleSkillBox() {
-    console.log("Clicked");
+
     if (this.showSkillBox === true) {
 
       this.showSkillBox = false;
@@ -386,32 +369,7 @@ component.
   }
 
 
-  onClickPage(item) {
 
-
-// Originally that was it.
-
-    this.isPageEnabled = true;
-    this.onClearFields();
-
-    if (item.editDate !== undefined) {
-      const aDate: Date = new Date(item.editDate);
-      const options = {
-        weekday: 'long', year: 'numeric', month: 'long',
-        day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true,
-      };
-
-
-      this.lastEdit = aDate.toLocaleString('en-GB', options);
-
-    } else {
-      this.lastEdit = 'Unknown';
-    }
-    this.theSkillTitle = item.skill;
-    this.titlePage = item.title;
-    this.contentPage = item.content;
-    this.pageID = item.id;
-  }
 
   movePagesToNewSkill(aSkill) {
     const thePages = this.getPages(aSkill);
@@ -425,7 +383,7 @@ component.
       const aPage = {
         title: eachPage.title,
         content: eachPage.content,
-        skill: this.fieldSkillTitle,
+        skill: this.editorTitleField,
         editDate: eachPage.editDate
       };
       const address = this.server + '/api/v1/page/' + eachPage.id;
@@ -448,8 +406,6 @@ component.
     }
 
 
-
-
   }
 
   getPages(aSkill) {
@@ -467,5 +423,88 @@ component.
     return this.arraySkillboxes;
   }
 
+  passPage(anAddressSkill: string, anAddressPage: string) {
 
+    // First step, just check if the address has all the params otherwise return
+
+    if (!(anAddressSkill && anAddressPage)) {
+      return;
+    }
+
+    // Without decodeURI doesn't work because it adds the %20 and javascript doesn't like it
+    const addressSkill = decodeURI(anAddressSkill);
+    const addressPage = decodeURI(anAddressPage);
+
+    /* Second step, check if the whole SPA page just loaded because in that case you need to give a bit of time
+    to the arrays to fill up with data. Otherwise everything can be instant */
+
+    if (this.arrayAllPages.length === 0) {
+      setTimeout(() => {
+
+        const theSkill = this.arrayAllPages.filter(item =>
+        item.skill === addressSkill && item.title === addressPage);
+
+        if (!(theSkill.length === 0)) {
+          const aPage = theSkill[0];
+          this.loadPage(aPage);
+        } else {
+          this.createOrError();
+        }
+
+
+      }, 500);
+    } else {
+      const theSkill = this.arrayAllPages.filter(item =>
+      item.skill === addressSkill && item.title === addressPage);
+
+      if (!(theSkill.length === 0)) {
+
+
+        const aPage = theSkill[0];
+
+        this.loadPage(aPage);
+      } else {
+        this.createOrError();
+      }
+    }
+
+
+  }
+
+  loadPage(item) {
+    this.pageFroalaEditorHidden = true;
+    this.isPageEnabled = true;
+
+
+    this.onClearFields();
+
+    if (item.editDate !== undefined) {
+      const aDate: Date = new Date(item.editDate);
+      const options = {
+        weekday: 'long', year: 'numeric', month: 'long',
+        day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true,
+      };
+
+
+      this.lastEdit = aDate.toLocaleString('en-GB', options);
+
+    } else {
+      this.lastEdit = 'Unknown';
+    }
+    this.theSkillTitle = item.skill;
+    this.titlePage = item.title;
+    this.contentPage = item.content;
+    this.pageID = item.id;
+
+  }
+
+createOrError() {
+  this.router.navigate(['/error']);
+}
+
+  clearPageFields() {
+    console.log('DoSomething');
+
+    this.isPageEnabled = false;
+  }
 }

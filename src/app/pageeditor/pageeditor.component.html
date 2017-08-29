@@ -4,33 +4,32 @@
 
     <div *ngIf="getLoggedStatus()" class="btn-group">
 
-      <button class="btn btn-xs btn-primary" *ngIf="globals.isHideEditor" (click)="globals.onToggleEditor()">Edit
+      <button class="btn btn-xs btn-primary" *ngIf="globals.pageFroalaEditorHidden" (click)="globals.onToggleEditor()">Edit
       </button>
-      <button *ngIf="!globals.isHideEditor" class="btn btn-xs btn-primary" (click)="globals.onSavePage()">{{globals.isSaving}} <app-spinner *ngIf="globals.showSpinner"></app-spinner>
+      <button *ngIf="!globals.pageFroalaEditorHidden" class="btn btn-xs btn-primary" (click)="globals.onSavePage()">{{globals.pageSavingButtonLabel}}
+        <app-spinner *ngIf="globals.showSpinner"></app-spinner>
       </button>
       <button class="btn btn-xs btn-danger" (click)="globals.onRemovePage()">Delete
       </button>
     </div>
   </h1>
-  <div style="color: #760a0e; font-style: italic; font-size:12px;" *ngIf="getLoggedStatus() && globals.isHideEditor"> Last Edited on {{globals.lastEdit}}</div>
+  <div style="color: #760a0e; font-style: italic; font-size:12px;" *ngIf="getLoggedStatus() && globals.pageFroalaEditorHidden"> Last Edited on {{globals.lastEdit}}</div>
 
-  <div *ngIf="globals.isHideEditor">
+  <div *ngIf="globals.pageFroalaEditorHidden">
 
     <p [innerHTML]="globals.contentPage" [froalaView]></p>
 
 
   </div>
-  <div *ngIf="!globals.isHideEditor">
+
+
+  <!-- The view with the editor-->
+  <div *ngIf="!globals.pageFroalaEditorHidden">
     <div class="input-group">
       <span class="input-group-addon">Rename</span>
-      <input [(ngModel)]="titlePage" type="text" class="form-control" name="msg">
+      <input [(ngModel)]="globals.titlePage" type="text" class="form-control" name="msg">
     </div><br>
-
-
-
-
-
-    <textarea class="form-control" rows="5" id="comment" [froalaEditor]="globals.froalaOptions" [(ngModel)]="globals.contentPage"></textarea>
+    <textarea class="form-control" rows="5" id="comment" [froalaEditor]="froalaOptions" [(ngModel)]="globals.contentPage"></textarea>
 
   </div>
 

@@ -23,6 +23,6 @@
      'col-lg-10': globals.showSkillEditor, 'col-xl-11':globals.showSkillEditor, 'col-md-12':globals.showSkillEditor && getLoggedStatus(), 'col-sm-12':globals.showSkillEditor && getLoggedStatus()}" class="col-xs-12">
       <app-skill-list *ngIf="globals.showSkillBox"></app-skill-list>
       <!--THe text of the page-->
-      <app-pageeditor *ngIf="isPageEnabled()"></app-pageeditor>
+      <app-pageeditor *ngIf="globals.isPageEnabled"></app-pageeditor>
     </div></div></div>
 

@@ -22,7 +22,8 @@
       <tr>
         <td id="theContent">
 
-          <a *ngFor="let subskill of globals.getPages(skill);" (click)="globals.onClickPage(subskill)">{{subskill.title}}
+          <a *ngFor="let subskill of myPages;"
+           [routerLink]="['/skills',subskill.skill, subskill.title]">{{subskill.title}}
           </a>
 
         </td>

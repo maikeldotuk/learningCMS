@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Skillbox} from '../../skillbox.model';
 import {SkillsPageGlobalsService} from '../../skills-page-globals.service';
 import {UserService} from '../../user.service';
+import {Page} from "../../page.model";
 
 @Component({
   selector: 'app-single-skill-box',
@@ -11,6 +12,7 @@ import {UserService} from '../../user.service';
 export class SingleSkillBoxComponent implements OnInit {
 @Input() skill: Skillbox;
   @Input('i') skillNumber: number;
+  @Input('skillPages') myPages: Page[];
 
 
   constructor(  public globals: SkillsPageGlobalsService, private user: UserService

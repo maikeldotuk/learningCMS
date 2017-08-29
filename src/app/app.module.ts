@@ -25,12 +25,15 @@ import { SkillListComponent } from './skill-list/skill-list.component';
 import { SkillpreviewComponent } from './skillpreview/skillpreview.component';
 import { SingleSkillBoxComponent } from './skill-list/single-skill-box/single-skill-box.component';
 import { PageeditorComponent } from './pageeditor/pageeditor.component';
+import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
   {path: 'skills', component: SkillsComponent},
+  {path: 'skills/:skill/:page', component: SkillsComponent},
   {path: 'about', component: AboutComponent},
-  {path: 'contact', component: ContactComponent}
+  {path: 'contact', component: ContactComponent},
+  {path: '**', component: NotfoundComponent}
 ];
 
 @NgModule({
@@ -51,6 +54,7 @@ const routes: Routes = [
     SkillpreviewComponent,
     SingleSkillBoxComponent,
     PageeditorComponent,
+    NotfoundComponent,
 
   ],
   imports: [

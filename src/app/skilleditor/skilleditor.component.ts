@@ -16,13 +16,13 @@ export class SkilleditorComponent implements OnInit {
   }
 
   getFieldSkillTitle(): string{
-  return this.globals.fieldSkillTitle;
+  return this.globals.editorTitleField;
   }
   getFieldLogoURL(): string {
-    return this.globals.fieldLogoURL;
+    return this.globals.editorLogoField;
   }
   isModify(): boolean {
-    return this.globals.isModify;
+    return this.globals.isExistingSkill;
   }
 
   addPageToSkill() {
@@ -30,12 +30,12 @@ export class SkilleditorComponent implements OnInit {
   }
 
   getFieldMasteryLevel(): string {
-    return this.globals.fieldMasteryLevel;
+    return this.globals.editorMasteryField;
   }
 
 
   disableAddSkillButton(): boolean {
-  return this.globals.disableAddSkillButton;
+  return this.globals.editorAddModifyButtonVisible;
   }
 
 

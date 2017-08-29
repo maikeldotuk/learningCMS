@@ -1,6 +1,8 @@
-<div id="listOfSkills" *ngIf="showSkillBox">
-  <app-single-skill-box *ngFor="let skill of getSkillBoxes(); let i=index"
-                        [skill]="skill" [i]="i" [skillPages]="globals.getPages(skill)"></app-single-skill-box>
+<div id="listOfSkills" >
+  <app-single-skill-box *ngFor="let skill of getSkillBoxes(); let skillNumber=index"
+                        [skill]="skill" [skillPages]="globals.getPages(skill)"
+                         (onSelectedSkill)="skillSelected($event, skillNumber)"
+  ></app-single-skill-box>
 
 
 

@@ -62,6 +62,8 @@ export class SkillsPageGlobalsService {
    easily which ones uses which and if they intercommunicate or not. If they don't they can be moved locally to that
    component.
    */
+
+
   onSelectSkill(aSkill, index) {
 
     this.isPageEnabled = false;

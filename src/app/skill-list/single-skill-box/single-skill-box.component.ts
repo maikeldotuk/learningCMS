@@ -1,8 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Skillbox} from '../../skillbox.model';
-import {SkillsPageGlobalsService} from '../../skills-page-globals.service';
-import {UserService} from '../../user.service';
-import {Page} from "../../page.model";
+import {Page} from '../../page.model';
 
 @Component({
   selector: 'app-single-skill-box',
@@ -11,14 +9,22 @@ import {Page} from "../../page.model";
 })
 export class SingleSkillBoxComponent implements OnInit {
 @Input() skill: Skillbox;
-  @Input('i') skillNumber: number;
+
   @Input('skillPages') myPages: Page[];
+  @Output() onSelectedSkill: EventEmitter<Skillbox>;
 
 
-  constructor(  public globals: SkillsPageGlobalsService, private user: UserService
-  ) { }
+
+  constructor() {
+    this.onSelectedSkill = new EventEmitter();
+
+  }
 
   ngOnInit() {
+  }
+
+  onClickedSskill() {
+    this.onSelectedSkill.emit(this.skill);
   }
 
 }

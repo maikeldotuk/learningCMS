@@ -27,9 +27,6 @@ export class SkillsComponent implements OnInit {
       }
     });
 
-    console.log(globals);
-
-
   }
 
   ngOnInit() {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SkillsPageGlobalsService} from '../skills-page-globals.service';
 import {UserService} from '../user.service';
+import {Skillbox} from "../skillbox.model";
 
 @Component({
   selector: 'app-skilleditor',
@@ -49,5 +50,6 @@ export class SkilleditorComponent implements OnInit {
   onClearFields() {
   this.globals.onClearFields();
   }
+
 
 }

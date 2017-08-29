@@ -18,9 +18,7 @@ export class SkillListComponent implements OnInit {
 
   }
 
-  showSkillBox(): boolean {
-    return this.globals.showSkillBox;
-  }
+
 
   getLoggedStatus(): boolean {
     return this.user.getLoggedStatus();
@@ -31,5 +29,11 @@ export class SkillListComponent implements OnInit {
   getSkillBoxes(): Skillbox[] {
     return this.globals.getArraySkillBoxes();
 }
+
+  skillSelected(skill: Skillbox, skillIDinArray: number) {
+
+    this.globals.onSelectSkill(skill, skillIDinArray);
+  }
+
 
 }

@@ -3,8 +3,8 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 declare var $: any;
 
-import {UserService} from "../user.service";
-import {SkillsPageGlobalsService} from "../skills-page-globals.service";
+import {UserService} from '../user.service';
+import {SkillsPageGlobalsService} from '../skills-page-globals.service';
 
 
 @Component({
@@ -175,4 +175,17 @@ export class SkillsComponent implements OnInit {
 
   }
 
+  getLoggedStatus(): boolean {
+    return this.user.getLoggedStatus();
+  }
+
+  isPreviewEnabled(): boolean {
+    return this.globals.isEnabled();
+  }
+  showSkillEditor(): boolean {
+    return this.globals.showSkillEditor;
+  }
+isPageEnabled(): boolean {
+  return this.globals.isPageEnabled;
+}
 }

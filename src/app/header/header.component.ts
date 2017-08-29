@@ -27,4 +27,8 @@ export class HeaderComponent implements OnInit {
     this.user.logout();
   }
 
+  getLoggedStatus(): boolean {
+    return this.user.getLoggedStatus();
+  }
+
 }

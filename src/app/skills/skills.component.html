@@ -1,26 +1,26 @@
 <div class="container-fluid" style="padding-bottom: 100px;" >
   <div class="row">
     <!-- The branding -->
-    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!user.getLoggedStatus()">
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!getLoggedStatus()">
       <app-branding></app-branding>
       <app-projects></app-projects>
       <app-legend></app-legend>
       <app-latestnews ></app-latestnews>
     </div>
     <!-- The skill editor -->
-    <div *ngIf="globals.showSkillEditor">
-      <div *ngIf="user.getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
+    <div *ngIf="showSkillEditor">
+      <div *ngIf="getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
         <app-skilleditor></app-skilleditor>
         <!-- The preview -->
-        <div *ngIf="globals.isEnabled()">
+        <div *ngIf="isPreviewEnabled">
           <app-skillpreview></app-skillpreview>
         </div>
       </div></div>
     <!--The list of skills and the page-->
-    <div [ngClass]="{'col-md-9': globals.showSkillEditor, 'col-sm-9': globals.showSkillEditor,
-     'col-lg-10': globals.showSkillEditor, 'col-xl-11': globals.showSkillEditor, 'col-md-12':!globals.showSkillEditor && user.getLoggedStatus(), 'col-sm-12':!globals.showSkillEditor && user.getLoggedStatus()}" class="col-xs-12">
+    <div [ngClass]="{'col-md-9': showSkillEditor, 'col-sm-9': showSkillEditor,
+     'col-lg-10': showSkillEditor, 'col-xl-11': showSkillEditor, 'col-md-12':!showSkillEditor && getLoggedStatus(), 'col-sm-12':!showSkillEditor && getLoggedStatus()}" class="col-xs-12">
       <app-skill-list></app-skill-list>
       <!--THe text of the page-->
-      <app-pageeditor *ngIf="globals.isPageEnabled"></app-pageeditor>
+      <app-pageeditor *ngIf="isPageEnabled()"></app-pageeditor>
     </div></div></div>
 

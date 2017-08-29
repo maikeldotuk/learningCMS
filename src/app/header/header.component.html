@@ -5,9 +5,9 @@
     <div class="navbar-header">
 
 
-      <button *ngIf="!user.getLoggedStatus()" type="button" class="navbar-toggle btn-danger btn" style="color: white;" data-toggle="collapse" (click)="login()"><span class="glyphicon glyphicon-log-in">
+      <button *ngIf="!getLoggedStatus()" type="button" class="navbar-toggle btn-danger btn" style="color: white;" data-toggle="collapse" (click)="login()"><span class="glyphicon glyphicon-log-in">
           </span></button>
-      <button  *ngIf="user.getLoggedStatus()" type="button" class="navbar-toggle btn-danger btn" style="color: white;" data-toggle="collapse" (click)="user.logout()"><span class="glyphicon glyphicon-log-out">
+      <button  *ngIf="getLoggedStatus()" type="button" class="navbar-toggle btn-danger btn" style="color: white;" data-toggle="collapse" (click)="user.logout()"><span class="glyphicon glyphicon-log-out">
 
       </span></button>
 
@@ -21,13 +21,13 @@
       </ul>
 
 
-      <p class="navbar-text pull-right" *ngIf="!user.getLoggedStatus()">
+      <p class="navbar-text pull-right" *ngIf="!getLoggedStatus()">
         <a   (click)="login()" style="color: white;"><span class="glyphicon glyphicon-log-in" >
           </span> Login</a>
 
 
 
-      <p class="navbar-text pull-right" *ngIf="user.getLoggedStatus()">
+      <p class="navbar-text pull-right" *ngIf="getLoggedStatus()">
       <a   (click)="logout()" style="color: white;"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
     </p>
 

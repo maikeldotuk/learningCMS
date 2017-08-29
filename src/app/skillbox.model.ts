@@ -1,5 +1,8 @@
+import {SkillsPageGlobalsService} from './skills-page-globals.service';
+
+
 export class Skillbox {
-  constructor(public skillID: number, public skillTitle: string, public skillLogoURL: string, public skillLevel: string) {
+  constructor(private globals: SkillsPageGlobalsService, public skillID: number, public skillTitle: string, public skillLogoURL: string, public skillLevel: string) {
   }
 
   getStyle() {
@@ -22,9 +25,9 @@ export class Skillbox {
     }
   }
 
-  getPages(allPagesArray) {
+  getPages() {
 
-    const thePages = allPagesArray.filter(item => {
+    const thePages = this.globals.arrayAllPages.filter(item => {
       return item.skill === this.skillTitle;
     });
 

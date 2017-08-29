@@ -19,7 +19,7 @@ import { ContactComponent } from './contact/contact.component';
 import { SkillsComponent } from './skills/skills.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {UserService} from './user.service';
-
+import {SkillsPageGlobalsService} from './skills-page-globals.service';
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
@@ -54,7 +54,7 @@ const routes: Routes = [
   providers: [
     {provide: LocationStrategy,
   useClass: HashLocationStrategy},
-    UserService,
+    UserService,SkillsPageGlobalsService,
     {provide: 'SERVER_URL', useValue: 'https://www.maikel.uk'}
 ],
   bootstrap: [AppComponent]

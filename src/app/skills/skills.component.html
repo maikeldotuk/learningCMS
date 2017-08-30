@@ -2,8 +2,8 @@
   <div class="row">
     <!-- The branding -->
     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!getLoggedStatus()">
-      <app-branding [collapse]="isCollapsed"></app-branding>
-      <app-projects></app-projects>
+      <app-branding ></app-branding>
+      <app-projects [collapse]="isCollapsed"></app-projects>
       <app-legend [collapse]="isCollapsed"></app-legend>
       <app-latestnews [collapse]="isCollapsed"></app-latestnews>
     </div>

@@ -9,7 +9,7 @@ import {Page} from '../../page.model';
 })
 export class SingleSkillBoxComponent implements OnInit {
 @Input() skill: Skillbox;
-
+ hidden = 'hidden';
   @Input('skillPages') myPages: Page[];
   @Output() onSelectedSkill: EventEmitter<Skillbox>;
   isCollapsed = false;

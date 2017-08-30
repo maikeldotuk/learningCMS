@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class ServerService {
-
+passedPage = {skill:"",page:"",shrink:""};
 
 
   titlePage: string;
@@ -359,19 +359,7 @@ export class ServerService {
     this.pageFroalaEditorHidden = false;
   }
 
-  toggleSkillBox() {
 
-    if (this.showSkillBox === true) {
-
-      this.showSkillBox = false;
-      this.toggleText = 'Shrink';
-
-    } else {
-      this.showSkillBox = true;
-      this.toggleText = 'Expand';
-    }
-
-  }
 
 
 
@@ -402,11 +390,9 @@ export class ServerService {
   onToogleEditor() {
     if (this.showSkillEditor === true) {
       this.showSkillEditor = false;
-
       this.showSkillEditorText = 'Show Editor';
     } else {
       this.showSkillEditor = true;
-
       this.showSkillEditorText = 'Hide Editor';
     }
 
@@ -428,7 +414,30 @@ export class ServerService {
     return this.arraySkillboxes;
   }
 
-  passPage(anAddressSkill: string, anAddressPage: string) {
+
+
+
+  toggleSkillBox() {
+
+    if (this.showSkillBox === true) {
+      const shrink = 'hidden';
+      this.router.navigate(['/skills', this.passedPage.skill, this.passedPage.page, shrink]);
+
+
+    } else {
+
+      //this.router.navigate(['/skills', this.theSkillTitle]);
+      this.passedPage.shrink = "";
+
+      this.showSkillBox = true;
+      this.toggleText = 'Expand';
+      this.router.navigate(['/skills', this.passedPage.skill, this.passedPage.page]);
+    }
+
+  }
+
+
+  passPage(anAddressSkill: string, anAddressPage: string, shrink: string) {
 
     // First step, just check if the address has all the params otherwise return
 
@@ -439,6 +448,7 @@ export class ServerService {
     // Without decodeURI doesn't work because it adds the %20 and javascript doesn't like it
     const addressSkill = decodeURI(anAddressSkill);
     const addressPage = decodeURI(anAddressPage);
+    this.passedPage = {skill: addressSkill, page: addressPage, shrink: shrink};
 
     /* Second step, check if the whole SPA page just loaded because in that case you need to give a bit of time
     to the arrays to fill up with data. Otherwise everything can be instant */
@@ -451,6 +461,10 @@ export class ServerService {
 
         if (!(theSkill.length === 0)) {
           const aPage = theSkill[0];
+          if ( shrink==='hidden' ) {
+            this.showSkillBox = false;
+            this.toggleText = 'Shrink';
+          }
           this.loadPage(aPage);
         } else {
           this.createOrError();
@@ -466,7 +480,10 @@ export class ServerService {
 
 
         const aPage = theSkill[0];
-
+        if ( shrink==='hidden' ) {
+          this.showSkillBox = false;
+          this.toggleText = 'Shrink';
+        }
         this.loadPage(aPage);
       } else {
         this.createOrError();

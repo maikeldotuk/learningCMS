@@ -21,10 +21,11 @@ export class SkillsComponent implements OnInit {
     route.params.subscribe(params => {
       const addressSkill = params['skill'];
       const addressPage = params['page'];
+      const showOrHide = params['hide'];
       if (!addressSkill || !addressPage) {
         this.server.clearPageFields();
       } else {
-        this.server.passPage(addressSkill, addressPage);
+        this.server.passPage(addressSkill, addressPage, showOrHide);
       }
     });
 

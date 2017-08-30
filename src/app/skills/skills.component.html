@@ -8,7 +8,7 @@
       <app-latestnews ></app-latestnews>
     </div>
     <!-- The skill editor -->
-    <div *ngIf="globals.showSkillEditor">
+    <div *ngIf="getShowSkillEditor()">
     <div *ngIf="getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
       <app-skilleditor></app-skilleditor>
       <!-- The preview -->
@@ -19,10 +19,12 @@
 
 
     <!--The list of skills and the page-->
-    <div [ngClass]="{'col-md-9': globals.showSkillEditor, 'col-sm-9': globals.showSkillEditor,
-     'col-lg-10': globals.showSkillEditor, 'col-xl-11':globals.showSkillEditor, 'col-md-12':globals.showSkillEditor && getLoggedStatus(), 'col-sm-12':globals.showSkillEditor && getLoggedStatus()}" class="col-xs-12">
-      <app-skill-list *ngIf="globals.showSkillBox"></app-skill-list>
+    <div [ngClass]="{'col-md-9': getShowSkillEditor(), 'col-sm-9': getShowSkillEditor(),
+     'col-lg-10': getShowSkillEditor(), 'col-xl-11':getShowSkillEditor(), 'col-md-12':getShowSkillEditor() && getLoggedStatus(),
+     'col-sm-12':getShowSkillEditor() && getLoggedStatus()}" class="col-xs-12">
+      <app-skill-list *ngIf="getShowSkillbox()" [loggedIn]="getLoggedStatus()" [arraySkills]="getSkillBoxes()"
+                      [toggleButtonText]="getSkillEditorText()" (selectedSkill)="onSkillSelected($event)" (emitToggleEditor)="editorToggled($event)"></app-skill-list>
       <!--THe text of the page-->
-      <app-pageeditor *ngIf="globals.isPageEnabled"></app-pageeditor>
+      <app-pageeditor *ngIf="getIsPageEnabled()"></app-pageeditor>
     </div></div></div>
 

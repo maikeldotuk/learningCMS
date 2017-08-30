@@ -1,4 +1,4 @@
-import {SkillsPageGlobalsService} from './skills-page-globals.service';
+import {ServerService} from './server.service';
 
 
 export class Skillbox {

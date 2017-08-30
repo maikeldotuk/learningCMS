@@ -8,7 +8,9 @@ import {Router} from '@angular/router';
 
 
 @Injectable()
-export class SkillsPageGlobalsService {
+export class ServerService {
+
+
 
   titlePage: string;
   thePages: Page[] = [];
@@ -53,7 +55,7 @@ export class SkillsPageGlobalsService {
     this.server = server;
     this.getUpdatedSkillsGrid();
     this.getAllPagesList();
-    this.showSkillEditor = true;
+    this.showSkillEditor  = true;
 
   }
 
@@ -64,7 +66,8 @@ export class SkillsPageGlobalsService {
    */
 
 
-  onSelectSkill(aSkill, index) {
+  selectedSkillFromArray(index) {
+    const aSkill = this.arraySkillboxes[index];
 
     this.isPageEnabled = false;
     if (this.user.getLoggedStatus() === false) {
@@ -505,8 +508,24 @@ createOrError() {
 }
 
   clearPageFields() {
-    console.log('DoSomething');
-
     this.isPageEnabled = false;
+    this.showSkillBox = true;
+  }
+
+   getShowSkillEditorText(): string {
+    return this.showSkillEditorText;
+
+  }
+
+  getShowSkillEditor(): boolean {
+    return this.showSkillEditor;
+  }
+
+  getIsPageEnabled(): boolean {
+    return this.isPageEnabled;
+  }
+
+  getShowSkillbox(): boolean {
+    return this.showSkillBox;
   }
 }

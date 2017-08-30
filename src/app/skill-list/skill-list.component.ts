@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import {SkillsPageGlobalsService} from '../skills-page-globals.service';
-import {UserService} from '../user.service';
-import {Skillbox} from "../skillbox.model";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ServerService} from '../server.service';
+import {Skillbox} from '../skillbox.model';
+import {Page} from '../page.model';
 
 @Component({
   selector: 'app-skill-list',
@@ -9,30 +9,31 @@ import {Skillbox} from "../skillbox.model";
   styleUrls: ['./skill-list.component.css']
 })
 export class SkillListComponent implements OnInit {
+  @Input() loggedIn: boolean;
+  @Input() arraySkills: Skillbox[];
+  @Input() toggleButtonText: string;
+@Output() selectedSkill: EventEmitter<number>;
+@Output() emitToggleEditor: EventEmitter<any>;
 
-  constructor(public globals: SkillsPageGlobalsService, private user: UserService
-  ) {
+    constructor(private server: ServerService) {
+this.selectedSkill = new EventEmitter();
+this.emitToggleEditor = new EventEmitter();
   }
 
   ngOnInit() {
 
   }
 
-
-
-  getLoggedStatus(): boolean {
-    return this.user.getLoggedStatus();
+  skillSelected(skillIDinArray: number) {
+    this.selectedSkill.emit(skillIDinArray);
   }
 
+  onToogleEditor() {
+    this.emitToggleEditor.emit('Done');
+  }
 
-
-  getSkillBoxes(): Skillbox[] {
-    return this.globals.getArraySkillBoxes();
-}
-
-  skillSelected(skill: Skillbox, skillIDinArray: number) {
-
-    this.globals.onSelectSkill(skill, skillIDinArray);
+  getPages(skill): Page[] {
+  return this.server.getPages(skill);
   }
 
 

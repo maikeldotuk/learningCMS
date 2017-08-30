@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {SkillsPageGlobalsService} from '../skills-page-globals.service';
+import {ServerService} from '../server.service';
 import {UserService} from '../user.service';
 import {Skillbox} from "../skillbox.model";
 
@@ -10,7 +10,7 @@ import {Skillbox} from "../skillbox.model";
 })
 export class SkilleditorComponent implements OnInit {
 
-  constructor( public globals: SkillsPageGlobalsService, private user: UserService
+  constructor(public globals: ServerService, private user: UserService
   ) { }
 
   ngOnInit() {

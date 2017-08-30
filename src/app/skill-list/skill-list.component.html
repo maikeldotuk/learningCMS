@@ -1,15 +1,14 @@
-<div id="listOfSkills" >
-  <app-single-skill-box *ngFor="let skill of getSkillBoxes(); let skillNumber=index"
-                        [skill]="skill" [skillPages]="globals.getPages(skill)"
-                         (onSelectedSkill)="skillSelected($event, skillNumber)"
-  ></app-single-skill-box>
+<div id="listOfSkills">
+  <!-- The skillboxes -->
+  <app-single-skill-box *ngFor="let skill of arraySkills; let skillNumber=index"
+                        [skill]="skill" [skillPages]="getPages(skill)"
+                         (onSelectedSkill)="skillSelected(skillNumber)"></app-single-skill-box>
 
-
-
-  <div class="dropdown" *ngIf="getLoggedStatus()">
+  <!-- The box to Hide the Skill Editor -->
+  <div class="dropdown" *ngIf="loggedIn">
     <table id="userControls"> <tr>
       <td id="normalLogo">
-        <button class="btn btn-sm btn-link" (click)="globals.onToogleEditor()">{{globals.showSkillEditorText}}</button>
+        <button class="btn btn-xs btn-danger" (click)="onToogleEditor()">{{toggleButtonText}}</button>
       </td>
     </tr>
     </table>

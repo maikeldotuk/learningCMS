@@ -19,7 +19,7 @@ import { ContactComponent } from './contact/contact.component';
 import { SkillsComponent } from './skills/skills.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {UserService} from './user.service';
-import {SkillsPageGlobalsService} from './skills-page-globals.service';
+import {ServerService} from './server.service';
 import { SkilleditorComponent } from './skilleditor/skilleditor.component';
 import { SkillListComponent } from './skill-list/skill-list.component';
 import { SkillpreviewComponent } from './skillpreview/skillpreview.component';
@@ -68,7 +68,7 @@ const routes: Routes = [
   providers: [
     {provide: LocationStrategy,
   useClass: HashLocationStrategy},
-    UserService,SkillsPageGlobalsService,
+    UserService,ServerService,
     {provide: 'SERVER_URL', useValue: 'https://www.maikel.uk'}
 ],
   bootstrap: [AppComponent]

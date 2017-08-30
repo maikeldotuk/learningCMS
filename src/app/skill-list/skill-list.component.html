@@ -1,3 +1,7 @@
+<div class="panel panel-default" *ngIf="!isCollapsed">
+
+<div class="panel-heading">Skills</div>
+  <div class="panel-body">
 <div id="listOfSkills">
   <!-- The skillboxes -->
   <app-single-skill-box *ngFor="let skill of arraySkills; let skillNumber=index"
@@ -14,3 +18,20 @@
     </table>
   </div>
 </div>
+  </div>
+</div>
+
+
+<accordion [closeOthers]="oneAtATime" *ngIf="isCollapsed">
+
+  <!-- The skillboxes -->
+  <app-single-skill-box *ngFor="let skill of arraySkills; let skillNumber=index"
+                        [skill]="skill" [skillPages]="getPages(skill)"
+                        (onSelectedSkill)="skillSelected(skillNumber)"></app-single-skill-box>
+
+  <!-- The box to Hide the Skill Editor -->
+  <a class="list-group-item list-group-item-info" *ngIf="loggedIn">
+
+    <button class="btn btn-xs btn-danger" (click)="onToogleEditor()">{{toggleButtonText}}</button>
+  </a>
+</accordion>

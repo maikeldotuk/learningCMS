@@ -1,4 +1,4 @@
-import {Component,  OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 
 
 @Component({
@@ -7,10 +7,26 @@ import {Component,  OnInit} from '@angular/core';
   styleUrls: ['./about.component.css']
 })
 export class AboutComponent implements OnInit {
-
-  constructor() { }
+  isCollapsed = false;
+  screenWidthFigure: number;
+  constructor() {
+    this.updateWidthValue();
+  }
 
   ngOnInit() {
+  }
+
+  @HostListener('window:resize') updateWidthValue(): void {
+    this.screenWidthFigure = window.screen.width;
+
+    if (this.screenWidthFigure >= 768) {
+
+      this.isCollapsed = false;
+    } else {
+
+      this.isCollapsed = true;
+    }
+
   }
 
 }

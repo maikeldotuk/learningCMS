@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 
@@ -14,9 +14,11 @@ import {Skillbox} from '../skillbox.model';
   styleUrls: ['./skills.component.css']
 })
 export class SkillsComponent implements OnInit {
+  isCollapsed = false;
+  screenWidthFigure: number;
 
-  // Careful when choosing either http or https
   constructor(private route: ActivatedRoute, private server: ServerService, private http: HttpClient, private user: UserService) {
+    this.updateWidthValue();
 
     route.params.subscribe(params => {
       const addressSkill = params['skill'];
@@ -74,5 +76,18 @@ export class SkillsComponent implements OnInit {
 
   editorToggled(event) {
     this.server.onToogleEditor();
+  }
+
+  @HostListener('window:resize') updateWidthValue(): void {
+    this.screenWidthFigure = window.screen.width;
+
+    if (this.screenWidthFigure >= 768) {
+
+      this.isCollapsed = false;
+    } else {
+
+      this.isCollapsed = true;
+    }
+
   }
 }

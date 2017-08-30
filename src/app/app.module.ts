@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {RouterModule, Routes} from '@angular/router';
+import {AccordionModule, CollapseModule, ModalModule} from 'ngx-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -64,7 +65,10 @@ const routes: Routes = [
     HttpClientModule,
     HttpModule,
     FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    CollapseModule.forRoot(),
+    ModalModule.forRoot(),
+    AccordionModule.forRoot()
   ],
   providers: [
     {provide: LocationStrategy,

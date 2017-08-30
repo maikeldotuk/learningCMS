@@ -17,6 +17,8 @@ table {
   border-collapse: collapse;
 }
 
+
+
 #knownTitle, #hoveredTitle, #learningTitle, #queuedTitle, #memorisingTitle, #legendTitle {
   position: absolute;
   opacity: 0.9;
@@ -26,7 +28,7 @@ table {
   font-weight: bold;
 }
 
-#knownTitle {
+#knownTitle  {
   background-color: rgba(41, 155, 255, 0.8);
 }
 
@@ -141,10 +143,27 @@ button:hover,
   outline: none !important;
 }
 
+#knownTitleCollapsed,  #learningTitleCollapsed, #queuedTitleCollapsed, #memorisingTitleCollapsed {
+  
+  font-size: 14px;
+  padding: 4px;
+}
+
+#knownTitleCollapsed {
+  background-color: rgba(41, 155, 255, 0.8);
+}
+
+#memorisingTitleCollapsed {
+  background-color: #00d700;
+}
+
+#learningTitleCollapsed {
+  background-color: #b3ffb3;
+}
+
+#queuedTitleCollapsed {
+  background-color: #ffef3f;
+}
 
 
-
-
-
-
-
+/*Collapsed*/

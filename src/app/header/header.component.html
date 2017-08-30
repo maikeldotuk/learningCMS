@@ -1,19 +1,20 @@
 <!--This navbar is asking to be on its own component-->
-
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
 
 
-      <button *ngIf="!getLoggedStatus()" type="button" class="navbar-toggle btn-danger btn" style="color: white;" data-toggle="collapse" (click)="login()"><span class="glyphicon glyphicon-log-in">
-          </span></button>
-      <button  *ngIf="getLoggedStatus()" type="button" class="navbar-toggle btn-danger btn" style="color: white;" data-toggle="collapse" (click)="logout()"><span class="glyphicon glyphicon-log-out">
+      <button type="button" class="navbar-toggle" (click)="isCollapsed = !isCollapsed" >
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
 
-      </span></button>
 
-      <a class="navbar-brand" href="#">Maikel Knowledge Base</a>
+      <a class="navbar-brand" (click)="isCollapsed = !isCollapsed" [collapse]="!isCollapsed">MKB</a>
+      <a class="navbar-brand"(click)="isCollapsed = !isCollapsed" [collapse]="isCollapsed">Maikel Knowledge Base</a>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
+    <div class="collapse navbar-collapse" [collapse]="isCollapsed">
       <ul class="nav navbar-nav">
         <li><a [routerLink]="['/skills']">Skills</a></li>
         <li><a [routerLink]="['/about']">About</a></li>

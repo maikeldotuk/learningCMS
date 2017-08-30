@@ -1,6 +1,6 @@
-<div class="dropdown" >
+<div class="dropdown" *ngIf="!isCollapsed">
   <table id="skillBox"> <tr>
-    <p [id]=skill.getStyle()>{{skill.skillTitle}}
+    <p [id]=getStyle()>{{skill.skillTitle}}
     </p>
 
     <td id="normalLogo"><img id="theLogo" [src]="skill.skillLogoURL"></td>
@@ -8,6 +8,7 @@
   </table>
 
   <div class="dropdown-content">
+
     <table id="skillBox">
       <div id="hoveredTitle">
 
@@ -23,7 +24,7 @@
         <td id="theContent">
 
           <a *ngFor="let subskill of myPages;"
-           [routerLink]="['/skills',subskill.skill, subskill.title]">{{subskill.title}}
+             [routerLink]="['/skills',subskill.skill, subskill.title]">{{subskill.title}}
           </a>
 
         </td>
@@ -32,3 +33,56 @@
     </table>
   </div>
 </div>
+
+
+
+<accordion-group *ngIf="isCollapsed" class="list-group" >
+    <div accordion-heading >
+      {{skill.skillTitle}}
+      <img class="pull-right flot-xs-right" style="max-height:30px; max-width:150px" [src]="skill.skillLogoURL">
+
+    </div>
+  <div [id]="getStyle()">Status: <strong>{{skill.skillLevel}}</strong></div>
+
+    <a class="list-group-item" style="color:black;width:100%" *ngFor="let subskill of myPages;"
+     [routerLink]="['/skills',subskill.skill, subskill.title]" >{{subskill.title}}
+  </a>
+
+
+</accordion-group>
+
+
+
+
+
+
+
+<!--
+<img style="float:right;  max-height:50px; max-width:150px" [src]="skill.skillLogoURL">
+<h4 class="list-group-item-heading"></h4>
+
+
+<p class="list-group-item-text">List Group Item Text</p>
+
+-->
+<!--
+<accordion>
+  <accordion-group heading="Static Header, initially expanded">
+    This content is straight in the template.
+  </accordion-group>
+  <accordion-group #group>
+    <div accordion-heading>
+      I can have markup, too!
+      <i class="pull-right float-xs-right glyphicon"
+         [ngClass]="{'glyphicon-chevron-down': group?.isOpen, 'glyphicon-chevron-right': !group?.isOpen}"></i>
+    </div>
+    This is just some content to illustrate fancy headings.
+  </accordion-group>
+  <accordion-group heading="Content 1">
+    <p>Content 1</p>
+  </accordion-group>
+  <accordion-group heading="Content 2">
+    <p>Content 2</p>
+  </accordion-group>
+</accordion>
+-->

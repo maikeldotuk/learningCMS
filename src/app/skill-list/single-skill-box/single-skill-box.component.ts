@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {Skillbox} from '../../skillbox.model';
 import {Page} from '../../page.model';
 
@@ -12,11 +12,14 @@ export class SingleSkillBoxComponent implements OnInit {
 
   @Input('skillPages') myPages: Page[];
   @Output() onSelectedSkill: EventEmitter<Skillbox>;
+  isCollapsed = false;
+  screenWidthFigure: number;
 
 
 
   constructor() {
     this.onSelectedSkill = new EventEmitter();
+    this.updateWidthValue();
 
   }
 
@@ -27,4 +30,29 @@ export class SingleSkillBoxComponent implements OnInit {
     this.onSelectedSkill.emit(this.skill);
   }
 
+  @HostListener('window:resize') updateWidthValue(): void {
+    this.screenWidthFigure = window.screen.width;
+
+    if (this.screenWidthFigure >= 768) {
+
+      this.isCollapsed = false;
+    } else {
+
+      this.isCollapsed = true;
+    }
+
+  }
+getStyle(): string {
+
+  if (!(this.isCollapsed)) {
+
+    return this.skill.getStyle();
+  } else {
+    const original = this.skill.getStyle();
+
+    return original + 'Collapsed';
+
+  }
+
+}
 }

@@ -7,6 +7,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
+  styleUrls:['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
 

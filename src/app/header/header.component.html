@@ -23,13 +23,13 @@
 
 
       <p class="navbar-text pull-right" *ngIf="!getLoggedStatus()">
-        <a   (click)="login()" style="color: white;"><span class="glyphicon glyphicon-log-in" >
+        <a   (click)="login()"><span class="glyphicon glyphicon-log-in" >
           </span> Login</a>
 
 
 
       <p class="navbar-text pull-right" *ngIf="getLoggedStatus()">
-      <a   (click)="logout()" style="color: white;"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+      <a   (click)="logout()"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
     </p>
 
 

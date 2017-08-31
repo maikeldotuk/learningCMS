@@ -11,7 +11,7 @@ import {Router} from '@angular/router';
 export class ServerService {
 passedPage = {skill:"",page:"",shrink:""};
 
-
+textWhenShow = 'Show Skillset';
   titlePage: string;
   thePages: Page[] = [];
   arraySkillboxes: Skillbox[] = [];
@@ -463,7 +463,7 @@ passedPage = {skill:"",page:"",shrink:""};
           const aPage = theSkill[0];
           if ( shrink==='hidden' ) {
             this.showSkillBox = false;
-            this.toggleText = 'Shrink';
+            this.toggleText = this.textWhenShow;
           }
           this.loadPage(aPage);
         } else {
@@ -482,7 +482,7 @@ passedPage = {skill:"",page:"",shrink:""};
         const aPage = theSkill[0];
         if ( shrink==='hidden' ) {
           this.showSkillBox = false;
-          this.toggleText = 'Shrink';
+          this.toggleText = this.textWhenShow;
         }
         this.loadPage(aPage);
       } else {

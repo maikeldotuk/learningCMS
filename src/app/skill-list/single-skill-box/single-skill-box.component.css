@@ -19,7 +19,7 @@ table {
 
 
 
-#knownTitle, #hoveredTitle, #learningTitle, #queuedTitle, #memorisingTitle, #legendTitle {
+#knownTitle, #hoveredTitle, #learningTitle, #queuedTitle, #legendTitle {
   position: absolute;
   opacity: 0.9;
   color: black;
@@ -28,21 +28,21 @@ table {
   font-weight: bold;
 }
 
-#knownTitle  {
+#knownTitle, #knownTitleCollapsed  {
   background-color: rgba(41, 155, 255, 0.8);
 }
 
-#memorisingTitle {
-  background-color: #00d700;
-}
 
-#learningTitle {
+#learningTitle, #learningTitleCollapsed {
   background-color: #b3ffb3;
 }
 
-#queuedTitle {
+#queuedTitle, #queuedTitleCollapsed {
   background-color: #ffef3f;
 }
+
+
+
 
 
 #hoveredTitle {
@@ -144,26 +144,12 @@ button:hover,
 }
 
 #knownTitleCollapsed,  #learningTitleCollapsed, #queuedTitleCollapsed, #memorisingTitleCollapsed {
-  
+
   font-size: 14px;
   padding: 4px;
 }
 
-#knownTitleCollapsed {
-  background-color: rgba(41, 155, 255, 0.8);
-}
 
-#memorisingTitleCollapsed {
-  background-color: #00d700;
-}
-
-#learningTitleCollapsed {
-  background-color: #b3ffb3;
-}
-
-#queuedTitleCollapsed {
-  background-color: #ffef3f;
-}
 
 
 /*Collapsed*/

@@ -13,11 +13,13 @@
 }
 
 #knownTitle{ background-color: rgba(41, 155, 255, 0.8); }
-#memorisingTitle { background-color: #00d700; }
 #learningTitle { background-color: #b3ffb3; }
 #queuedTitle { background-color: #ffef3f; }
 #hoveredTitle{ background-color: black; font-weight: normal; color: yellow; }
 #legendTitle { background-color: black; color: white }
+
+
+
 
 #legendTable {
   margin: 0px auto;

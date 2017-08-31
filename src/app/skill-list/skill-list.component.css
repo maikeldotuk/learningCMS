@@ -60,7 +60,7 @@ table {
   border-collapse: collapse;
 }
 
-#knownTitle, #hoveredTitle, #learningTitle, #queuedTitle, #memorisingTitle, #legendTitle {
+#knownTitle, #hoveredTitle, #learningTitle, #queuedTitle, #legendTitle {
   position: absolute;
   opacity: 0.9;
   color: black;
@@ -73,12 +73,9 @@ table {
   background-color: rgba(41, 155, 255, 0.8);
 }
 
-#memorisingTitle {
-  background-color: #00d700;
-}
 
 #learningTitle {
-  background-color: #b3ffb3;
+  background-color: #00d700;
 }
 
 #queuedTitle {

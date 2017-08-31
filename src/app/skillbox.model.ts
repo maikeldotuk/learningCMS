@@ -10,18 +10,13 @@ export class Skillbox {
       case 'Known': {
         return 'knownTitle';
       }
-      case 'Memorising': {
-        return 'memorisingTitle';
-      }
       case 'Learning': {
         return 'learningTitle';
       }
       case 'Queued': {
         return 'queuedTitle';
       }
-      case 'Deferred': {
-        return 'preparingTitle';
-      }
+
     }
   }
 

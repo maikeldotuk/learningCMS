@@ -40,18 +40,22 @@ this.updateWidthValue();
 
   login() {
     this.user.clickedLogin();
-    this.isCollapsed = !this.isCollapsed;
+    this.shouldCollapse();
   }
 
   logout() {
     this.user.logout();
-    this.isCollapsed = !this.isCollapsed;
+    this.shouldCollapse();
   }
 
   getLoggedStatus(): boolean {
     return this.user.getLoggedStatus();
   }
 
-
+shouldCollapse() {
+    if (this.screenWidthFigure < 768) {
+      this.isCollapsed = !this.isCollapsed;
+    }
+}
 
 }

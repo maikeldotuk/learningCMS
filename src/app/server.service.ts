@@ -221,9 +221,6 @@ textWhenShow = 'Show Skillset';
       case 'Known': {
         return 'knownTitle';
       }
-      case 'Memorising': {
-        return 'memorisingTitle';
-      }
       case 'Learning': {
         return 'learningTitle';
       }

@@ -1,5 +1,5 @@
 <!--This navbar is asking to be on its own component-->
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
 
@@ -16,9 +16,9 @@
     </div>
     <div class="collapse navbar-collapse" [collapse]="isCollapsed">
       <ul class="nav navbar-nav">
-        <li><a [routerLink]="['/skills']" (click)="isCollapsed = !isCollapsed">Skills</a></li>
-        <li><a [routerLink]="['/about']" (click)="isCollapsed = !isCollapsed">About</a></li>
-        <li><a [routerLink]="['/contact']" (click)="isCollapsed = !isCollapsed">Contact</a></li>
+        <li><a [routerLink]="['/skills']" (click)="shouldCollapse()">Skills</a></li>
+        <li><a [routerLink]="['/about']" (click)="shouldCollapse()">About</a></li>
+        <li><a [routerLink]="['/contact']" (click)="shouldCollapse()">Contact</a></li>
       </ul>
 
 

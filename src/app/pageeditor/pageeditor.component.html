@@ -1,7 +1,6 @@
+<button *ngIf="globals.pageFroalaEditorHidden" [ngStyle]="{'left':buttonLocation}" class="switch-version btn btn-danger btn-sm" (click)="goBack()"><i class="fa fa-arrow-left"></i></button>
 
-
-  <h1>{{globals.theSkillTitle}}: {{globals.titlePage}}<button style="margin-left: 10px;" (click)="globals.toggleSkillBox()" class="btn btn-xs btn-primary">{{globals.toggleText}}</button>
-
+<h1>{{globals.theSkillTitle}}: {{globals.titlePage}}
     <div *ngIf="getLoggedStatus()" class="btn-group">
 
       <button class="btn btn-xs btn-primary" *ngIf="globals.pageFroalaEditorHidden" (click)="globals.onToggleEditor()">Edit
@@ -17,7 +16,7 @@
 
   <div *ngIf="globals.pageFroalaEditorHidden">
 
-    <p [innerHTML]="globals.contentPage" [froalaView]></p>
+    <p [froalaView]="globals.contentPage" ></p>
 
 
   </div>

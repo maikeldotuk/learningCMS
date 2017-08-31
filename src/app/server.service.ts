@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 
 @Injectable()
 export class ServerService {
-passedPage = {skill:"",page:"",shrink:""};
+
 
 textWhenShow = 'Show Skillset';
   titlePage: string;
@@ -31,7 +31,7 @@ textWhenShow = 'Show Skillset';
   orderOnGrid: number;
   pageSavingButtonLabel = 'Save Page';
   showSkillBox = true;
-  toggleText = 'Expand';
+
 
   showSpinner = false;
   selectedSkill: Skillbox;
@@ -415,29 +415,8 @@ textWhenShow = 'Show Skillset';
   }
 
 
-
-
-  toggleSkillBox() {
-
-    if (this.showSkillBox === true) {
-      const shrink = 'hidden';
-      this.router.navigate(['/skills', this.passedPage.skill, this.passedPage.page, shrink]);
-
-
-    } else {
-
-      //this.router.navigate(['/skills', this.theSkillTitle]);
-      this.passedPage.shrink = "";
-
-      this.showSkillBox = true;
-      this.toggleText = 'Expand';
-      this.router.navigate(['/skills', this.passedPage.skill, this.passedPage.page]);
-    }
-
-  }
-
-
-  passPage(anAddressSkill: string, anAddressPage: string, shrink: string) {
+  passPage(anAddressSkill: string, anAddressPage: string) {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
 
     // First step, just check if the address has all the params otherwise return
 
@@ -448,7 +427,6 @@ textWhenShow = 'Show Skillset';
     // Without decodeURI doesn't work because it adds the %20 and javascript doesn't like it
     const addressSkill = decodeURI(anAddressSkill);
     const addressPage = decodeURI(anAddressPage);
-    this.passedPage = {skill: addressSkill, page: addressPage, shrink: shrink};
 
     /* Second step, check if the whole SPA page just loaded because in that case you need to give a bit of time
     to the arrays to fill up with data. Otherwise everything can be instant */
@@ -461,10 +439,7 @@ textWhenShow = 'Show Skillset';
 
         if (!(theSkill.length === 0)) {
           const aPage = theSkill[0];
-          if ( shrink==='hidden' ) {
-            this.showSkillBox = false;
-            this.toggleText = this.textWhenShow;
-          }
+          this.showSkillBox = false;
           this.loadPage(aPage);
         } else {
           this.createOrError();
@@ -477,13 +452,8 @@ textWhenShow = 'Show Skillset';
       item.skill === addressSkill && item.title === addressPage);
 
       if (!(theSkill.length === 0)) {
-
-
         const aPage = theSkill[0];
-        if ( shrink==='hidden' ) {
-          this.showSkillBox = false;
-          this.toggleText = this.textWhenShow;
-        }
+        this.showSkillBox = false;
         this.loadPage(aPage);
       } else {
         this.createOrError();

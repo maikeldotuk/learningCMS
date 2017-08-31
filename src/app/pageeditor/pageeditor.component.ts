@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import {ServerService} from "../server.service";
 import {UserService} from '../user.service';
+import {Router} from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -9,7 +10,7 @@ declare var $: any;
   styleUrls: ['./pageeditor.component.css']
 })
 export class PageeditorComponent implements OnInit {
-
+buttonLocation : string;
   froalaOptions: Object = {
     placeholderText: 'Add here the text for the page',
     charCounterCount: true,
@@ -27,8 +28,10 @@ export class PageeditorComponent implements OnInit {
     }
   };
 
-  constructor(public globals: ServerService, private user: UserService
-  ) { }
+  constructor(private router: Router, public globals: ServerService, private user: UserService
+  ) {
+    this.updateButtonLocation();
+  }
 
   ngOnInit() {
 
@@ -167,5 +170,15 @@ export class PageeditorComponent implements OnInit {
     return this.user.getLoggedStatus();
   }
 
+  goBack() {
+   this.router.navigate(['/skills']);
+  }
+
+  @HostListener('body:resize') updateButtonLocation(): void {
+
+
+    this.buttonLocation = document.body.clientWidth - 30 + 'px';
+
+  }
 
 }

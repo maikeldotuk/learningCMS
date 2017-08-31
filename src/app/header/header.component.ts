@@ -40,10 +40,12 @@ this.updateWidthValue();
 
   login() {
     this.user.clickedLogin();
+    this.isCollapsed = !this.isCollapsed;
   }
 
   logout() {
     this.user.logout();
+    this.isCollapsed = !this.isCollapsed;
   }
 
   getLoggedStatus(): boolean {

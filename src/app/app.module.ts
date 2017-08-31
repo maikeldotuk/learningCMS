@@ -32,7 +32,6 @@ const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
   {path: 'skills', component: SkillsComponent},
   {path: 'skills/:skill/:page', component: SkillsComponent},
-  {path: 'skills/:skill/:page/:hide', component: SkillsComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
   {path: '**', component: NotfoundComponent}

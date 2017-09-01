@@ -218,7 +218,7 @@ textWhenShow = 'Show Skillset';
   getStyle() {
 
     switch (this.editorMasteryField) {
-      case 'Known': {
+      case 'Familiar': {
         return 'knownTitle';
       }
       case 'Learning': {

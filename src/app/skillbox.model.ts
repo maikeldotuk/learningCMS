@@ -7,7 +7,7 @@ export class Skillbox {
 
   getStyle() {
     switch (this.skillLevel) {
-      case 'Known': {
+      case 'Familiar': {
         return 'knownTitle';
       }
       case 'Learning': {

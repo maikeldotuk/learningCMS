@@ -22,16 +22,11 @@
 </div>
 
 
-<accordion [closeOthers]="oneAtATime" *ngIf="isCollapsed">
+<accordion style="width:100%" [closeOthers]="oneAtATime" *ngIf="isCollapsed" >
 
   <!-- The skillboxes -->
-  <app-single-skill-box *ngFor="let skill of arraySkills; let skillNumber=index"
+  <app-single-skill-box class="list-group" *ngFor="let skill of arraySkills; let skillNumber=index"
                         [skill]="skill" [skillPages]="getPages(skill)"
                         (onSelectedSkill)="skillSelected(skillNumber)"></app-single-skill-box>
 
-  <!-- The box to Hide the Skill Editor -->
-  <a class="list-group-item list-group-item-info" *ngIf="loggedIn">
-
-    <button class="btn btn-xs btn-danger" (click)="onToogleEditor()">{{toggleButtonText}}</button>
-  </a>
 </accordion>

@@ -1,27 +1,7 @@
-#knownTitle, #hoveredTitle, #learningTitle, #queuedTitle, #memorisingTitle, #legendTitle {
-  text-align: center;
-  border: 1px solid grey;
-  height: 20px;
-  color: black;
-  font-size: 16px;
-  margin: 0px;
-  padding: 5px;
-  margin: auto;
-  width: 100%;
-
-
-}
-
 #knownTitle{ background-color: rgba(41, 155, 255, 0.8); }
 #learningTitle { background-color: #b3ffb3; }
 #queuedTitle { background-color: #ffef3f; }
-#hoveredTitle{ background-color: black; font-weight: normal; color: yellow; }
-#legendTitle { background-color: black; color: white }
 
 
 
 
-#legendTable {
-  margin: 0px auto;
-  width: 130px;
-}

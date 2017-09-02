@@ -19,6 +19,7 @@
         <li><a [routerLink]="['/skills']" (click)="shouldCollapse()">Skills</a></li>
         <li><a [routerLink]="['/about']" (click)="shouldCollapse()">About</a></li>
         <li><a [routerLink]="['/contact']" (click)="shouldCollapse()">Contact</a></li>
+        <li><a *ngIf="getLoggedStatus() && screenWidthFigure<768" [routerLink]="['/skilleditor']" (click)="shouldCollapse()">Skill Editor</a></li>
       </ul>
 
 

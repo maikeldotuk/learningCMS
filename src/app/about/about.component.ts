@@ -29,4 +29,8 @@ export class AboutComponent implements OnInit {
 
   }
 
+  getPaddingBottom() {
+    return this.isCollapsed === false ? '100px' : '10px';
+  }
+
 }

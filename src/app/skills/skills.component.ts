@@ -89,4 +89,8 @@ export class SkillsComponent implements OnInit {
     }
 
   }
+
+  getPaddingBottom() {
+    return this.isCollapsed === false ? '100px' : '10px';
+  }
 }

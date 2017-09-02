@@ -1,14 +1,15 @@
-<div class="container-fluid" style="padding-bottom: 100px;" >
+<div class="container-fluid" [ngStyle]="{'padding-bottom': getPaddingBottom()}" >
   <div class="row">
     <!-- The branding -->
+    <app-branding [collapse]="!isCollapsed"></app-branding>
     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!getLoggedStatus()">
-      <app-branding ></app-branding>
+      <app-branding [collapse]="isCollapsed"></app-branding>
       <app-projects [collapse]="isCollapsed"></app-projects>
       <app-legend [collapse]="isCollapsed"></app-legend>
       <app-latestnews [collapse]="isCollapsed"></app-latestnews>
     </div>
     <!-- The skill editor -->
-    <div *ngIf="getShowSkillEditor()">
+    <div *ngIf="getShowSkillEditor()" [collapse]="isCollapsed">
     <div *ngIf="getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
       <app-skilleditor></app-skilleditor>
       <!-- The preview -->

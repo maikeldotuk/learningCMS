@@ -36,17 +36,17 @@
 
 
 
-<accordion-group *ngIf="isCollapsed" class="list-group" >
+<accordion-group *ngIf="isCollapsed"  >
     <div accordion-heading >
       {{skill.skillTitle}}
       <img class="pull-right flot-xs-right" style="max-height:30px; max-width:150px" [src]="skill.skillLogoURL">
 
     </div>
-  <div [id]="getStyle()">Status: <strong>{{skill.skillLevel}}</strong></div>
+  <div class="list-group-item" [id]="getStyle()">Status: <strong>{{skill.skillLevel}}</strong></div>
 
-    <a class="list-group-item" style="color:black;width:100%" *ngFor="let subskill of myPages;"
+    <li class="list-group-item" *ngFor="let subskill of myPages;"
      [routerLink]="['/skills',subskill.skill, subskill.title]">{{subskill.title}}
-  </a>
+  </li>
 
 
 </accordion-group>

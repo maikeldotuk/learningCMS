@@ -143,13 +143,8 @@ button:hover,
   outline: none !important;
 }
 
-#knownTitleCollapsed,  #learningTitleCollapsed, #queuedTitleCollapsed, #memorisingTitleCollapsed {
-
-  font-size: 14px;
-  padding: 4px;
-}
 
 
 
 
-/*Collapsed*/
+

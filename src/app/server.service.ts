@@ -243,11 +243,11 @@ textWhenShow = 'Show Skillset';
           new Skillbox(data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery),
         );
       }
-      console.log(this.arraySkillboxes.sort((n1, n2) => this.sortSkills(n1, n2)));
+      this.arraySkillboxes.sort((n1, n2) => this.sortSkills(n1, n2));
     });
   }
 
-  sortSkills(n1: Skillbox,n2: Skillbox): number {
+  sortSkills(n1: Skillbox, n2: Skillbox): number {
 
     if (n1.skillLevel < n2.skillLevel) {
       return -1;

@@ -255,9 +255,9 @@ textWhenShow = 'Show Skillset';
       return 1;
     }
 
-    if (n2.skillTitle < n2.skillTitle) {
+    if (n1.skillTitle < n2.skillTitle) {
       return -1;
-    } else if (n2.skillTitle > n2.skillTitle) {
+    } else if (n1.skillTitle > n2.skillTitle) {
       return 1;
     } else {
       return 0;

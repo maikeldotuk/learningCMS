@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1">
+      <app-branding></app-branding>
+      <app-projects></app-projects>
+      <app-legend></app-legend>
+    </div>
+
+
+
+
+    <div class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
+      <h1>{{titlePage}}
+      <div *ngIf="getLoggedStatus()" class="btn-group">
+
+        <button class="btn btn-xs btn-primary" *ngIf="!isEdit" (click)="onToggleEditor()">Edit
+        </button>
+        <button *ngIf="isEdit" class="btn btn-xs btn-primary" (click)="onSavePage()">{{pageSavingButtonLabel}}
+          <app-spinner *ngIf="showSpinner"></app-spinner>
+        </button>
+      </div></h1>
+      <div *ngIf="!isEdit" [froalaView]="textPage"></div>
+      <div *ngIf="isEdit" [froalaEditor]="froalaOptions" [(ngModel)]="textPage"></div>
+
+    </div>
+  </div>
+</div>
+

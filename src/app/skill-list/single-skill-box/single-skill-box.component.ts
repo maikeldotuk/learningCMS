@@ -8,9 +8,9 @@ import {Page} from '../../page.model';
   styleUrls: ['./single-skill-box.component.css']
 })
 export class SingleSkillBoxComponent implements OnInit {
-@Input() skill: Skillbox;
 
-  @Input('skillPages') myPages: Page[];
+  @Input() skill: Skillbox;
+  @Input() myPages: Page[];
   @Output() onSelectedSkill: EventEmitter<Skillbox>;
   isCollapsed = false;
   screenWidthFigure: number;

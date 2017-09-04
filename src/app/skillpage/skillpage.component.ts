@@ -1,26 +1,69 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
 import {ServerService} from '../server.service';
+import {Skillbox} from '../skillbox.model';
 import {UserService} from '../user.service';
 import {Router} from '@angular/router';
 declare var $: any;
 
 @Component({
-  selector: 'app-pageeditor',
-  templateUrl: './pageeditor.component.html',
-  styleUrls: ['./pageeditor.component.css']
+  selector: 'app-skillpage',
+  templateUrl: './skillpage.component.html',
+  styleUrls: ['./skillpage.component.css']
 })
-export class PageeditorComponent implements OnInit {
-buttonLocation: string;
+export class SkillpageComponent implements OnInit {
+  textPage: string;
+  titlePage: string;
   froalaOptions: Object;
+  isEdit = false;
+  pageSavingButtonLabel = 'Save Page';
+  showSpinner = false;
+  theSkill: Skillbox;
+  theID: number;
 
-  constructor(private router: Router, public globals: ServerService, private user: UserService
-  ) {
-    this.updateButtonLocation();
-    this.froalaOptions = this.globals.globalFroala;
+
+  constructor(private route: ActivatedRoute, private server: ServerService, private user: UserService) {
+
+    this.froalaOptions = this.server.globalFroala;
+    route.params.subscribe(params => {
+      const addressSkill = params['skill'];
+      if (!addressSkill) {
+     this.titlePage = 'Error';
+     this.textPage = 'You need to write something';
+      } else {
+        if (this.server.arraySkillboxes.length === 0) {
+          setTimeout(() => {
+            let testVar: any;
+            if ((this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill))) {
+              testVar = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill).descriptHTML;
+            } else {
+              testVar = 'This skill doesn\'t exist';
+            }
+            this.titlePage = addressSkill;
+            this.textPage = testVar;
+            this.theSkill = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill);
+            this.theID = this.server.arraySkillboxes.indexOf(this.theSkill);
+
+
+          }, 300);
+        } else {
+          let testVar: any;
+          if ((this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill))) {
+            testVar = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill).descriptHTML;
+          } else {
+            testVar = 'This skill doesn\'t exist';
+          }
+          this.titlePage = addressSkill;
+          this.textPage = testVar;
+          this.theSkill = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill);
+          this.theID = this.server.arraySkillboxes.indexOf(this.theSkill);
+        }
+
+      }
+    });
   }
 
   ngOnInit() {
-
 
     const isActive = function (cmd) {
       const blocks = this.selection.blocks();
@@ -152,19 +195,20 @@ buttonLocation: string;
       }
     });
   }
+
   getLoggedStatus(): boolean {
     return this.user.getLoggedStatus();
   }
 
-  goBack() {
-   this.router.navigate(['/skills']);
+  onToggleEditor() {
+    this.isEdit = true;
   }
 
-  @HostListener('body:resize') updateButtonLocation(): void {
-
-
-    this.buttonLocation = document.body.clientWidth - 30 + 'px';
-
+  onSavePage() {
+    this.isEdit = false;
+    this.server.addDescriptionToSkill(this.theID, this.textPage);
   }
 
 }
+
+

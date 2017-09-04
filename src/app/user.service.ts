@@ -9,7 +9,7 @@ export class UserService {
 
   constructor(private http: HttpClient, @Inject('SERVER_URL') server: string) {
     this.server = server;
-    this.logedin = false;
+    this.logedin = true;
   }
 
   getLoggedStatus() {

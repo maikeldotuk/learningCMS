@@ -10,6 +10,23 @@ import {Router} from '@angular/router';
 @Injectable()
 export class ServerService {
 
+  globalFroala: Object = {
+    placeholderText: 'Add here the text for the page',
+    charCounterCount: true,
+    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre', '|', 'formatOL', 'formatUL', 'quote', 'insertLink', 'insertImage', 'insertTable', 'html'],
+    toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre'],
+    toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
+      'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
+      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
+    toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
+      'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
+      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
+    tableStyles: {
+      'table table-bordered': 'BS bordered',
+      'table table-condensed': 'BS condensed'
+    }
+  };
+
 
 textWhenShow = 'Show Skillset';
   titlePage: string;
@@ -240,7 +257,7 @@ textWhenShow = 'Show Skillset';
 
       for (const entry of Object.keys(data)) {
         this.arraySkillboxes.push(
-          new Skillbox(data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery),
+          new Skillbox(data[entry]._id, data[entry].title, data[entry].logoURL, data[entry].mastery, data[entry].descriptHTML),
         );
       }
       this.arraySkillboxes.sort((n1, n2) => this.sortSkills(n1, n2));
@@ -272,7 +289,7 @@ textWhenShow = 'Show Skillset';
 
   }
 
-
+// IMPORTANT: Change blank here otherwise you'd overwrite them all.
   onSendSkill() {
 
     let formattedItem: Skillbox;
@@ -281,6 +298,7 @@ textWhenShow = 'Show Skillset';
       title: this.editorTitleField,
       logoURL: this.editorLogoField,
       mastery: this.editorMasteryField,
+      descriptHTML: 'Blank'
     };
     const address = this.server + '/api/v1/todo';
     let results: any;
@@ -288,14 +306,14 @@ textWhenShow = 'Show Skillset';
 
     req.subscribe(data => {
       results = data;
-      formattedItem = new Skillbox(results._id, newSkill.title, newSkill.logoURL, newSkill.mastery);
+      formattedItem = new Skillbox(results._id, newSkill.title, newSkill.logoURL, newSkill.mastery, newSkill.descriptHTML);
       this.arraySkillboxes.push(formattedItem);
       this.onClearFields();
       this.getAllPagesList();
     });
   }
 
-//This is going to be to modify
+// This is going to be to modify
   onAmendSkill() {
 
     this.movePagesToNewSkill(this.arraySkillboxes[this.orderOnGrid]); // Link the pages to the new skill title.
@@ -424,7 +442,7 @@ textWhenShow = 'Show Skillset';
     return thePages;
   }
 
-  //New setters and getters
+  // New setters and getters
 
   getArraySkillBoxes(): Skillbox[] {
     return this.arraySkillboxes;
@@ -531,4 +549,35 @@ createOrError() {
   getShowSkillbox(): boolean {
     return this.showSkillBox;
   }
+
+
+  addDescriptionToSkill(theID: number, content: string) {
+
+    // Deletes the old skill without deleting the pages.
+    const id = theID;
+    const theSkillToChange = this.arraySkillboxes[id];
+
+    let formattedItem: Skillbox;
+
+    const amendedSkill = {
+      title: theSkillToChange.skillTitle,
+      logoURL: theSkillToChange.skillLogoURL,
+      mastery: theSkillToChange.skillLevel,
+      descriptHTML: content
+    };
+    const address = this.server + '/api/v1/todo/' + theSkillToChange.skillID;
+
+    let results: any;
+    const req = this.http.put(address, amendedSkill);
+
+    req.subscribe(data => {
+      results = data;
+      formattedItem = new Skillbox(results._id, amendedSkill.title, amendedSkill.logoURL, amendedSkill.mastery, amendedSkill.descriptHTML);
+      this.arraySkillboxes.splice(id, 1);
+      this.arraySkillboxes.push(formattedItem);
+      this.arraySkillboxes.sort((n1, n2) => this.sortSkills(n1, n2));
+    });
+  }
+
+
 }

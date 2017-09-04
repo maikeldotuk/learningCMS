@@ -14,7 +14,7 @@ buttonLocation : string;
   froalaOptions: Object = {
     placeholderText: 'Add here the text for the page',
     charCounterCount: true,
-    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre'],
+    toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre', '|', 'formatOL', 'formatUL', 'quote', 'insertLink', 'insertImage', 'insertTable', 'html'],
     toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre'],
     toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
       'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',

@@ -17,7 +17,7 @@ Be aware that if you fork it and use it in a live website **you'll have to get y
  * https://github.com/chymz/ng2-ckeditor
  * https://www.tinymce.com/docs/integrations/angular2/
  
-From all those options TinyMCE seems the most viable one. I tried to install it and although it was feasible I found it would have consumed much more time than I required and not quite look as what I wanted. Froala simply checked all the requirements I had in my list. 
+From all those options TinyMCE seems the most viable one. I tried to install it and although it was feasible I found it would have consumed much more time than I required and not quite look as what I wanted. Froala simply checked all the requirements I had in my list. I'm still considering other options and as the website it's still in development I haven't quite yet finished with it, for example I haven't added yet images upload to fully know if Froala is definitely the best option and therefore get a license.  
  
 This is the way the website looks as of 26th of August of 2017. Due to obvious reasons this picture could be outdated. Check the website itself to see the live latest version http://www.maikel.uk
 

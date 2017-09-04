@@ -8,7 +8,7 @@
       <button *ngIf="!globals.pageFroalaEditorHidden" class="btn btn-xs btn-primary" (click)="globals.onSavePage()">{{globals.pageSavingButtonLabel}}
         <app-spinner *ngIf="globals.showSpinner"></app-spinner>
       </button>
-      <button class="btn btn-xs btn-danger" (click)="globals.onRemovePage()">Delete
+      <button class="btn btn-xs btn-danger" (click)="onRemovePage()">Delete
       </button>
     </div>
   </h1>

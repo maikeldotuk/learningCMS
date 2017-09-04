@@ -26,9 +26,11 @@ export class SingleSkillBoxComponent implements OnInit {
   ngOnInit() {
   }
 
+  /* Depreacated but not deleted from others
   onClickedSskill() {
     this.onSelectedSkill.emit(this.skill);
   }
+  */
 
   @HostListener('window:resize') updateWidthValue(): void {
     this.screenWidthFigure = window.screen.width;

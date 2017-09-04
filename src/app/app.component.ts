@@ -8,22 +8,25 @@ import {Component, HostListener, OnInit} from '@angular/core';
 })
 export class AppComponent implements OnInit {
   screenWidthFigure: number;
-  isCollapsed: boolean;
+  isSmallScreen: boolean;
   ngOnInit() {}
 
 
   constructor() {this.updateWidthValue();}
-
   @HostListener('window:resize') updateWidthValue(): void {
     this.screenWidthFigure = window.screen.width;
 
     if (this.screenWidthFigure >= 768) {
 
-      this.isCollapsed = false;
+      this.isSmallScreen = false;
     } else {
 
-      this.isCollapsed = true;
+      this.isSmallScreen = true;
     }
 
+  }
+
+  getPaddingBottom() {
+    return this.isSmallScreen === false ? '100px' : '10px';
   }
 }

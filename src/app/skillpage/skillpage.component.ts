@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ServerService} from '../server.service';
 import {Skillbox} from '../skillbox.model';
@@ -20,11 +20,14 @@ export class SkillpageComponent implements OnInit {
   showSpinner = false;
   theSkill: Skillbox;
   theID: number;
+  screenWidthFigure: number;
+  isSmallScreen = false;
 
 
   constructor(private route: ActivatedRoute, private server: ServerService, private user: UserService) {
 
     this.froalaOptions = this.server.globalFroala;
+    this.updateWidthValue();
     route.params.subscribe(params => {
       const addressSkill = params['skill'];
       if (!addressSkill) {
@@ -207,6 +210,23 @@ export class SkillpageComponent implements OnInit {
   onSavePage() {
     this.isEdit = false;
     this.server.addDescriptionToSkill(this.theID, this.textPage);
+  }
+
+  @HostListener('window:resize') updateWidthValue(): void {
+    this.screenWidthFigure = window.screen.width;
+
+    if (this.screenWidthFigure >= 768) {
+
+      this.isSmallScreen = false;
+    } else {
+
+      this.isSmallScreen = true;
+    }
+
+  }
+
+  getPaddingBottom() {
+    return this.isSmallScreen === false ? '100px' : '10px';
   }
 
 }

@@ -10,20 +10,16 @@
   <div class="dropdown-content">
 
     <table id="skillBox">
-      <div id="hoveredTitle">
+      <div id="hoveredTitle">{{skill.skillTitle}}</div><tr>
 
-        <a [routerLink]="['/skills',skill.skillTitle]">{{skill.skillTitle}}</a>
-
-      </div><tr>
-
-      <td id="hooveredLogo" (click)="onClickedSskill()"><img id="theLogo" [src]="skill.skillLogoURL"></td>
+      <td id="hooveredLogo" [routerLink]="['/skills',skill.skillTitle]"><img id="theLogo" [src]="skill.skillLogoURL"></td>
 
     </tr>
 
       <tr>
-        <td id="theContent">
+        <td *ngIf="!(myPages.length===0)" id="theContent">
 
-          <a *ngFor="let subskill of myPages;"
+          <a  *ngFor="let subskill of myPages;"
              [routerLink]="['/skills',subskill.skill, subskill.title]">{{subskill.title}}
           </a>
 

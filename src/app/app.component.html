@@ -1,5 +1,15 @@
 
 <app-header></app-header>
-<router-outlet></router-outlet>
-<app-footer [collapse]="isCollapsed"></app-footer>
+<div class="container-fluid" [ngStyle]="{'padding-bottom': getPaddingBottom()}" >
+  <div class="row">
+    <!-- The branding -->
+<app-branding [collapse]="!isSmallScreen"></app-branding>
+<div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1">
+  <app-branding [collapse]="isSmallScreen"></app-branding>
+  <app-projects [collapse]="isSmallScreen"></app-projects>
+  <app-legend [collapse]="isSmallScreen"></app-legend>
+  <app-latestnews [collapse]="isSmallScreen"></app-latestnews>
+</div>
+    <router-outlet></router-outlet></div></div>
+<app-footer [collapse]="isSmallScreen"></app-footer>
 

@@ -82,14 +82,10 @@ textWhenShow = 'Show Skillset';
    component.
    */
 
-
+// Depreacated because the skill editor is going to be part of the skill page.
   selectedSkillFromArray(index) {
     const aSkill = this.arraySkillboxes[index];
 
-    this.isPageEnabled = false;
-    if (this.user.getLoggedStatus() === false) {
-      return;
-    }
 
     this.selectedSkill = aSkill;
 
@@ -227,6 +223,9 @@ textWhenShow = 'Show Skillset';
         this.getAllPagesList();
         this.isPageEnabled = false;
         this.onClearFields();
+
+        // This could be changed to send back to the skill page of the page that was deleted
+        this.router.navigate(['/skills']);
       });
     }).catch(swal.noop);
 

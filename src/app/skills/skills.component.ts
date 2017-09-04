@@ -14,7 +14,7 @@ import {Skillbox} from '../skillbox.model';
   styleUrls: ['./skills.component.css']
 })
 export class SkillsComponent implements OnInit {
-  isCollapsed = false;
+  isSmallScreen = false;
   screenWidthFigure: number;
 
   constructor(private route: ActivatedRoute, private server: ServerService, private http: HttpClient, private user: UserService) {
@@ -82,15 +82,15 @@ export class SkillsComponent implements OnInit {
 
     if (this.screenWidthFigure >= 768) {
 
-      this.isCollapsed = false;
+      this.isSmallScreen = false;
     } else {
 
-      this.isCollapsed = true;
+      this.isSmallScreen = true;
     }
 
   }
 
   getPaddingBottom() {
-    return this.isCollapsed === false ? '100px' : '10px';
+    return this.isSmallScreen === false ? '100px' : '10px';
   }
 }

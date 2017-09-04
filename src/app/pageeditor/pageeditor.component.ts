@@ -166,5 +166,9 @@ buttonLocation: string;
     this.buttonLocation = document.body.clientWidth - 30 + 'px';
 
   }
+onRemovePage() {
+  this.globals.onRemovePage();
 
+
+}
 }

@@ -1,31 +1,9 @@
-<div class="container-fluid" [ngStyle]="{'padding-bottom': getPaddingBottom()}" >
-  <div class="row">
-    <!-- The branding -->
-    <app-branding [collapse]="!isCollapsed"></app-branding>
-    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" *ngIf="!getLoggedStatus()">
-      <app-branding [collapse]="isCollapsed"></app-branding>
-      <app-projects [collapse]="isCollapsed"></app-projects>
-      <app-legend [collapse]="isCollapsed"></app-legend>
-      <app-latestnews [collapse]="isCollapsed"></app-latestnews>
-    </div>
-    <!-- The skill editor -->
-    <div *ngIf="getShowSkillEditor()" [collapse]="isCollapsed">
-    <div *ngIf="getLoggedStatus()" class="col-xs-12 col-sm-3 col-md-3 col-lg-2 col-xl-1" >
-      <app-skilleditor></app-skilleditor>
-      <!-- The preview -->
-
-      <app-skillpreview *ngIf="isPreviewEnabled()"></app-skillpreview>
-
-    </div></div>
-
-
-    <!--The list of skills and the page-->
-    <div [ngClass]="{'col-md-9': getShowSkillEditor(), 'col-sm-9': getShowSkillEditor(),
+ <div [ngClass]="{'col-md-9': getShowSkillEditor(), 'col-sm-9': getShowSkillEditor(),
      'col-lg-10': getShowSkillEditor(), 'col-xl-11':getShowSkillEditor(), 'col-md-12':getShowSkillEditor() && getLoggedStatus(),
      'col-sm-12':getShowSkillEditor() && getLoggedStatus()}" class="col-xs-12">
       <app-skill-list *ngIf="getShowSkillbox()" [loggedIn]="getLoggedStatus()" [arraySkills]="getSkillBoxes()"
                       [toggleButtonText]="getSkillEditorText()" (selectedSkill)="onSkillSelected($event)" (emitToggleEditor)="editorToggled($event)"></app-skill-list>
       <!--THe text of the page-->
       <app-pageeditor *ngIf="getIsPageEnabled()"></app-pageeditor>
-    </div></div></div>
+ </div>
 

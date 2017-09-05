@@ -246,6 +246,7 @@ export class SkillpageComponent implements OnInit {
       this.noPages = (this.thePages.length === 0) ? true : false;
       this.doesExist = true;
     } else {
+      this.theSkill = new Skillbox(0, '', '', 'Learning', '');
       this.doesExist = false;
       return;
     }
@@ -261,8 +262,8 @@ export class SkillpageComponent implements OnInit {
   }
 
   onCancelEdit(someVar) {
-    this.isNew = false;
-    this.doesExist = false;
+
+    if (this.isNew === true) {this.doesExist = false;}
     this.isEdit = false;
   }
 

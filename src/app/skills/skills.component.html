@@ -3,7 +3,5 @@
      'col-sm-12':getShowSkillEditor() && getLoggedStatus()}" class="col-xs-12">
       <app-skill-list *ngIf="getShowSkillbox()" [loggedIn]="getLoggedStatus()" [arraySkills]="getSkillBoxes()"
                       [toggleButtonText]="getSkillEditorText()" (selectedSkill)="onSkillSelected($event)" (emitToggleEditor)="editorToggled($event)"></app-skill-list>
-      <!--THe text of the page-->
-      <app-pageeditor *ngIf="getIsPageEnabled()"></app-pageeditor>
  </div>
 

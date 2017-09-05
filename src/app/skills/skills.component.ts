@@ -17,18 +17,10 @@ export class SkillsComponent implements OnInit {
   isSmallScreen = false;
   screenWidthFigure: number;
 
-  constructor(private route: ActivatedRoute, private server: ServerService, private http: HttpClient, private user: UserService) {
+  constructor( private server: ServerService, private http: HttpClient, private user: UserService) {
     this.updateWidthValue();
 
-    route.params.subscribe(params => {
-      const addressSkill = params['skill'];
-      const addressPage = params['page'];
-      if (!addressSkill || !addressPage) {
-        this.server.clearPageFields();
-      } else {
-        this.server.passPage(addressSkill, addressPage);
-      }
-    });
+
 
   }
 
@@ -41,21 +33,13 @@ export class SkillsComponent implements OnInit {
     return this.user.getLoggedStatus();
   }
 
-  isPreviewEnabled(): boolean {
-    return this.server.showPreview();
-  }
 
-  getIsPageEnabled(): boolean {
-    return this.server.getIsPageEnabled();
-  }
 
   getSkillBoxes(): Skillbox[] {
     return this.server.getArraySkillBoxes();
   }
 
-  onSkillSelected(skillNumber: number) {
-    this.server.selectedSkillFromArray(skillNumber);
-  }
+
 
   getShowSkillEditor(): boolean {
     if (this.user.getLoggedStatus() === false) {

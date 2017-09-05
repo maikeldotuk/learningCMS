@@ -12,7 +12,8 @@ export class AppComponent implements OnInit {
   ngOnInit() {}
 
 
-  constructor() {this.updateWidthValue();}
+  constructor() {this.updateWidthValue();
+    document.body.scrollTop = document.documentElement.scrollTop = 0;}
   @HostListener('window:resize') updateWidthValue(): void {
     this.screenWidthFigure = window.screen.width;
 

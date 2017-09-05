@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ServerService} from '../server.service';
 import {UserService} from '../user.service';
 import {Skillbox} from "../skillbox.model";
+import {Page} from "../page.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-skilleditor',
@@ -10,45 +12,33 @@ import {Skillbox} from "../skillbox.model";
 })
 export class SkilleditorComponent implements OnInit {
 
-  constructor(public globals: ServerService, private user: UserService
-  ) { }
+  @Input() theSkill: Skillbox;
+  @Input() moreContent: string;
+  @Input() isNew: boolean;
+  @Output() onAddedPage: EventEmitter<Page>;
+  @Output() cancelEdit: EventEmitter<any>;
+
+  constructor(private router: Router) {
+    this.onAddedPage = new EventEmitter();
+    this.cancelEdit = new EventEmitter();
+
+  }
 
   ngOnInit() {
   }
 
-  getFieldSkillTitle(): string{
-  return this.globals.editorTitleField;
-  }
-  getFieldLogoURL(): string {
-    return this.globals.editorLogoField;
-  }
-  isModify(): boolean {
-    return this.globals.isExistingSkill;
-  }
 
   addPageToSkill() {
-    this.globals.addPageToSkill();
+    const aPage = new Page('', this.moreContent, '', this.theSkill.skillTitle, new Date());
+    this.onAddedPage.emit(aPage);
+    this.moreContent = '';
+
   }
 
-  getFieldMasteryLevel(): string {
-    return this.globals.editorMasteryField;
-  }
+  onCancel() {
 
+    this.cancelEdit.emit(0);
 
-  disableAddSkillButton(): boolean {
-  return this.globals.editorAddModifyButtonVisible;
-  }
-
-
-  onCreateSkill() {
-  this.globals.onCreateSkill();
-  }
-
-  onAmendSkill() {
-  this.globals.onAmendSkill();
-  }
-  onClearFields() {
-  this.globals.onClearFields();
   }
 
 

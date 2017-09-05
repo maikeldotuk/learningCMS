@@ -29,16 +29,16 @@ import { PageeditorComponent } from './pageeditor/pageeditor.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { EditorpageComponent } from './editorpage/editorpage.component';
 import { SkillpageComponent } from './skillpage/skillpage.component';
+import { IndexComponent } from './index/index.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
   {path: 'skills', component: SkillsComponent},
-  {path: 'skills/:skill/:page', component: SkillsComponent},
+  {path: 'skills/:skill/:page', component: PageeditorComponent},
   {path: 'skills/:skill', component: SkillpageComponent},
   {path: 'about', component: AboutComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'skilleditor', component: EditorpageComponent},
-  {path: 'skills/:skill', component: EditorpageComponent},
   {path: '**', component: NotfoundComponent}
 
 
@@ -65,6 +65,7 @@ const routes: Routes = [
     NotfoundComponent,
     EditorpageComponent,
     SkillpageComponent,
+    IndexComponent,
 
   ],
   imports: [

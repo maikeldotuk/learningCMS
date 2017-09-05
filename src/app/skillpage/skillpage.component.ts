@@ -3,8 +3,10 @@ import {ActivatedRoute} from '@angular/router';
 import {ServerService} from '../server.service';
 import {Skillbox} from '../skillbox.model';
 import {UserService} from '../user.service';
-import {Router} from '@angular/router';
+
+import {Page} from '../page.model';
 declare var $: any;
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-skillpage',
@@ -13,53 +15,43 @@ declare var $: any;
 })
 export class SkillpageComponent implements OnInit {
   textPage: string;
-  titlePage: string;
+  titleSkill: string;
   froalaOptions: Object;
   isEdit = false;
-  pageSavingButtonLabel = 'Save Page';
+  pageSavingButtonLabel = 'Save Skill';
   showSpinner = false;
-  theSkill: Skillbox;
+  theSkill: Skillbox = new Skillbox(0, '', '', 'Learning', '');
   theID: number;
   screenWidthFigure: number;
   isSmallScreen = false;
+  thePages: Page[];
+  noPages = true;
+  addressSkill: string;
+  isNew = false;
+
+
+  doesExist = false;
+
+  moreContent: string;
 
 
   constructor(private route: ActivatedRoute, private server: ServerService, private user: UserService) {
 
+
     this.froalaOptions = this.server.globalFroala;
     this.updateWidthValue();
     route.params.subscribe(params => {
-      const addressSkill = params['skill'];
-      if (!addressSkill) {
-     this.titlePage = 'Error';
+      this.addressSkill = params['skill'];
+      if (!this.addressSkill) {
+     this.titleSkill = 'Error';
      this.textPage = 'You need to write something';
       } else {
         if (this.server.arraySkillboxes.length === 0) {
           setTimeout(() => {
-            let testVar: any;
-            if ((this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill))) {
-              testVar = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill).descriptHTML;
-            } else {
-              testVar = 'This skill doesn\'t exist';
-            }
-            this.titlePage = addressSkill;
-            this.textPage = testVar;
-            this.theSkill = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill);
-            this.theID = this.server.arraySkillboxes.indexOf(this.theSkill);
-
-
+            this.updateSkill();
           }, 300);
         } else {
-          let testVar: any;
-          if ((this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill))) {
-            testVar = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill).descriptHTML;
-          } else {
-            testVar = 'This skill doesn\'t exist';
-          }
-          this.titlePage = addressSkill;
-          this.textPage = testVar;
-          this.theSkill = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === addressSkill);
-          this.theID = this.server.arraySkillboxes.indexOf(this.theSkill);
+          this.updateSkill();
         }
 
       }
@@ -207,9 +199,22 @@ export class SkillpageComponent implements OnInit {
     this.isEdit = true;
   }
 
-  onSavePage() {
+  onSaveSkill() {
+
+    const originalTitle = this.addressSkill;
+    const hasChangedTitle = originalTitle === this.theSkill.skillTitle ? false : true;
     this.isEdit = false;
-    this.server.addDescriptionToSkill(this.theID, this.textPage);
+
+    if (this.isNew === false && hasChangedTitle === false) {
+    this.server.addDescriptionToSkill(this.theID, this.theSkill.descriptHTML);
+    } else if (this.isNew === false && hasChangedTitle === true) {
+      console.log("has changed title");
+      this.server.onAmendSkill(this.theSkill, this.addressSkill);
+
+    } else {
+        this.server.onSendSkill(this.theSkill);
+      }
+
   }
 
   @HostListener('window:resize') updateWidthValue(): void {
@@ -225,8 +230,67 @@ export class SkillpageComponent implements OnInit {
 
   }
 
-  getPaddingBottom() {
-    return this.isSmallScreen === false ? '100px' : '10px';
+
+  onAddPage(aPage: Page) {
+    this.server.addPageToSkill(aPage);
+    setTimeout(() => {
+      this.updateSkill();
+    }, 1000);
+  }
+
+  updateSkill() {
+    if ((this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === this.addressSkill))) {
+      this.theSkill = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === this.addressSkill);
+      this.theID = this.server.getArraySkillBoxes().indexOf(this.theSkill);
+      this.thePages = this.server.getPages(this.theSkill);
+      this.noPages = (this.thePages.length === 0) ? true : false;
+      this.doesExist = true;
+    } else {
+      this.doesExist = false;
+      return;
+    }
+  }
+
+  createSkill() {
+    console.log('Creating skill');
+    this.theSkill.skillTitle = this.addressSkill;
+    console.log(this.theSkill);
+    this.isNew = true;
+    this.isEdit = true;
+    this.doesExist = true;
+  }
+
+  onCancelEdit(someVar) {
+    this.isNew = false;
+    this.doesExist = false;
+    this.isEdit = false;
+  }
+
+  onRemoveSkill() {
+    // this.server.onRemoveSkill(
+
+
+    swal({
+      title: 'Are you sure?',
+      text: 'You\'ll lose the skill and any pages attached to it',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'red',
+      confirmButtonText: 'Yes, delete it!',
+      showLoaderOnConfirm: true,
+      buttonsStyling: false,
+      confirmButtonClass: 'btn btn-danger',
+      cancelButtonClass: 'btn btn-primary',
+      focusCancel: true,
+      preConfirm: (data) => {
+
+        return new Promise(function (resolve) {
+          resolve();
+        });
+      }
+    }).then(() => {
+      this.server.onRemoveSkill(this.theSkill);
+    }).catch(swal.noop);
   }
 
 }

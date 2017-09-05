@@ -1,18 +1,41 @@
+<div *ngIf="doesExist" class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
+
+  <!--The Skill editor-->
+  <div *ngIf="isEdit" class="row">
+  <div class="col-xs-9">
+    <app-skilleditor [isNew]="isNew" [theSkill]="theSkill" [moreContent]="moreContent" (cancelEdit)="onCancelEdit($event)" (onAddedPage)="onAddPage($event)"></app-skilleditor>
+  </div>
+  <div class="col-xs-3">
+    <app-index [noPages]="noPages" [thePages]="thePages"
+               [theSkill]="theSkill" ></app-index>
+  </div>
+</div>
 
 
+  <!--The Skill Page-->
+  <h1>{{theSkill.skillTitle}}
+    <div *ngIf="getLoggedStatus()" class="btn-group">
 
-    <div class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
-      <h1>{{titlePage}}
-      <div *ngIf="getLoggedStatus()" class="btn-group">
-
-        <button class="btn btn-xs btn-primary" *ngIf="!isEdit" (click)="onToggleEditor()">Edit
-        </button>
-        <button *ngIf="isEdit" class="btn btn-xs btn-primary" (click)="onSavePage()">{{pageSavingButtonLabel}}
-          <app-spinner *ngIf="showSpinner"></app-spinner>
-        </button>
-      </div></h1>
-      <div *ngIf="!isEdit" [froalaView]="textPage"></div>
-      <div *ngIf="isEdit" [froalaEditor]="froalaOptions" [(ngModel)]="textPage"></div>
-
+      <button class="btn btn-xs btn-primary" *ngIf="!isEdit" (click)="onToggleEditor()">Edit
+      </button>
+      <button *ngIf="isEdit" class="btn btn-xs btn-primary" (click)="onSaveSkill()">{{pageSavingButtonLabel}}
+        <app-spinner *ngIf="showSpinner"></app-spinner>
+      </button>
+      <button *ngIf="isEdit" class="btn btn-xs btn-danger" (click)="onRemoveSkill()">Delete Skill</button>
     </div>
+  </h1>
+  <!-- This is the index-->
+  <app-index *ngIf="!isEdit" style="float:right" [noPages]="noPages" [thePages]="thePages"
+             [theSkill]="theSkill" ></app-index>
+  <div *ngIf="!isEdit" [froalaView]="theSkill.descriptHTML"></div>
+  <div *ngIf="isEdit" [froalaEditor]="froalaOptions" [(ngModel)]="theSkill.descriptHTML"></div>
+  <br>
+</div>
+
+<div *ngIf="!doesExist" class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
+  <h1>The skill <strong>{{addressSkill}}</strong> has no section</h1>
+  <p>Would you like to create it?</p>
+  <button *ngIf="getLoggedStatus()" class="btn btn-primary" (click)="createSkill()">Yes, please!</button>
+  <p *ngIf="!getLoggedStatus()" >You will need to <strong>log-in</strong> first</p>
+</div>
 

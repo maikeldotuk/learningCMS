@@ -1,51 +1,58 @@
-<div class="panel panel-default">
-  <div class="panel-heading">Skill Editor</div>
-  <div class="panel-body">
-    <div class="input-group">
-      <span class="input-group-addon">Skill</span>
-      <input [(ngModel)]="globals.editorTitleField" type="text" class="form-control" name="msg"
-             placeholder="The name of the skill">
-    </div><br>
 
-
-    <div class="input-group">
-      <span class="input-group-addon">Logo</span>
-      <input [(ngModel)]="globals.editorLogoField" type="text" class="form-control" name="msg"
-             placeholder="A valid URL with the logo">
-    </div><br>
-    <form >
-      <div class="input-group" *ngIf="globals.isExistingSkill">
-        <input type="text" class="form-control" placeholder="Page within the skill" [(ngModel)]="globals.moreContent" [ngModelOptions]="{standalone: true}">
-        <div class="input-group-btn">
-          <button class="btn btn-default" (click)="globals.addPageToSkill()">
-            <i class="glyphicon glyphicon-plus"></i>
-          </button>
-        </div>
+  <div class="panel panel-default">
+    <div class="panel-heading">Skill Editor</div>
+    <div class="panel-body">
+      <div class="input-group">
+        <span class="input-group-addon">Skill</span>
+        <input [(ngModel)]="theSkill.skillTitle" type="text" class="form-control" name="msg"
+               placeholder="The name of the skill">
       </div>
-    </form>
+      <br>
 
 
-    <br *ngIf="globals.isExistingSkill">
 
-    <div class="form-group">
-      <label for="level">Level of Mastery:</label>
-      <select [(ngModel)]="globals.editorMasteryField" class="form-control" id="level">
+      <div class="input-group">
+        <span class="input-group-addon">Logo</span>
+        <input [(ngModel)]="theSkill.skillLogoURL" type="text" class="form-control" name="msg"
+               placeholder="A valid URL with the logo">
+      </div>
+      <br>
+      <form *ngIf="!isNew">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Page within the skill" [(ngModel)]="moreContent"
+                 [ngModelOptions]="{standalone: true}">
+          <div class="input-group-btn">
+            <button class="btn btn-default" (click)="addPageToSkill()">
+              <i class="glyphicon glyphicon-plus"></i>
+            </button>
+          </div>
+        </div>
+      </form>
 
-        <option>Familiar</option>
-        <option selected="selected">Learning</option>
-        <option>Queued</option>
 
-      </select></div>
+      <div class="form-group">
+        <label for="level">Level of Mastery:</label>
+        <select [(ngModel)]="theSkill.skillLevel" class="form-control" id="level">
+
+          <option>Familiar</option>
+          <option selected="selected">Learning</option>
+          <option>Queued</option>
+
+        </select></div></div>
+
+
+        <div class="panel-footer">
+
+          <button class="btn btn-xs btn-danger" (click)="onCancel()">Cancel
+          </button>
+          <!--
+          <button class="btn btn-xs btn-primary" [disabled]="editorAddModifyButtonVisible"
+                  *ngIf="isExistingSkill" (click)="onAmendSkill()">Modify
+          </button>
+     <button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="onClearFields()">
+        Clear
+      </button>
+
+    </div>-->
   </div>
 
-
-  <div class="panel-footer">
-    <button class="btn btn-xs btn-primary" [disabled]="globals.editorAddModifyButtonVisible" *ngIf="!globals.isExistingSkill" (click)="globals.onCreateSkill()">Create
-    </button><button class="btn btn-xs btn-primary" [disabled]="globals.editorAddModifyButtonVisible" *ngIf="globals.isExistingSkill" (click)="globals.onAmendSkill()">Modify
-  </button><button style=" float: right;" type="button" class="btn btn-danger btn-xs" (click)="globals.onClearFields()">
-    Clear
-  </button>
-
-  </div>
-
-</div>

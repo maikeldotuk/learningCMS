@@ -1,27 +1,24 @@
 <div class="panel panel-default">
 
 
-  <div class="panel-heading">Preview<button *ngIf="getLoggedStatus() && globals.isExistingSkill" style="float:right;" type="button" class="btn btn-danger btn-xs"
-                                            (click)="globals.onRemoveSkill(globals.orderOnGrid)">
-    Delete
-  </button></div>
+  <div class="panel-heading">Preview</div>
   <div class="panel-body">
 
 
 
     <table id="skillBox" style="margin: 0px auto;">
       <tr>
-        <th [id]=globals.getStyle()>
+        <th [id]=theSkill.getStyle()>
 
-          {{globals.editorTitleField}}
+          {{theSkill.skillTitle}}
         </th>
       </tr>
       <tr>
-        <td id="normalLogo"><img id="theLogo" [src]="globals.editorLogoField"></td>
+        <td id="normalLogo"><img id="theLogo" [src]="theSkill.skillLogoURL"></td>
       </tr>
       <tr>
         <td id="theContent">
-          <a *ngFor="let subskill of globals.thePages;"
+          <a *ngFor="let subskill of thePages;"
              [routerLink]="['/skills',subskill.skill, subskill.title]">{{subskill.title}}
           </a>
 

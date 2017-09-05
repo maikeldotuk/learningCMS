@@ -1,8 +1,10 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnInit, Output, EventEmitter} from '@angular/core';
 import {ServerService} from '../server.service';
 import {UserService} from '../user.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Page} from "../page.model";
 declare var $: any;
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'app-pageeditor',
@@ -10,13 +12,44 @@ declare var $: any;
   styleUrls: ['./pageeditor.component.css']
 })
 export class PageeditorComponent implements OnInit {
-buttonLocation: string;
+  buttonLocation: string;
   froalaOptions: Object;
+  thePage = new Page('', '', '', '', null);
+  isEdit = false;
+  addressSkill: string;
+  addressPage: string;
+  lastEdit: string;
+  pageSavingButtonLabel = "Save Page";
+  showSpinner = false;
+  dateOptions = {
+  weekday: 'long', year: 'numeric', month: 'long',
+  day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true,
+};
 
-  constructor(private router: Router, public globals: ServerService, private user: UserService
-  ) {
+  // @Output() onSavedPage: EventEmitter<Page>;
+
+  constructor(private route: ActivatedRoute, private router: Router, public server: ServerService, private user: UserService) {
+    // this.onSavedPage = new EventEmitter();
     this.updateButtonLocation();
-    this.froalaOptions = this.globals.globalFroala;
+    this.froalaOptions = this.server.globalFroala;
+
+    route.params.subscribe(params => {
+      this.addressSkill = params['skill'];
+      this.addressPage = params['page'];
+      if (!this.addressSkill && !this.addressPage) {
+        this.thePage.skill = 'Error';
+        this.thePage.content = 'You need to write something';
+      } else {
+        if (this.server.arrayAllPages.length === 0) {
+          setTimeout(() => {
+            this.updatePage();
+          }, 300);
+        } else {
+          this.updatePage();
+        }
+
+      }
+    });
   }
 
   ngOnInit() {
@@ -152,12 +185,13 @@ buttonLocation: string;
       }
     });
   }
+
   getLoggedStatus(): boolean {
     return this.user.getLoggedStatus();
   }
 
   goBack() {
-   this.router.navigate(['/skills']);
+    this.router.navigate(['/skills']);
   }
 
   @HostListener('body:resize') updateButtonLocation(): void {
@@ -166,9 +200,73 @@ buttonLocation: string;
     this.buttonLocation = document.body.clientWidth - 30 + 'px';
 
   }
-onRemovePage() {
-  this.globals.onRemovePage();
 
 
-}
+
+  onToggleEditor() {
+    this.isEdit = true;
+  }
+
+  updatePage() {
+    if ((this.server.arrayAllPages.find(thePage => thePage.skill === this.addressSkill && thePage.title === this.addressPage))) {
+      this.thePage = this.server.arrayAllPages.find(thePage => thePage.skill === this.addressSkill && thePage.title === this.addressPage);
+      // this.theID = this.server.arraySkillboxes.indexOf(this.theSkill);
+      // this.thePages = this.server.getPages(this.theSkill);
+      // this.noPages = (this.thePages.length===0) ? true: false;
+      // this.doesExist = true;
+      const someDate = this.thePage.editDate;
+      if (someDate !== undefined) {
+        const aDate: Date = new Date(someDate);
+        this.lastEdit = aDate.toLocaleString('en-GB', this.dateOptions);
+
+      } else {
+        this.lastEdit = 'Unknown';
+      }
+    } else {
+      this.thePage.content  = 'This page doesn\'t exist';
+      return;
+    }
+  }
+
+  onSavePage() {
+    this.pageSavingButtonLabel = 'Saving';
+    this.showSpinner = true;
+    this.lastEdit = new Date().toLocaleDateString('en-GB', this.dateOptions);
+
+
+    this.server.onSavePage(this.thePage);
+    setTimeout(() => {
+      this.pageSavingButtonLabel = 'Saved';
+      this.showSpinner = false;
+      this.pageSavingButtonLabel = 'Save';
+      this.isEdit = false;
+      this.router.navigate(['/skills', this.thePage.skill, this.thePage.title]);
+    }, 1000);
+  }
+
+
+  onRemovePage() {
+      swal({
+        title: 'Are you sure?',
+        text: 'Once deleted you can\'t recover this page',
+        type: 'warning',
+        showCancelButton: true,
+
+        confirmButtonText: 'Yes, delete it!',
+        showLoaderOnConfirm: true,
+        buttonsStyling: false,
+        confirmButtonClass: 'btn btn-danger',
+        cancelButtonClass: 'btn btn-primary',
+        focusCancel: true,
+        preConfirm: (data) => {
+
+          return new Promise(function (resolve) {
+            resolve();
+          });
+        }
+      }).then(() => {
+        this.server.onRemovePage(this.thePage);
+      }).catch(swal.noop);
+
+  }
 }

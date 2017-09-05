@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ServerService} from "../server.service";
 import {UserService} from '../user.service';
+import {Skillbox} from "../skillbox.model";
+import {Page} from "../page.model";
 
 @Component({
   selector: 'app-skillpreview',
@@ -8,7 +10,8 @@ import {UserService} from '../user.service';
   styleUrls: ['./skillpreview.component.css']
 })
 export class SkillpreviewComponent implements OnInit {
-
+@Input() theSkill: Skillbox;
+@Input() thePages: Page[];
   constructor(public globals: ServerService, private user: UserService
   ) { }
 

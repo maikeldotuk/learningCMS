@@ -1,12 +1,12 @@
 <!-- This is the index-->
 
-  <div *ngIf="!noPages" class="panel panel-default">
+  <div  class="panel panel-default">
     <div class="panel-heading"><img style="display:block; margin:auto; max-width: 100px" [src]="theSkill.skillLogoURL"></div>
-    <div class="list-group">
+    <div *ngIf="!noPages" class="list-group">
       <a *ngFor="let page of thePages" class="list-group-item" [routerLink]="['/skills',page.skill, page.title]">{{page.title}}</a>
       <li class="list-group-item" [ngClass]="getStyle()">Status: <strong>{{theSkill.skillLevel}}</strong></li>
     </div>
-
+    <li *ngIf="noPages" class="list-group-item" [ngClass]="getStyle()">Status: <strong>{{theSkill.skillLevel}}</strong></li>
   </div>
 
 

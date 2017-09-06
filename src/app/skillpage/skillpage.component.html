@@ -25,10 +25,10 @@
     </div>
   </h1>
   <!-- This is the index-->
-  <app-index *ngIf="!isEdit" style="margin-left: 50px; float:right" [noPages]="noPages" [thePages]="thePages"
+  <app-index *ngIf="!isEdit" style="margin-left: 20px; float:right" [noPages]="noPages" [thePages]="thePages"
              [theSkill]="theSkill" ></app-index>
   <div *ngIf="!isEdit" [froalaView]="theSkill.descriptHTML"></div>
-  <div *ngIf="isEdit" [froalaEditor]="froalaOptions" [(ngModel)]="theSkill.descriptHTML"></div>
+  <div *ngIf="isEdit" [froalaEditor]="froalaOptions" [(froalaModel)]="theSkill.descriptHTML"></div>
   <br>
 </div>
 

@@ -2,7 +2,7 @@ import {ServerService} from './server.service';
 
 
 export class Skillbox {
-  constructor(public skillID: number, public skillTitle: string, public skillLogoURL: string, public skillLevel: string, public descriptHTML: string) {
+  constructor(public skillID: string, public skillTitle: string, public skillLogoURL: string, public skillLevel: string, public descriptHTML: string) {
   }
 
   getStyle() {

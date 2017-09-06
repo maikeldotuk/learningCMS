@@ -2,7 +2,7 @@ import {Component, HostListener, OnInit, Output, EventEmitter} from '@angular/co
 import {ServerService} from '../server.service';
 import {UserService} from '../user.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Page} from "../page.model";
+import {Page} from '../page.model';
 declare var $: any;
 import swal from 'sweetalert2';
 
@@ -19,7 +19,7 @@ export class PageeditorComponent implements OnInit {
   addressSkill: string;
   addressPage: string;
   lastEdit: string;
-  pageSavingButtonLabel = "Save Page";
+  pageSavingButtonLabel = 'Save Page';
   showSpinner = false;
   dateOptions = {
   weekday: 'long', year: 'numeric', month: 'long',
@@ -86,6 +86,7 @@ export class PageeditorComponent implements OnInit {
         alert('Hello!');
       }
     });
+
 
     $.FroalaEditor.DefineIcon('h1', {NAME: '<strong>H1</strong>', template: 'text'});
     $.FroalaEditor.DefineIcon('h2', {NAME: '<strong>H2</strong>', template: 'text'});

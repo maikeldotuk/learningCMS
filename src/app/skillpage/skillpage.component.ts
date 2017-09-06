@@ -1,4 +1,4 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {Component, HostListener,  OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {ServerService} from '../server.service';
 import {Skillbox} from '../skillbox.model';

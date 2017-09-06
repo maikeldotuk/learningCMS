@@ -12,16 +12,17 @@ import {setTime} from 'ngx-bootstrap/timepicker/timepicker.utils';
 export class ServerService {
 
   globalFroala: Object = {
+    imageUploadURL: 'https://www.maikel.uk/images',
+    imageUploadParam: 'image_param',
+    imageUploadMethod: 'POST',
+    imageMaxSize: 5 * 1024 * 1024,
+    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
     placeholderText: 'Add here the text for the page',
     charCounterCount: true,
     toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre', '|', 'formatOL', 'formatUL', 'quote', 'insertLink', 'insertImage', 'insertTable', 'html'],
-    toolbarButtonsXS: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre'],
-    toolbarButtonsSM: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
+    /* toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
       'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
-      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
-    toolbarButtonsMD: ['fullscreen', 'bold', 'italic', 'underline', '|', 'color', 'paragraphStyle', '|', 'align',
-      'formatOL', 'formatUL', 'outdent', 'indent', 'quote', '-', 'insertLink', 'insertImage', 'insertVideo',
-      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'],
+      'insertFile', 'insertTable', '|', 'help', 'html', '|', 'undo', 'redo', 'paragraphFormat'], */
     tableStyles: {
       'table table-bordered': 'BS bordered',
       'table table-condensed': 'BS condensed'
@@ -182,7 +183,7 @@ export class ServerService {
 
     req.subscribe(data => {
       results = data;
-      formattedItem = new Skillbox(results._id, newSkill.title, newSkill.logoURL, newSkill.mastery, newSkill.descriptHTML);
+      formattedItem = new Skillbox(results.newID, newSkill.title, newSkill.logoURL, newSkill.mastery, newSkill.descriptHTML);
       this.arraySkillboxes.push(formattedItem);
       this.getAllPagesList();
       this.router.navigate(['skills']);
@@ -309,9 +310,6 @@ export class ServerService {
     // Deletes the old skill without deleting the pages.
     const id = theID;
     const theSkillToChange = this.arraySkillboxes[id];
-    console.log(id);
-    console.log(theSkillToChange);
-
     let formattedItem: Skillbox;
 
     const amendedSkill = {
@@ -327,7 +325,7 @@ export class ServerService {
 
     req.subscribe(data => {
       results = data;
-      formattedItem = new Skillbox(results._id, amendedSkill.title, amendedSkill.logoURL, amendedSkill.mastery, amendedSkill.descriptHTML);
+      formattedItem = new Skillbox(results.newID, amendedSkill.title, amendedSkill.logoURL, amendedSkill.mastery, amendedSkill.descriptHTML);
       this.arraySkillboxes.splice(id, 1);
       this.arraySkillboxes.push(formattedItem);
       this.arraySkillboxes.sort((n1, n2) => this.sortSkills(n1, n2));

@@ -1,4 +1,5 @@
-<div class="dropdown" *ngIf="!isCollapsed">
+<div id="listOfSkills" *ngIf="!isCollapsed">
+<div class="dropdown" >
   <table id="skillBox"> <tr>
     <p [id]=getStyle()>{{skill.skillTitle}}
     </p>
@@ -29,7 +30,7 @@
     </table>
   </div>
 </div>
-
+</div>
 
 
 <accordion-group *ngIf="isCollapsed"  >

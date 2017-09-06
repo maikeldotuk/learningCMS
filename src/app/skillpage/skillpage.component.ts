@@ -20,7 +20,7 @@ export class SkillpageComponent implements OnInit {
   isEdit = false;
   pageSavingButtonLabel = 'Save Skill';
   showSpinner = false;
-  theSkill: Skillbox = new Skillbox(0, '', '', 'Learning', '');
+  theSkill: Skillbox = new Skillbox( '', '', '', 'Learning', '');
   theID: number;
   screenWidthFigure: number;
   isSmallScreen = false;
@@ -105,8 +105,7 @@ export class SkillpageComponent implements OnInit {
       callback: function (cmd, val, params) {
         if (isActive.apply(this, [cmd])) {
           this.paragraphFormat.apply('N');
-        }
-        else {
+        } else {
           this.paragraphFormat.apply(cmd);
         }
       },
@@ -120,8 +119,7 @@ export class SkillpageComponent implements OnInit {
       callback: function (cmd, val, params) {
         if (isActive.apply(this, [cmd])) {
           this.paragraphFormat.apply('N');
-        }
-        else {
+        } else {
           this.paragraphFormat.apply(cmd);
         }
       },
@@ -135,8 +133,7 @@ export class SkillpageComponent implements OnInit {
       callback: function (cmd, val, params) {
         if (isActive.apply(this, [cmd])) {
           this.paragraphFormat.apply('N');
-        }
-        else {
+        } else {
           this.paragraphFormat.apply(cmd);
         }
       },
@@ -180,8 +177,7 @@ export class SkillpageComponent implements OnInit {
       callback: function (cmd, val, params) {
         if (isActive.apply(this, [cmd])) {
           this.paragraphFormat.apply('N');
-        }
-        else {
+        } else {
           this.paragraphFormat.apply(cmd);
         }
       },
@@ -208,7 +204,6 @@ export class SkillpageComponent implements OnInit {
     if (this.isNew === false && hasChangedTitle === false) {
     this.server.addDescriptionToSkill(this.theID, this.theSkill.descriptHTML);
     } else if (this.isNew === false && hasChangedTitle === true) {
-      console.log("has changed title");
       this.server.onAmendSkill(this.theSkill, this.addressSkill);
 
     } else {
@@ -246,16 +241,14 @@ export class SkillpageComponent implements OnInit {
       this.noPages = (this.thePages.length === 0) ? true : false;
       this.doesExist = true;
     } else {
-      this.theSkill = new Skillbox(0, '', '', 'Learning', '');
+      this.theSkill = new Skillbox('' , '', '', 'Learning', '');
       this.doesExist = false;
       return;
     }
   }
 
   createSkill() {
-    console.log('Creating skill');
     this.theSkill.skillTitle = this.addressSkill;
-    console.log(this.theSkill);
     this.isNew = true;
     this.isEdit = true;
     this.doesExist = true;

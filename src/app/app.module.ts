@@ -30,6 +30,7 @@ import { NotfoundComponent } from './notfound/notfound.component';
 import { EditorpageComponent } from './editorpage/editorpage.component';
 import { SkillpageComponent } from './skillpage/skillpage.component';
 import { IndexComponent } from './index/index.component';
+import { BackbuttonComponent } from './backbutton/backbutton.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
@@ -66,6 +67,7 @@ const routes: Routes = [
     EditorpageComponent,
     SkillpageComponent,
     IndexComponent,
+    BackbuttonComponent,
 
   ],
   imports: [

@@ -12,11 +12,7 @@ import {setTime} from 'ngx-bootstrap/timepicker/timepicker.utils';
 export class ServerService {
 
   globalFroala: Object = {
-    imageUploadURL: 'https://www.maikel.uk/images',
-    imageUploadParam: 'image_param',
-    imageUploadMethod: 'POST',
-    imageMaxSize: 5 * 1024 * 1024,
-    imageAllowedTypes: ['jpeg', 'jpg', 'png'],
+
     placeholderText: 'Add here the text for the page',
     charCounterCount: true,
     toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre', '|', 'formatOL', 'formatUL', 'quote', 'insertLink', 'insertImage', 'insertTable', 'html'],

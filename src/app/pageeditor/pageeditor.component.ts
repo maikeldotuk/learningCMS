@@ -40,14 +40,7 @@ export class PageeditorComponent implements OnInit {
         this.thePage.skill = 'Error';
         this.thePage.content = 'You need to write something';
       } else {
-        if (this.server.arrayAllPages.length === 0) {
-          setTimeout(() => {
-            this.updatePage();
-          }, 300);
-        } else {
-          this.updatePage();
-        }
-
+        this.waitForArrayToLoad();
       }
     });
   }
@@ -198,7 +191,7 @@ export class PageeditorComponent implements OnInit {
   @HostListener('body:resize') updateButtonLocation(): void {
 
 
-    this.buttonLocation = document.body.clientWidth - 30 + 'px';
+    this.buttonLocation = document.body.clientWidth -50 + 'px';
 
   }
 
@@ -208,13 +201,39 @@ export class PageeditorComponent implements OnInit {
     this.isEdit = true;
   }
 
-  updatePage() {
+  waitForArrayToLoad() {
+
+// I need to simplify this
+const step = 300;
+    if (this.server.arrayAllPages.length === 0) {
+      setTimeout(() => {
+        console.log('Array still loading 1');
+        if (this.server.arrayAllPages.length === 0) {
+          setTimeout(() => {
+            console.log('Array still loading 2');
+            if (this.server.arrayAllPages.length === 0) {
+              setTimeout(() => {
+                console.log('Array still loading 3');
+                if (this.server.arrayAllPages.length === 0) {
+                  setTimeout(() => {
+                    console.log('Array still loading 4');
+
+
+                  }, step);
+                } else { this.loadPageData(); }
+              }, step);
+            } else { this.loadPageData(); }
+              }, step);
+            } else { this.loadPageData(); }
+      }, step);
+    } else { this.loadPageData(); }
+
+
+  }
+
+  loadPageData() {
     if ((this.server.arrayAllPages.find(thePage => thePage.skill === this.addressSkill && thePage.title === this.addressPage))) {
       this.thePage = this.server.arrayAllPages.find(thePage => thePage.skill === this.addressSkill && thePage.title === this.addressPage);
-      // this.theID = this.server.arraySkillboxes.indexOf(this.theSkill);
-      // this.thePages = this.server.getPages(this.theSkill);
-      // this.noPages = (this.thePages.length===0) ? true: false;
-      // this.doesExist = true;
       const someDate = this.thePage.editDate;
       if (someDate !== undefined) {
         const aDate: Date = new Date(someDate);

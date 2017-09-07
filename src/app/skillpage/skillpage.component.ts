@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ServerService} from '../server.service';
 import {Skillbox} from '../skillbox.model';
 import {UserService} from '../user.service';
-import { MetaService } from '@ngx-meta/core';
+
 
 import {Page} from '../page.model';
 declare var $: any;
@@ -36,7 +36,7 @@ export class SkillpageComponent implements OnInit {
   moreContent: string;
 
 
-  constructor(private readonly meta: MetaService, private route: ActivatedRoute, private server: ServerService, private user: UserService) {
+  constructor( private route: ActivatedRoute, private server: ServerService, private user: UserService) {
 
 
     this.froalaOptions = this.server.globalFroala;
@@ -242,8 +242,8 @@ export class SkillpageComponent implements OnInit {
       this.noPages = (this.thePages.length === 0) ? true : false;
       this.doesExist = true;
       // Meta tags
-      this.meta.setTitle(`${this.theSkill.skillTitle}`);
-      this.meta.setTag('og:image', this.theSkill.skillLogoURL);
+      //this.meta.setTitle(`${this.theSkill.skillTitle}`);
+      //this.meta.setTag('og:image', this.theSkill.skillLogoURL);
     } else {
       this.theSkill = new Skillbox('' , '', '', 'Learning', '');
       this.doesExist = false;

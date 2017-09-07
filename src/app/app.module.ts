@@ -6,8 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {RouterModule, Routes} from '@angular/router';
 import {AccordionModule, CollapseModule, ModalModule} from 'ngx-bootstrap';
-import { MetaGuard } from '@ngx-meta/core';
-import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@ngx-meta/core';
+//import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@ngx-meta/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BrandingComponent } from './branding/branding.component';
@@ -33,7 +32,7 @@ import { SkillpageComponent } from './skillpage/skillpage.component';
 import { IndexComponent } from './index/index.component';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
 
-
+/*
 export function metaFactory(): MetaLoader {
   return new MetaStaticLoader({
     pageTitlePositioning: PageTitlePositioning.PrependPageTitle,
@@ -47,6 +46,7 @@ export function metaFactory(): MetaLoader {
     }
   });
 }
+*/
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
@@ -104,11 +104,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     CollapseModule.forRoot(),
     ModalModule.forRoot(),
-    AccordionModule.forRoot(),
-    MetaModule.forRoot({
+    AccordionModule.forRoot()
+    /*MetaModule.forRoot({
       provide: MetaLoader,
       useFactory: (metaFactory)
-    })
+    })*/
 
   ],
   providers: [

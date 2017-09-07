@@ -40,10 +40,11 @@
 
     </div>
   <div class="list-group-item" [id]="getStyle()">Status: <strong>{{skill.skillLevel}}</strong></div>
-
-    <li class="list-group-item" *ngFor="let subskill of myPages;"
+  <div class="list-group-item" [routerLink]="['/skills',skill.skillTitle]">About {{skill.skillTitle}}</div>
+    <div class="list-group-item" *ngFor="let subskill of myPages;"
      [routerLink]="['/skills',subskill.skill, subskill.title]">{{subskill.title}}
-  </li>
+  </div>
+
 
 
 </accordion-group>

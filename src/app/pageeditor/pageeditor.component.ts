@@ -12,7 +12,7 @@ import swal from 'sweetalert2';
   styleUrls: ['./pageeditor.component.css']
 })
 export class PageeditorComponent implements OnInit {
-  buttonLocation: string;
+
   froalaOptions: Object;
   thePage = new Page('', '', '', '', null);
   isEdit = false;
@@ -30,7 +30,7 @@ export class PageeditorComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private router: Router, public server: ServerService, private user: UserService) {
     // this.onSavedPage = new EventEmitter();
-    this.updateButtonLocation();
+
     this.froalaOptions = this.server.globalFroala;
 
     route.params.subscribe(params => {
@@ -183,18 +183,6 @@ export class PageeditorComponent implements OnInit {
   getLoggedStatus(): boolean {
     return this.user.getLoggedStatus();
   }
-
-  goBack() {
-    this.router.navigate(['/skills']);
-  }
-
-  @HostListener('body:resize') updateButtonLocation(): void {
-
-
-    this.buttonLocation = document.body.clientWidth -50 + 'px';
-
-  }
-
 
 
   onToggleEditor() {

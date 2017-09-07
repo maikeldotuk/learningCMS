@@ -1,4 +1,6 @@
 .switch-version {
   position: fixed;
   top: 30%;
+  color: red;
+  font-size: 24px;
 }

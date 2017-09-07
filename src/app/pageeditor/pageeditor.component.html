@@ -1,6 +1,5 @@
 <div class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
-<button *ngIf="!isEdit" [ngStyle]="{'left':buttonLocation}" class="switch-version btn btn-danger btn-sm"
-        (click)="goBack()"><i class="fa fa-arrow-left"></i></button>
+<app-backbutton [isEdit]="isEdit"></app-backbutton>
 
   <h1><a [routerLink]="['/skills',thePage.skill]">{{thePage.skill}}</a> <i class="fa fa-angle-right"></i> {{thePage.title}}
   <div *ngIf="getLoggedStatus()" class="btn-group">

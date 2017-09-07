@@ -1,3 +1,2 @@
-<p>
-  backbutton works!
-</p>
+<a *ngIf="!isEdit" [ngStyle]="{'left':buttonLocation}" class="switch-version"
+        (click)="goBack()"><i class="fa fa-arrow-circle-left"></i></a>

@@ -3,6 +3,7 @@ import {ServerService} from '../server.service';
 import {UserService} from '../user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Page} from '../page.model';
+import { MetaService } from '@ngx-meta/core';
 declare var $: any;
 import swal from 'sweetalert2';
 
@@ -28,7 +29,7 @@ export class PageeditorComponent implements OnInit {
 
   // @Output() onSavedPage: EventEmitter<Page>;
 
-  constructor(private route: ActivatedRoute, private router: Router, public server: ServerService, private user: UserService) {
+  constructor(private readonly meta: MetaService, private route: ActivatedRoute, private router: Router, public server: ServerService, private user: UserService) {
     // this.onSavedPage = new EventEmitter();
 
     this.froalaOptions = this.server.globalFroala;
@@ -226,6 +227,9 @@ const step = 300;
       if (someDate !== undefined) {
         const aDate: Date = new Date(someDate);
         this.lastEdit = aDate.toLocaleString('en-GB', this.dateOptions);
+        this.meta.setTitle(`${this.thePage.skill} - ${this.thePage.title}`);
+        const someSkill = this.server.arraySkillboxes.find(aSkill => aSkill.skillTitle === this.thePage.skill);
+        this.meta.setTag('og:image', someSkill.skillLogoURL);
 
       } else {
         this.lastEdit = 'Unknown';

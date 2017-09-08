@@ -3,6 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {ServerService} from '../server.service';
 import {Skillbox} from '../skillbox.model';
 import {UserService} from '../user.service';
+import {Meta, Title} from '@angular/platform-browser';
 
 
 import {Page} from '../page.model';
@@ -36,7 +37,7 @@ export class SkillpageComponent implements OnInit {
   moreContent: string;
 
 
-  constructor( private route: ActivatedRoute, private server: ServerService, private user: UserService) {
+  constructor(private titleService: Title , private metaService: Meta, private route: ActivatedRoute, private server: ServerService, private user: UserService) {
 
 
     this.froalaOptions = this.server.globalFroala;
@@ -47,14 +48,7 @@ export class SkillpageComponent implements OnInit {
      this.titleSkill = 'Error';
      this.textPage = 'You need to write something';
       } else {
-        if (this.server.arraySkillboxes.length === 0) {
-          setTimeout(() => {
-            this.updateSkill();
-          }, 300);
-        } else {
-          this.updateSkill();
-        }
-
+            this.waitForArrayToLoad();
       }
     });
   }
@@ -234,6 +228,37 @@ export class SkillpageComponent implements OnInit {
     }, 1000);
   }
 
+
+  waitForArrayToLoad() {
+
+// I need to simplify this
+    const step = 400;
+    if (this.server.arraySkillboxes.length === 0) {
+      setTimeout(() => {
+        console.log('Array still loading 1');
+        if (this.server.arraySkillboxes.length === 0) {
+          setTimeout(() => {
+            console.log('Array still loading 2');
+            if (this.server.arraySkillboxes.length === 0) {
+              setTimeout(() => {
+                console.log('Array still loading 3');
+                if (this.server.arraySkillboxes.length === 0) {
+                  setTimeout(() => {
+                    console.log('Array still loading 4');
+
+
+                  }, step);
+                } else { this.updateSkill();; }
+              }, step);
+            } else { this.updateSkill(); }
+          }, step);
+        } else { this.updateSkill(); }
+      }, step);
+    } else { this.updateSkill(); }
+
+
+  }
+
   updateSkill() {
     if ((this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === this.addressSkill))) {
       this.theSkill = this.server.getArraySkillBoxes().find(theSkill => theSkill.skillTitle === this.addressSkill);
@@ -242,8 +267,10 @@ export class SkillpageComponent implements OnInit {
       this.noPages = (this.thePages.length === 0) ? true : false;
       this.doesExist = true;
       // Meta tags
-      //this.meta.setTitle(`${this.theSkill.skillTitle}`);
-      //this.meta.setTag('og:image', this.theSkill.skillLogoURL);
+      const winTitle = 'Maikel.uk: ' + this.theSkill.skillTitle;
+      this.titleService.setTitle( winTitle );
+      this.metaService.addTag({ property: 'og:title', content: winTitle});
+      this.metaService.addTag({ property: 'og:icon', content: this.theSkill.skillLogoURL });
     } else {
       this.theSkill = new Skillbox('' , '', '', 'Learning', '');
       this.doesExist = false;

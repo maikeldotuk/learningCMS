@@ -6,6 +6,7 @@ import {Page} from '../page.model';
 // import { MetaService } from '@ngx-meta/core';
 declare var $: any;
 import swal from 'sweetalert2';
+import {Meta, Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-pageeditor',
@@ -29,7 +30,7 @@ export class PageeditorComponent implements OnInit {
 
   // @Output() onSavedPage: EventEmitter<Page>;
 
-  constructor( private route: ActivatedRoute, private router: Router, public server: ServerService, private user: UserService) {
+  constructor(private titleService: Title, private metaService: Meta, private route: ActivatedRoute, private router: Router, public server: ServerService, private user: UserService) {
     // this.onSavedPage = new EventEmitter();
 
     this.froalaOptions = this.server.globalFroala;
@@ -227,9 +228,17 @@ const step = 300;
       if (someDate !== undefined) {
         const aDate: Date = new Date(someDate);
         this.lastEdit = aDate.toLocaleString('en-GB', this.dateOptions);
-        /*this.meta.setTitle(`${this.thePage.skill} - ${this.thePage.title}`);
+
+        // Meta tags
         const someSkill = this.server.arraySkillboxes.find(aSkill => aSkill.skillTitle === this.thePage.skill);
-        this.meta.setTag('og:image', someSkill.skillLogoURL);*/
+        const winTitle = this.thePage.skill + ': ' + this.thePage.title + ' - Maikel.uk';
+        this.titleService.setTitle( winTitle );
+        this.metaService.addTag({ property: 'og:title', content: winTitle});
+        this.metaService.addTag({ property: 'title', content: winTitle});
+        this.metaService.addTag({ property: 'og:icon', content: 'someSkill.skillLogoURL' });
+        this.metaService.addTag({ property: 'og:image', content: 'someSkill.skillLogoURL' });
+        this.metaService.addTag({ property: 'description', content: 'MKB is a CMS to help self-directed learning' });
+        this.metaService.addTag({ property: 'og:type', content: 'website' });
 
       } else {
         this.lastEdit = 'Unknown';

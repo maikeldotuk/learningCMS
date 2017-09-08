@@ -1,4 +1,5 @@
 import {Component, HostListener, OnInit} from '@angular/core';
+import {Meta, Title} from "@angular/platform-browser";
 
 
 @Component({
@@ -9,7 +10,14 @@ import {Component, HostListener, OnInit} from '@angular/core';
 export class AboutComponent implements OnInit {
   isCollapsed = false;
   screenWidthFigure: number;
-  constructor() {
+  constructor(private titleService: Title, private metaService: Meta) {
+    const winTitle = 'Maikel.uk: About';
+    this.titleService.setTitle( 'Maikel.uk: About');
+    this.metaService.addTag({ property: 'og:title', content: winTitle});
+    this.metaService.addTag({ property: 'title', content: winTitle});
+    this.metaService.addTag({ property: 'og:icon', content: 'https://www.maikel.uk/images/logo.png' });
+    this.metaService.addTag({ property: 'description', content: 'MKB is a CMS to help self-directed learning' });
+    this.metaService.addTag({ property: 'og:type', content: 'website' });
     this.updateWidthValue();
   }
 

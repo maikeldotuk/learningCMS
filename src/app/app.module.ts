@@ -6,7 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {RouterModule, Routes} from '@angular/router';
 import {AccordionModule, CollapseModule, ModalModule} from 'ngx-bootstrap';
-//import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@ngx-meta/core';
+import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@ngx-meta/core';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BrandingComponent } from './branding/branding.component';
@@ -18,7 +18,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { SkillsComponent } from './skills/skills.component';
-import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {UserService} from './user.service';
 import {ServerService} from './server.service';
 import { SkilleditorComponent } from './skilleditor/skilleditor.component';
@@ -32,34 +32,26 @@ import { SkillpageComponent } from './skillpage/skillpage.component';
 import { IndexComponent } from './index/index.component';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
 
-/*
+
 export function metaFactory(): MetaLoader {
   return new MetaStaticLoader({
     pageTitlePositioning: PageTitlePositioning.PrependPageTitle,
     pageTitleSeparator: ' - ',
     applicationName: 'Maikel.uk',
     defaults: {
-      title: 'Skills',
-      description: 'MKB is a CMS to help self-directed learning',
+      title: 'Maikel.uk',
+      description: 'A website about a CMS to empower self-directed learning',
       'og:image': 'https://www.maikel.uk/images/logo.png',
       'og:type': 'website',
     }
   });
 }
-*/
+
+
 
 const routes: Routes = [
   {path: '', redirectTo: 'skills', pathMatch: 'full'},
-  // {path: 'skills', component: SkillsComponent},
-  {
-    path: 'skills', component: SkillsComponent,
-    data: {
-      meta: {
-        title: 'Skills',
-        description: 'My Skillset'
-      }
-    }
-  },
+  {path: 'skills', component: SkillsComponent},
   {path: 'skills/:skill/:page', component: PageeditorComponent},
   {path: 'skills/:skill', component: SkillpageComponent},
   {path: 'about', component: AboutComponent},
@@ -104,11 +96,11 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     CollapseModule.forRoot(),
     ModalModule.forRoot(),
-    AccordionModule.forRoot()
-    /*MetaModule.forRoot({
+    AccordionModule.forRoot(),
+    MetaModule.forRoot({
       provide: MetaLoader,
       useFactory: (metaFactory)
-    })*/
+    })
 
   ],
   providers: [

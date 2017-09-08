@@ -28,8 +28,8 @@ export class UserService {
         this.logedin = true;
       } else {
         swal({
-          title:"Wrong Password!",
-          imageUrl: "https://media.tenor.com/images/aee72fd7530ce5deae7209ffe6df76c0/tenor.gif",
+          title:'Wrong Password!',
+          imageUrl: 'https://www.maikel.uk/images/gifs/tenor.gif',
           buttonsStyling: false,
           confirmButtonClass: 'btn btn-primary',
           confirmButtonText: 'Try Again',
@@ -46,7 +46,7 @@ export class UserService {
     swal({
       title: 'Introduce the Password',
       input: 'password',
-      imageUrl: 'favicon.ico',
+      imageUrl: 'https://www.maikel.uk/images/logo.png',
       buttonsStyling: false,
       confirmButtonClass: 'btn btn-primary',
       confirmButtonText: 'Let me In',

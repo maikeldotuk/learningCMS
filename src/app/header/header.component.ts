@@ -1,8 +1,7 @@
 import {Component, HostListener, OnInit} from '@angular/core';
 
 import {UserService} from '../user.service';
-import { BsModalService } from 'ngx-bootstrap/modal';
-import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
+
 
 @Component({
   selector: 'app-header',
@@ -11,7 +10,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal/modal-options.class';
 })
 export class HeaderComponent implements OnInit {
 
-  password: string;
+
   isCollapsed = false;
   screenWidthFigure: number;
 

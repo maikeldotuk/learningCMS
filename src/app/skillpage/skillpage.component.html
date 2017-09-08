@@ -32,7 +32,8 @@
   <br>
 </div>
 
-<div *ngIf="!doesExist" class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
+<div *ngIf="isLoading"><app-loader></app-loader></div>
+<div *ngIf="!doesExist && !isLoading" class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
   <h1>The skill <strong>{{addressSkill}}</strong> has no section</h1>
   <p>Would you like to create it?</p>
   <button *ngIf="getLoggedStatus()" class="btn btn-primary" (click)="createSkill()">Yes, please!</button>

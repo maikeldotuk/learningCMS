@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
+<div class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11" *ngIf="!isLoading">
 <app-backbutton [isEdit]="isEdit"></app-backbutton>
 
   <h1><a [routerLink]="['/skills',thePage.skill]">{{thePage.skill}}</a> <i class="fa fa-angle-right"></i> {{thePage.title}}
@@ -35,3 +35,4 @@
 
 </div>
 </div>
+<div *ngIf="isLoading"><app-loader></app-loader></div>

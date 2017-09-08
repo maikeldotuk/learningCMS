@@ -7,6 +7,9 @@ import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import {RouterModule, Routes} from '@angular/router';
 import {AccordionModule, CollapseModule, ModalModule} from 'ngx-bootstrap';
 import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@ngx-meta/core';
+import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
+
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { BrandingComponent } from './branding/branding.component';
@@ -18,7 +21,6 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { SkillsComponent } from './skills/skills.component';
-import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 import {UserService} from './user.service';
 import {ServerService} from './server.service';
 import { SkilleditorComponent } from './skilleditor/skilleditor.component';
@@ -31,6 +33,7 @@ import { EditorpageComponent } from './editorpage/editorpage.component';
 import { SkillpageComponent } from './skillpage/skillpage.component';
 import { IndexComponent } from './index/index.component';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 export function metaFactory(): MetaLoader {
@@ -85,6 +88,7 @@ const routes: Routes = [
     SkillpageComponent,
     IndexComponent,
     BackbuttonComponent,
+    LoaderComponent,
 
   ],
   imports: [
@@ -104,8 +108,8 @@ const routes: Routes = [
 
   ],
   providers: [
-    {provide: LocationStrategy,
-  useClass: HashLocationStrategy},
+    // {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: LocationStrategy, useClass: PathLocationStrategy },
     UserService, ServerService,
     {provide: 'SERVER_URL', useValue: 'https://www.maikel.uk'}
 ],

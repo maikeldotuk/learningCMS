@@ -15,6 +15,7 @@ import {Meta, Title} from '@angular/platform-browser';
 })
 export class PageeditorComponent implements OnInit {
 
+  isLoading = true;
   froalaOptions: Object;
   thePage = new Page('', '', '', '', null);
   isEdit = false;
@@ -239,6 +240,7 @@ const step = 300;
         this.metaService.addTag({ property: 'og:image', content: 'someSkill.skillLogoURL' });
         this.metaService.addTag({ property: 'description', content: 'MKB is a CMS to help self-directed learning' });
         this.metaService.addTag({ property: 'og:type', content: 'website' });
+        this.isLoading = false;
 
       } else {
         this.lastEdit = 'Unknown';

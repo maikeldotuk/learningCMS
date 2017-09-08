@@ -30,6 +30,7 @@ export class SkillpageComponent implements OnInit {
   noPages = true;
   addressSkill: string;
   isNew = false;
+  isLoading = true;
 
 
   doesExist = false;
@@ -271,9 +272,11 @@ export class SkillpageComponent implements OnInit {
       this.titleService.setTitle( winTitle );
       this.metaService.addTag({ property: 'og:title', content: winTitle});
       this.metaService.addTag({ property: 'og:icon', content: this.theSkill.skillLogoURL });
+      this.isLoading = false;
     } else {
       this.theSkill = new Skillbox('' , '', '', 'Learning', '');
       this.doesExist = false;
+      this.isLoading = false;
       return;
     }
   }

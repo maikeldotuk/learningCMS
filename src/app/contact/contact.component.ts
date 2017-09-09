@@ -8,15 +8,10 @@ import {Meta, Title} from '@angular/platform-browser';
 export class ContactComponent implements OnInit {
   isCollapsed = false;
   screenWidthFigure: number;
-  constructor(private titleService: Title, private metaService: Meta) {
+  constructor(private titleService: Title) {
     this.updateWidthValue();
     const winTitle = 'Maikel.uk: Contact';
-    document.title = winTitle;
-    this.metaService.addTag({ property: 'og:title', content: winTitle});
-    this.metaService.addTag({ property: 'title', content: winTitle});
-    this.metaService.addTag({ property: 'og:icon', content: 'https://www.maikel.uk/images/logo.png' });
-    this.metaService.addTag({ property: 'description', content: 'MKB is a CMS to help self-directed learning' });
-    this.metaService.addTag({ property: 'og:type', content: 'website' });
+    this.titleService.setTitle(winTitle);
   }
 
   ngOnInit() {

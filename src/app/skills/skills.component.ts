@@ -18,16 +18,12 @@ export class SkillsComponent implements OnInit {
   isSmallScreen = false;
   screenWidthFigure: number;
 
-  constructor(private titleService: Title, private metaService: Meta, private server: ServerService, private http: HttpClient, private user: UserService) {
+  constructor(private titleService: Title, private server: ServerService, private http: HttpClient, private user: UserService) {
     this.updateWidthValue();
 
     const winTitle = 'Maikel.uk: Skills';
     this.titleService.setTitle( winTitle );
-    this.metaService.addTag({ property: 'og:title', content: winTitle});
-    this.metaService.addTag({ property: 'title', content: winTitle});
-    this.metaService.addTag({ property: 'og:icon', content: 'https://www.maikel.uk/images/logo.png' });
-    this.metaService.addTag({ property: 'description', content: 'MKB is a CMS to help self-directed learning' });
-    this.metaService.addTag({ property: 'og:type', content: 'website' });
+
 
   }
 

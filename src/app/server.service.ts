@@ -13,6 +13,9 @@ export class ServerService {
 
   globalFroala: Object = {
 
+    imageUploadURL: '/upload_image',
+    imageManagerLoadURL: '/load_images',
+    imageManagerDeleteURL: '/delete_image',
     placeholderText: 'Add here the text for the page',
     charCounterCount: true,
     toolbarButtons: ['fullscreen', 'bold', 'italic', 'underline', '|', 'undo', 'redo', '|', 'h1', 'h2', 'h3', 'h4', 'p', 'pre', '|', 'formatOL', 'formatUL', 'quote', 'insertLink', 'insertImage', 'insertTable', 'html'],

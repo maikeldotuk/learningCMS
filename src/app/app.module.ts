@@ -111,7 +111,8 @@ const routes: Routes = [
     // {provide: LocationStrategy, useClass: HashLocationStrategy},
     {provide: LocationStrategy, useClass: PathLocationStrategy },
     UserService, ServerService,
-    {provide: 'SERVER_URL', useValue: 'https://www.maikel.uk'}
+     {provide: 'SERVER_URL', useValue: 'https://www.maikel.uk'}
+    //{provide: 'SERVER_URL', useValue: 'http://localhost:3000'}
 ],
   bootstrap: [AppComponent]
 })

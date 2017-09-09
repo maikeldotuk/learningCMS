@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {}
 
 
-  constructor(private titleService: Title, private metaService: Meta) {this.updateWidthValue();
+  constructor(private titleService: Title) {this.updateWidthValue();
     document.body.scrollTop = document.documentElement.scrollTop = 0;}
   @HostListener('window:resize') updateWidthValue(): void {
     this.screenWidthFigure = window.screen.width;
@@ -30,11 +30,7 @@ export class AppComponent implements OnInit {
 
     const winTitle = 'Maikel.uk';
     this.titleService.setTitle( winTitle );
-    this.metaService.addTag({ property: 'og:title', content: winTitle});
-    this.metaService.addTag({ property: 'title', content: winTitle});
-    this.metaService.addTag({ property: 'og:icon', content: 'https://www.maikel.uk/images/logo.png' });
-    this.metaService.addTag({ property: 'description', content: 'MKB is a CMS to help self-directed learning' });
-    this.metaService.addTag({ property: 'og:type', content: 'website' });
+
 
 
 

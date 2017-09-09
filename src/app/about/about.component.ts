@@ -10,14 +10,8 @@ import {Meta, Title} from "@angular/platform-browser";
 export class AboutComponent implements OnInit {
   isCollapsed = false;
   screenWidthFigure: number;
-  constructor(private titleService: Title, private metaService: Meta) {
-    const winTitle = 'Maikel.uk: About';
+  constructor(private titleService: Title) {
     this.titleService.setTitle( 'Maikel.uk: About');
-    this.metaService.addTag({ property: 'og:title', content: winTitle});
-    this.metaService.addTag({ property: 'title', content: winTitle});
-    this.metaService.addTag({ property: 'og:icon', content: 'https://www.maikel.uk/images/logo.png' });
-    this.metaService.addTag({ property: 'description', content: 'MKB is a CMS to help self-directed learning' });
-    this.metaService.addTag({ property: 'og:type', content: 'website' });
     this.updateWidthValue();
   }
 

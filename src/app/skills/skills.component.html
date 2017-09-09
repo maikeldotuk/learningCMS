@@ -2,6 +2,6 @@
      'col-lg-10': getShowSkillEditor(), 'col-xl-11':getShowSkillEditor(), 'col-md-12':getShowSkillEditor() && getLoggedStatus(),
      'col-sm-12':getShowSkillEditor() && getLoggedStatus()}" class="col-xs-12">
       <app-skill-list *ngIf="getShowSkillbox()" [loggedIn]="getLoggedStatus()" [arraySkills]="getSkillBoxes()"
-                      [toggleButtonText]="getSkillEditorText()" (selectedSkill)="onSkillSelected($event)" (emitToggleEditor)="editorToggled($event)"></app-skill-list>
+                      [toggleButtonText]="getSkillEditorText()" (emitToggleEditor)="editorToggled($event)"></app-skill-list>
  </div>
 

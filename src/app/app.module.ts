@@ -8,6 +8,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AccordionModule, CollapseModule, ModalModule} from 'ngx-bootstrap';
 import { MetaModule, MetaLoader, MetaStaticLoader, PageTitlePositioning } from '@ngx-meta/core';
 import {HashLocationStrategy, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 
 
 import { AppComponent } from './app.component';
@@ -104,7 +105,8 @@ const routes: Routes = [
     MetaModule.forRoot({
       provide: MetaLoader,
       useFactory: (metaFactory)
-    })
+    }),
+    MalihuScrollbarModule.forRoot()
 
   ],
   providers: [

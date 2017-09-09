@@ -6,6 +6,7 @@ describe('PageeditorComponent', () => {
   let component: PageeditorComponent;
   let fixture: ComponentFixture<PageeditorComponent>;
 
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ PageeditorComponent ]

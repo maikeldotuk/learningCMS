@@ -7,6 +7,7 @@ import {Page} from '../page.model';
 declare var $: any;
 import swal from 'sweetalert2';
 import {Meta, Title} from '@angular/platform-browser';
+import {MalihuScrollbarService} from "ngx-malihu-scrollbar";
 
 @Component({
   selector: 'app-pageeditor',
@@ -24,8 +25,9 @@ export class PageeditorComponent implements OnInit {
   lastEdit: string;
   pageSavingButtonLabel = 'Save Page';
   showSpinner = false;
+  public scrollbarOptions = { alwaysShowScrollbar: 2, axis: 'xy', theme: 'dark-thick', scrollButtons: { enable: true } };
   dateOptions = {
-  weekday: 'long', year: 'numeric', month: 'long',
+    weekday: 'long', year: 'numeric', month: 'long',
   day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true,
 };
 

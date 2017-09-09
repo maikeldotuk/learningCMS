@@ -1,5 +1,6 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {AfterViewInit, Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
+
 
 
 
@@ -8,13 +9,14 @@ import {Meta, Title} from '@angular/platform-browser';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit  {
   screenWidthFigure: number;
   isSmallScreen: boolean;
   ngOnInit() {}
 
 
-  constructor(private titleService: Title) {this.updateWidthValue();
+  constructor(private titleService: Title,
+  ) {this.updateWidthValue();
     document.body.scrollTop = document.documentElement.scrollTop = 0;}
   @HostListener('window:resize') updateWidthValue(): void {
     this.screenWidthFigure = window.screen.width;
@@ -37,6 +39,7 @@ export class AppComponent implements OnInit {
   }
 
   getPaddingBottom() {
-    return this.isSmallScreen === false ? '100px' : '10px';
+    return this.isSmallScreen === false ? '60px' : '10px';
   }
+
 }

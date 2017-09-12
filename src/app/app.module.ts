@@ -35,6 +35,7 @@ import { SkillpageComponent } from './skillpage/skillpage.component';
 import { IndexComponent } from './index/index.component';
 import { BackbuttonComponent } from './backbutton/backbutton.component';
 import { LoaderComponent } from './loader/loader.component';
+import { FacebooklikeComponent } from './facebooklike/facebooklike.component';
 
 
 export function metaFactory(): MetaLoader {
@@ -90,6 +91,7 @@ const routes: Routes = [
     IndexComponent,
     BackbuttonComponent,
     LoaderComponent,
+    FacebooklikeComponent,
 
   ],
   imports: [

@@ -29,7 +29,7 @@ export class SkilleditorComponent implements OnInit {
 
 
   addPageToSkill() {
-    const aPage = new Page('', this.moreContent, '', this.theSkill.skillTitle, new Date());
+    const aPage = new Page('', this.moreContent, '', this.theSkill.skillTitle, new Date(), 'empty');
     this.onAddedPage.emit(aPage);
     this.moreContent = '';
 

@@ -20,16 +20,27 @@
 
 <div  *ngIf="!isEdit">
   <div  [froalaView]="thePage.content"></div>
+
 </div>
 
 
 <!-- The view with the editor-->
 <div *ngIf="isEdit">
+  <img class="img-thumbnail " *ngIf="thePage.imgURL !== null" [src]="thePage.imgURL" style="max-width:130px;float:right;">
   <div class="input-group">
     <span class="input-group-addon">Rename</span>
     <input [(ngModel)]="thePage.title" type="text" class="form-control" name="msg">
+
   </div>
   <br>
+  <div class="input-group">
+    <span class="input-group-addon">SEO image URL</span>
+    <input [(ngModel)]="thePage.imgURL" type="text" class="form-control" name="msg" placeholder="Recommended to be bigger than 250x250px">
+
+  </div>
+
+  <br>
+
 
   <div [froalaEditor]="froalaOptions" [(ngModel)]="thePage.content"></div>
 

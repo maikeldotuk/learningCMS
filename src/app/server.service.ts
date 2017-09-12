@@ -3,9 +3,9 @@ import {Page} from './page.model';
 import {Skillbox} from './skillbox.model';
 import {UserService} from './user.service';
 import {HttpClient} from '@angular/common/http';
-import swal from 'sweetalert2';
+
 import {Router} from '@angular/router';
-import {setTime} from 'ngx-bootstrap/timepicker/timepicker.utils';
+
 
 
 @Injectable()
@@ -89,6 +89,7 @@ export class ServerService {
     const theData = {
       title: aPage.title,
       content: '',
+      imgURL: aPage.imgURL,
       skill: aPage.skill,
       editDate: aPage.editDate
     };
@@ -96,7 +97,7 @@ export class ServerService {
     const req = this.http.post(address, theData);
     req.subscribe(data => {
       results = data;
-      somePage = new Page(results._id, results.title, results.content, results.skill, results.editDate);
+      somePage = new Page(results._id, results.title, results.content, results.skill, results.editDate, results.imgURL);
       this.arrayAllPages.push(somePage);
     });
   }
@@ -107,7 +108,7 @@ export class ServerService {
       const id = this.arraySkillboxes.indexOf(theSkill);
       const thePages = this.getPages(theSkill);
 
-      const address = this.server + '/api/v1/todo/' + theSkill.skillID;
+      const address = this.server + '/api/v1/skill/' + theSkill.skillID;
       const req = this.http.delete(address);
       req.subscribe();
       this.arraySkillboxes.splice(id, 1);
@@ -131,7 +132,7 @@ export class ServerService {
 
   getUpdatedSkillsGrid() {
     this.arraySkillboxes = [];
-    const address = this.server + '/api/v1/todos';
+    const address = this.server + '/api/v1/skills';
 
     this.http.get(address).subscribe(data => {
       // Read the result field from the JSON response.
@@ -176,7 +177,7 @@ export class ServerService {
       mastery: theSkill.skillLevel,
       descriptHTML: (theSkill.descriptHTML.length === 0 ? 'blank' : theSkill.descriptHTML)
     };
-    const address = this.server + '/api/v1/todo';
+    const address = this.server + '/api/v1/skill';
     let results: any;
     const req = this.http.post(address, newSkill);
 
@@ -195,6 +196,7 @@ export class ServerService {
     const aPage = {
       title: thePage.title,
       content: thePage.content,
+      imgURL: thePage.imgURL,
       skill: thePage.skill,
       editDate: new Date()
     };
@@ -217,7 +219,7 @@ export class ServerService {
 
 
     // Deletes the old skill without deleting the pages.
-    const address = this.server + '/api/v1/todo/' + oldSkill.skillID;
+    const address = this.server + '/api/v1/skill/' + oldSkill.skillID;
     const req = this.http.delete(address);
     req.subscribe();
     this.arraySkillboxes.splice(orderOnGrid, 1);
@@ -242,6 +244,7 @@ export class ServerService {
       const aPage = {
         title: eachPage.title,
         content: eachPage.content,
+        imgURL: eachPage.imgURL,
         skill: newSkill.skillTitle,
         editDate: eachPage.editDate
       };
@@ -317,7 +320,7 @@ export class ServerService {
       mastery: theSkillToChange.skillLevel,
       descriptHTML: content
     };
-    const address = this.server + '/api/v1/todo/' + theSkillToChange.skillID;
+    const address = this.server + '/api/v1/skill/' + theSkillToChange.skillID;
 
     let results: any;
     const req = this.http.put(address, amendedSkill);
@@ -353,7 +356,7 @@ export class ServerService {
 
       for (const entry of Object.keys(data)) {
         this.arrayAllPages.push(
-          new Page(data[entry]._id, data[entry].title, data[entry].content, data[entry].skill, data[entry].editDate),
+          new Page(data[entry]._id, data[entry].title, data[entry].content, data[entry].skill, data[entry].editDate, data[entry].imgURL)
         );
       }
     });

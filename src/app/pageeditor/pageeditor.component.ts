@@ -1,13 +1,13 @@
-import {Component, HostListener, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component,  OnInit} from '@angular/core';
 import {ServerService} from '../server.service';
 import {UserService} from '../user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Page} from '../page.model';
-// import { MetaService } from '@ngx-meta/core';
+
 declare var $: any;
 import swal from 'sweetalert2';
-import {Meta, Title} from '@angular/platform-browser';
-import {MalihuScrollbarService} from "ngx-malihu-scrollbar";
+import { Title} from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-pageeditor',
@@ -18,7 +18,7 @@ export class PageeditorComponent implements OnInit {
 
   isLoading = true;
   froalaOptions: Object;
-  thePage = new Page('', '', '', '', null);
+  thePage = new Page('', '', '', '', null, '');
   isEdit = false;
   addressSkill: string;
   addressPage: string;
@@ -33,8 +33,8 @@ export class PageeditorComponent implements OnInit {
 
   // @Output() onSavedPage: EventEmitter<Page>;
 
-  constructor(private titleService: Title, private metaService: Meta, private route: ActivatedRoute, private router: Router, public server: ServerService, private user: UserService) {
-    // this.onSavedPage = new EventEmitter();
+  constructor(private titleService: Title,  private route: ActivatedRoute, private router: Router, public server: ServerService, private user: UserService) {
+
 
     this.froalaOptions = this.server.globalFroala;
 
@@ -232,16 +232,11 @@ const step = 300;
         const aDate: Date = new Date(someDate);
         this.lastEdit = aDate.toLocaleString('en-GB', this.dateOptions);
 
-        // Meta tags
-        const someSkill = this.server.arraySkillboxes.find(aSkill => aSkill.skillTitle === this.thePage.skill);
+        // Title change
+
         const winTitle = this.thePage.skill + ': ' + this.thePage.title + ' - Maikel.uk';
         this.titleService.setTitle( winTitle );
-        this.metaService.addTag({ property: 'og:title', content: winTitle});
-        this.metaService.addTag({ property: 'title', content: winTitle});
-        this.metaService.addTag({ property: 'og:icon', content: 'someSkill.skillLogoURL' });
-        this.metaService.addTag({ property: 'og:image', content: 'someSkill.skillLogoURL' });
-        this.metaService.addTag({ property: 'description', content: 'MKB is a CMS to help self-directed learning' });
-        this.metaService.addTag({ property: 'og:type', content: 'website' });
+
         this.isLoading = false;
 
       } else {

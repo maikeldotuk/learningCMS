@@ -11,9 +11,11 @@ This is a list of features that need adding, improving, or that already work in 
 
 # Features that need implementing
 
-* A proper user login mechanism. But this depends on the final backend. I'm testing the waters with Flask now. So I could learn two different technologies at once.
+* A proper **user login** mechanism. But this depends on the final backend. I'm testing the waters with Flask now. So I could learn two different technologies at once. The problem is that I need to reverse engineer a crawler detector from the Expressjs implementation before I could swap to Flask. Without that crawler detector my SEO solution cannot work. 
 
 * **Autosave** I need to decide if it'll just save whatever I'm writting every 30 seconds and where, if it'll have any sort of version control. This could change the entire way the DB documents are stored.
+
+* **Lazy-loading of pages** When you open this site it loads E-V-E-R-Y-T-H-I-N-G on your browser and I mean everything. That's why there's no wait when clicking any pages. This so far is a feature, not a hindrance, but when there's enough content this could make it radically slow. I need to avoid loading all the pages and instead load just enough info to find them when clicking on them.
 
 # Optional features.
 

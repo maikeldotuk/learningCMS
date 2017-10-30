@@ -15,7 +15,7 @@ import { Title} from '@angular/platform-browser';
   styleUrls: ['./pageeditor.component.css']
 })
 export class PageeditorComponent implements OnInit {
-
+  twenty_test = [];
   isLoading = true;
   froalaOptions: Object;
   thePage = new Page('', '', '', '', null, '');
@@ -25,6 +25,7 @@ export class PageeditorComponent implements OnInit {
   lastEdit: string;
   pageSavingButtonLabel = 'Save Page';
   showSpinner = false;
+  scoreArray = [];
   public scrollbarOptions = { alwaysShowScrollbar: 2, axis: 'xy', theme: 'dark-thick', scrollButtons: { enable: true } };
   dateOptions = {
     weekday: 'long', year: 'numeric', month: 'long',
@@ -238,6 +239,11 @@ const step = 300;
         this.titleService.setTitle( winTitle );
 
         this.isLoading = false;
+        this.twenty_test = this.takeTwenty(this.thePage.test);
+        // scoreArray has to be defined here somehow
+        for (let i = 0; i < 20; i++) {
+          this.scoreArray.push(false);
+        }
 
       } else {
         this.lastEdit = 'Unknown';
@@ -246,6 +252,19 @@ const step = 300;
       this.thePage.content  = 'This page doesn\'t exist';
       return;
     }
+  }
+
+  // Takes twenty random questions and returns an array with just those.
+  takeTwenty(original) {
+    const processed = [];
+    const useThis = original.map(x => Object.assign({}, x));
+    for (let i = 0; i < 20; i++) {
+      const random_index = Math.floor(Math.random() * useThis.length);
+      const rand = useThis[random_index];
+      useThis.splice(random_index, 1);
+      processed.push(rand);
+    }
+    return processed;
   }
 
   onSavePage() {
@@ -288,5 +307,35 @@ const step = 300;
         this.server.onRemovePage(this.thePage);
       }).catch(swal.noop);
 
+  }
+  markTest() {
+    // Get the number of questions that were answered correctly as a total.
+
+    let totals = 0;
+    for (let i = 0; i < 20; i++) {
+      if (this.scoreArray[i] === true) {
+        totals = totals + 1;
+      }
+    }
+
+    // With the total, use an injectable to send the score.
+
+    const score = {
+      score: totals,
+      date: new Date()
+    };
+
+    this.thePage.scores.push(score);
+    this.server.onSavePage(this.thePage);
+    swal({
+      title: 'Saved score',
+      text: 'Your mark has been saved. You had ' + totals + ' correct answers out of 20',
+      type: 'info'
+    });
+    // Route to a page with results. Use Angular charts.
+  }
+
+  countAnswers(response) {
+    this.scoreArray[response.index] = response.correct;
   }
 }

@@ -1,7 +1,8 @@
-<li>{{item.question}}
+<li  class="list-group-item item"><strong>{{index+1}} - {{item.question}}</strong>
 <form>
-  <p *ngFor="let answer of item.answers">
-  <input name="chosen" type="radio" [value]=answer> {{ answer }}
-  </p>
+  <div *ngFor="let answer of answers" class="radio">
+  <label><input name="chosen" type="radio" [value]=answer (click)="radioClicked(answer)"> {{ answer }}</label>
+  </div>
 </form>
 </li>
+

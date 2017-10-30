@@ -198,7 +198,9 @@ export class ServerService {
       content: thePage.content,
       imgURL: thePage.imgURL,
       skill: thePage.skill,
-      editDate: new Date()
+      editDate: new Date(),
+      test: thePage.test,
+      scores: thePage.scores
     };
     const address = this.server + '/api/v1/page/' + thePage.id;
     const req = this.http.put(address, aPage);

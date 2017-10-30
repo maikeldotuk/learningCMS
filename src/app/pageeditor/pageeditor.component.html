@@ -46,10 +46,17 @@
 
 </div>
 </div>
-<div class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
-  Tester
+<div class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11" *ngIf="!isEdit  && thePage.test.length >= 20">
+  <strong>What's left to do here is:</strong>
   <ul>
-    <app-question *ngFor="let item of thePage.test" [item]="item"></app-question>
+    <li>Send you to a page with graphs that shows the results</li>
   </ul>
-</div>
+  <div class="panel panel-default">
+    <div class="panel-heading">Tester</div>
+    <div class="list-group">
+      <app-question *ngFor="let item of twenty_test; let i = index" [item]="item" [index]="i" (answerChosen)="countAnswers($event)"></app-question></div>
+
+  </div>
+<button [disabled]="!getLoggedStatus()" class="btn btn-danger pull-right" title="I'm only available if you're logged in" (click)="markTest()"> Send and Mark</button></div>
+
 <div *ngIf="isLoading"><app-loader></app-loader></div>

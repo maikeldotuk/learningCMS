@@ -46,4 +46,10 @@
 
 </div>
 </div>
+<div class="col-xs-12 col-sm-9 cold-md-9 col-lg-10 col-xl-11">
+  Tester
+  <ul>
+    <app-question *ngFor="let item of thePage.test" [item]="item"></app-question>
+  </ul>
+</div>
 <div *ngIf="isLoading"><app-loader></app-loader></div>

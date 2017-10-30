@@ -356,7 +356,8 @@ export class ServerService {
 
       for (const entry of Object.keys(data)) {
         this.arrayAllPages.push(
-          new Page(data[entry]._id, data[entry].title, data[entry].content, data[entry].skill, data[entry].editDate, data[entry].imgURL)
+          new Page(data[entry]._id, data[entry].title, data[entry].content, data[entry].skill, data[entry].editDate,
+            data[entry].imgURL, data[entry].test, data[entry].scores)
         );
       }
     });

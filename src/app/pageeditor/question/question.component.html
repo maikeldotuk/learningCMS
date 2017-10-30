@@ -1,0 +1,7 @@
+<li>{{item.question}}
+<form>
+  <p *ngFor="let answer of item.answers">
+  <input name="chosen" type="radio" [value]=answer> {{ answer }}
+  </p>
+</form>
+</li>
